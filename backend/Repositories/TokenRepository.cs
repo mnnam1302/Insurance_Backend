@@ -100,10 +100,11 @@ namespace backend.Repositories
                 if (user != null)
                 {
                     // Tạo access token
-                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(5), "SecreteKey");
+                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromSeconds(10), "SecreteKey");
+                    var refreshToken = GenerateToken(user.UserId, TimeSpan.FromSeconds(15), "SecreteKey");
                     // Tạo refresh token
                     //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "RefreshTokenSecret");
-                    var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
+                    //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
 
                     // Lưu refresh token cho người dùng
                     await SaveOrUpdateRefreshToken(user.UserId, refreshToken);
