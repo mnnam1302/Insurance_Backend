@@ -11,5 +11,9 @@ namespace backend.Models
         public DbSet<User> Users { get; set; }
 
         public DbSet<Token> Tokens { get; set; }
+
+        public DbSet<InsuranceType> InsuranceTypes { get; set; }
+
+        public DbSet<Insurance> Insurances { get; set; }
     }
 }

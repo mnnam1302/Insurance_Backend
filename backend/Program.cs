@@ -27,6 +27,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<IInsuranceTypeRepository, InsuranceTypeRepository>();
+builder.Services.AddScoped<IInsuranceTypeService, InsuranceTypeService>();
+
+builder.Services.AddScoped<IInsuranceRepository, InsuranceRepository>();
+builder.Services.AddScoped<IInsuranceService, InsuranceService>();
+
 // Filter request required Authorized
 builder.Services.AddScoped<JwtAuthorizeFilter>();
 
