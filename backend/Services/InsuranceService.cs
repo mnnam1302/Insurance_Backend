@@ -12,9 +12,9 @@ namespace backend.Services
             _insuranceRepository = insuranceRepository;
         }
 
-        public async Task<List<Insurance>> GetAllInsurances()
+        public async Task<List<Insurance>> GetAllInsurances(int fromAge, int toAge)
         {
-            return await _insuranceRepository.GetAllInsurances();
+            return await _insuranceRepository.GetAllInsurances(fromAge, toAge);
         }
 
         public async Task<Insurance?> GetInsuranceById(int id)

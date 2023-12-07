@@ -18,11 +18,11 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllInsurances() 
+        public async Task<IActionResult> GetAllInsurances(int fromAge = 1, int toAge = 3) 
         {
             try
             {
-                List<Insurance> insurances = await _insuranceService.GetAllInsurances();
+                List<Insurance> insurances = await _insuranceService.GetAllInsurances(fromAge, toAge);
 
                 if (insurances == null)
                 {
