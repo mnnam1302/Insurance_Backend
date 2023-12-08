@@ -1,4 +1,5 @@
-﻿using backend.Filters;
+﻿using backend.Controllers;
+using backend.Filters;
 using backend.Models;
 using backend.Repositories;
 using backend.Services;
@@ -39,6 +40,8 @@ builder.Services.AddScoped<IInsuranceService, InsuranceService>();
 
 builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
 builder.Services.AddScoped<IBeneficiaryService, BeneficiaryService>();
+
+builder.Services.AddScoped<FirebaseController>();
 
 builder.Services.AddSingleton(provider =>
 {

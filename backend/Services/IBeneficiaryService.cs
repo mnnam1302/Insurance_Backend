@@ -5,6 +5,6 @@ namespace backend.Services
 {
     public interface IBeneficiaryService
     {
-        Task<Beneficiary> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO);
+        Task<Beneficiary?> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO);
     }
 }

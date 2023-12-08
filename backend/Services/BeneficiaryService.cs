@@ -12,8 +12,7 @@ namespace backend.Services
         {
             _beneficiaryRepository = beneficiaryRepository;
         }
-
-        public async Task<Beneficiary> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO)
+        public async Task<Beneficiary?> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO)
         {
             return await _beneficiaryRepository.CreateBeneficiary(beneficiaryDTO);
         }
