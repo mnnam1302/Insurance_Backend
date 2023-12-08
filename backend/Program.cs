@@ -1,9 +1,14 @@
-﻿using backend.Filters;
+﻿using backend.Controllers;
+using backend.Filters;
 using backend.Models;
 using backend.Repositories;
 using backend.Services;
+using Firebase.Auth;
+using Firebase.Storage;
+using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +37,22 @@ builder.Services.AddScoped<IInsuranceTypeService, InsuranceTypeService>();
 
 builder.Services.AddScoped<IInsuranceRepository, InsuranceRepository>();
 builder.Services.AddScoped<IInsuranceService, InsuranceService>();
+
+builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
+builder.Services.AddScoped<IBeneficiaryService, BeneficiaryService>();
+
+builder.Services.AddScoped<FirebaseController>();
+
+builder.Services.AddSingleton(provider =>
+{
+    // Đọc thông tin cấu hình từ IConfiguration
+    var firebaseConfig = new FirebaseConfig(builder.Configuration.GetSection("Firebase")["ApiKey"]);
+    return firebaseConfig;
+});
+builder.Services.AddSingleton(provider => new FirebaseStorage(builder.Configuration.GetSection("Firebase")["StorageBucket"]));
+builder.Services.AddSingleton<FirebaseAuthProvider>();
+
+
 
 // Filter request required Authorized
 builder.Services.AddScoped<JwtAuthorizeFilter>();
