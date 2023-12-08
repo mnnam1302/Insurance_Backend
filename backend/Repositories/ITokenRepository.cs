@@ -7,6 +7,8 @@ namespace backend.Repositories
     {
         Task<TokenDTO?> Login(LoginDTO loginDTO);
 
+        Task Logout(string refresh);
+
         Task<string?> Refresh(string refresh);
     }
 }

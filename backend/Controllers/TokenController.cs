@@ -17,7 +17,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginVersion([FromBody] LoginDTO loginDTO)
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
             if (loginDTO is null)
             {
@@ -37,6 +37,28 @@ namespace backend.Controllers
                     access = token.AccessToken,
                     refresh = token.RefreshToken,
                     user_id = token.UserId
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] TokenDTO tokenDTO)
+        {
+            if (tokenDTO.RefreshToken is null)
+            {
+                return BadRequest("Invalid client request");
+            }
+            try
+            {
+                await _tokenService.Logout(tokenDTO.RefreshToken);
+
+                return Ok(new
+                {
+                    message = "Logout successful"
                 });
             }
             catch (ArgumentException ex)

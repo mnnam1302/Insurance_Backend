@@ -1,5 +1,6 @@
 ﻿using backend.DTO;
 using backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -53,7 +54,7 @@ namespace backend.Repositories
             return await _dbContext.Tokens.FirstOrDefaultAsync(t => t.UserId == userId);
         }
 
-        private async Task SaveOrUpdateRefreshToken(int userId, string refreshToken)
+        private async Task CreateOrUpdateRefreshToken(int userId, string refreshToken)
         {
             // Kiểm tra xem người dùng đã có refresh token hay chưa
             Token? existingToken = await GetExistingRefreshToken(userId);
@@ -107,8 +108,7 @@ namespace backend.Repositories
                     //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
 
                     // Lưu refresh token cho người dùng
-                    await SaveOrUpdateRefreshToken(user.UserId, refreshToken);
-
+                    await CreateOrUpdateRefreshToken(user.UserId, refreshToken);
 
                     // Return access_token và refresh_token, maybe userId
                     return new TokenDTO
@@ -131,7 +131,7 @@ namespace backend.Repositories
 
         public async Task<string?> Refresh(string refresh)
         {
-            // Tạo đối tượng xử lý token
+            // Tạo đối tượng xử lý refresh token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config["Jwt:SecreteKey"] ?? "");
 
@@ -168,6 +168,61 @@ namespace backend.Repositories
             catch (ArgumentException ex)
             {
                 throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public async Task Logout(string refresh)
+        {
+            // Tạo đối tượng xử lý refresh token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config["Jwt:SecreteKey"] ?? "");
+
+            try
+            {
+                // Tạo đối tượng xử lý token
+                var claimsPrincipal = tokenHandler.ValidateToken(refresh, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                var refreshToken = (JwtSecurityToken)validatedToken;
+
+                // Kiểm tra userId có tồn tại không
+                var userId = int.Parse(refreshToken.Claims.First().Value);
+
+                User? user = await _userRepository.GetUserById(userId);
+
+                if (user == null)
+                {
+                    throw new ArgumentException("User is not valid");
+                }
+
+                // Xóa refresh token ở database
+                // Update refresh về "" || null nếu tồn tại
+
+                // Kiểm tra xem người dùng đã có refresh token hay chưa
+                Token? existingToken = await GetExistingRefreshToken(userId);
+
+                if (existingToken == null)
+                {
+                    throw new ArgumentException("Token is not valid in database");
+                }
+                else
+                {
+                    existingToken.TokenValue = "";          // Update thuộc tính refresh ""
+                    existingToken.Expired = DateTime.Now;   // Update expired Now => sure
+                }
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (ArgumentException ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
