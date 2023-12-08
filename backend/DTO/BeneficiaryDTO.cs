@@ -5,6 +5,8 @@ namespace backend.DTO
 {
     public class BeneficiaryDTO
     {
+        public int BeneficiaryId { get; set; }
+
         [Required(ErrorMessage = "Email is required")]
         [StringLength(255)]
         public string Email { get; set; } = "";
@@ -25,8 +27,8 @@ namespace backend.DTO
         [StringLength(20)]
         public string CardIdentification { get; set; } = "";
 
-        [StringLength(255)]
         public IFormFile? ImageIdentification { get; set; }
+        public string? ImageUrl { get; set; }
 
         [StringLength(255)]
         public string? Address { get; set; }
