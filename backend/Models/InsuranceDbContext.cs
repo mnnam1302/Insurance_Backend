@@ -18,6 +18,8 @@ namespace backend.Models
 
         public DbSet<Insurance> Insurances { get; set; }
 
+        public DbSet<Registration> Registrations { get; set; }
+
         public DbSet<InsuranceOrder> InsuranceOrders { get; set; }
     }
 }

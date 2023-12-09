@@ -32,14 +32,17 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            var orderDTO = new InsuranceOrderDTO();
-            orderDTO.Id = order.Id;
-            orderDTO.ContractId = order.ContractId;
-            orderDTO.TotalCost = order.TotalCost;
-            orderDTO.TotalPayment = order.TotalPayment;
-            orderDTO.Description = order.Description;
-            orderDTO.Status = order.Status;
-            orderDTO.PaymentDate = order.PaymentDate;
+            var orderDTO = new InsuranceOrderDTO
+            {
+                Id = order.Id,
+                ContractId = order.ContractId,
+                TotalCost = order.TotalCost,
+                TotalPayment = order.TotalPayment,
+                Description = order.Description,
+                Status = order.Status,
+                PaymentDate = order.PaymentDate
+            };
+            
 
             return Ok(orderDTO);
         }
@@ -60,7 +63,7 @@ namespace backend.Controllers
             insuranceDbContext.InsuranceOrders.Add(orderDomain);
             insuranceDbContext.SaveChanges();
 
-            InsuranceOrderDTO o_dto = new InsuranceOrderDTO()
+            InsuranceOrderDTO o_dto = new InsuranceOrderDTO
             {
                 Id = orderDomain.Id,
                 ContractId = dto.ContractId,
@@ -68,7 +71,7 @@ namespace backend.Controllers
                 TotalPayment = dto.TotalPayment,
                 Description = dto.Description,
                 Status = dto.Status,
-                PaymentDate = null,
+                PaymentDate = null
             };
 
             return CreatedAtAction(nameof(GetById), new { Id = o_dto.Id }, o_dto);

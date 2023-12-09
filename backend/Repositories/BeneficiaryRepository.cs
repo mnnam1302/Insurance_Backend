@@ -1,5 +1,6 @@
 ﻿using backend.DTO;
 using backend.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,19 @@ namespace backend.Repositories
                 return beneficiary;
             }
             catch (ArgumentException ex) {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public async Task<Beneficiary?> GetBeneficiaryById(int beneficiaryId)
+        {
+            try
+            {
+                var beneficiary = await _dbContext.Beneficiaries.FindAsync(beneficiaryId);
+                return beneficiary;
+            }
+            catch(ArgumentException ex)
+            {
                 throw new ArgumentException(ex.Message);
             }
         }
