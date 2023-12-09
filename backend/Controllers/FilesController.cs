@@ -40,7 +40,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Something was wrong");
+                throw new Exception(ex.Message);
             }
             return fileName;
         }
