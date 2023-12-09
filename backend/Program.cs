@@ -41,6 +41,9 @@ builder.Services.AddScoped<IInsuranceService, InsuranceService>();
 builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
 builder.Services.AddScoped<IBeneficiaryService, BeneficiaryService>();
 
+builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+
 builder.Services.AddScoped<FirebaseController>();
 
 builder.Services.AddSingleton(provider =>

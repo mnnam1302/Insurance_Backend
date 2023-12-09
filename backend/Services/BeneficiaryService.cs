@@ -1,6 +1,7 @@
 ﻿using backend.DTO;
 using backend.Models;
 using backend.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
 {
@@ -15,6 +16,11 @@ namespace backend.Services
         public async Task<Beneficiary?> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO)
         {
             return await _beneficiaryRepository.CreateBeneficiary(beneficiaryDTO);
+        }
+
+        public async Task<Beneficiary?> GetBeneficiaryById(int beneficiaryId)
+        {
+            return await _beneficiaryRepository.GetBeneficiaryById(beneficiaryId);
         }
     }
 }

@@ -25,6 +25,41 @@ namespace backend.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBeneficiaryById([FromRoute] int id)
+        {
+            try
+            {
+                Beneficiary? beneficiary = await _beneficiaryService.GetBeneficiaryById(id);
+
+                if (beneficiary == null)
+                {
+                    return NotFound();
+                }
+
+                var resultBeneficaryDTO = new BeneficiaryDTO
+                {
+                    BeneficiaryId = beneficiary.BeneficiaryId,
+                    Email = beneficiary.Email,
+                    FullName = beneficiary.FullName,
+                    Phone = beneficiary.Phone,
+                    Sex = beneficiary.Sex,
+                    DateOfBirth = beneficiary.DateOfBirth,
+                    CardIdentification = beneficiary.CardIdentification,
+                    ImageUrl = beneficiary.ImageIdentificationUrl,
+                    Address = beneficiary.Address,
+                    RelationshipPolicyholder = beneficiary.RelationshipPolicyholder,
+                    UserId = beneficiary.UserId
+                };
+
+                return Ok(resultBeneficaryDTO);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpPost]
         [JwtAuthorize]
