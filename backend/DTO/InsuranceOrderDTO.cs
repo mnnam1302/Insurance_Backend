@@ -14,12 +14,12 @@ namespace backend.DTO
         public double TotalCost { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Price must be greater than or equal to 0")]
-        public double TotalPayment { get; set; }
+        public double TotalPayment { get; set; } = 0;
 
         public string Description { get; set; } = "";
 
         public string Status { get; set; } = "Processing";
 
-        public DateTime? PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; } = null;
     }
 }

@@ -1,97 +1,91 @@
-﻿using backend.DTO;
+﻿using backend.Attribute;
+using backend.DTO;
 using backend.Models;
-using Microsoft.AspNetCore.Http;
+using backend.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/v1/[controller]")]
     public class InsuranceOrderController : ControllerBase
     {
-        private readonly InsuranceDbContext insuranceDbContext;
+        private readonly IInsuranceOrderService _orderService;
 
-        public InsuranceOrderController(InsuranceDbContext insuranceDbContext)
+        public InsuranceOrderController(IInsuranceOrderService orderService)
         {
-            this.insuranceDbContext = insuranceDbContext;
+            _orderService = orderService;
         }
 
         [HttpGet]
-        public IActionResult GetAllOrder()
+        public async Task<IActionResult> GetAllOrder()
         {
-            var orders = insuranceDbContext.InsuranceOrders.ToList();
-            return Ok(orders);
+            try
+            {
+                List<InsuranceOrder> order = await _orderService.GetAll();
+                if (order == null)
+                {
+                    return NotFound();
+                }
+                return Ok(order);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Error = ex.Message});
+            }
+
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var order = insuranceDbContext.InsuranceOrders.FirstOrDefault(x => x.Id == id);
-            if (order == null)
+            try
             {
-                return NotFound();
+                InsuranceOrder? order = await _orderService.GetById(id);
+
+                if (order == null)
+                {
+                    return NotFound();
+                }
+                return Ok(order);
             }
-
-            var orderDTO = new InsuranceOrderDTO();
-            orderDTO.Id = order.Id;
-            orderDTO.ContractId = order.ContractId;
-            orderDTO.TotalCost = order.TotalCost;
-            orderDTO.TotalPayment = order.TotalPayment;
-            orderDTO.Description = order.Description;
-            orderDTO.Status = order.Status;
-            orderDTO.PaymentDate = order.PaymentDate;
-
-            return Ok(orderDTO);
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
 
         [HttpPost]
-        public IActionResult CreateInsuranceOrder([FromBody] CreateInsuranceOrder dto)
+        [JwtAuthorize]
+        public async Task<IActionResult> AddInsuranceOrder([FromBody] InsuranceOrderDTO dto)
         {
-            var orderDomain = new InsuranceOrder
+            if (dto == null)
             {
-                ContractId = dto.ContractId,
-                TotalCost = dto.TotalCost,
-                TotalPayment = dto.TotalPayment,
-                Description = dto.Description,
-                Status = dto.Status,
-                PaymentDate = null,
-            };
-
-            insuranceDbContext.InsuranceOrders.Add(orderDomain);
-            insuranceDbContext.SaveChanges();
-
-            InsuranceOrderDTO o_dto = new InsuranceOrderDTO()
-            {
-                Id = orderDomain.Id,
-                ContractId = dto.ContractId,
-                TotalCost = dto.TotalCost,
-                TotalPayment = dto.TotalPayment,
-                Description = dto.Description,
-                Status = dto.Status,
-                PaymentDate = null,
-            };
-
-            return CreatedAtAction(nameof(GetById), new { Id = o_dto.Id }, o_dto);
-        }
-
-        [HttpPut]
-        [Route("{id}")]
-        public IActionResult UpdateOrder([FromRoute] int id, [FromBody] InsuranceOrderDTO dto)
-        {
-            var orderDomain = insuranceDbContext.InsuranceOrders.FirstOrDefault(x => x.Id == id);
-            if (orderDomain == null)
-            {
-                return NotFound();
+                return BadRequest("invalid request");
             }
-            orderDomain.Status = dto.Status;
-            insuranceDbContext.SaveChanges();
-
-            var updated_order_dto = new UpdateInsuranceOrder()
+            try
             {
-                Status = orderDomain.Status,
-                PaymentDate = dto.PaymentDate,
-            };
-            return Ok(updated_order_dto);
+                InsuranceOrder? order = await _orderService.AddInsuranceOrder(dto);
+                
+                if (order == null)
+                {
+                    return BadRequest("Order not created, Please check your request!");
+                }
+
+                var o_dto = new InsuranceOrderDTO
+                {
+                    ContractId = order.ContractId,
+                    TotalCost = order.TotalCost,
+                    Description = order.Description,
+                };
+
+                return Ok(o_dto);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }
