@@ -8,5 +8,6 @@ namespace backend.Services
         Task<List<InsuranceOrder>> GetAll();
         Task<InsuranceOrder?> GetById(int id);
         Task<InsuranceOrder?> AddInsuranceOrder(InsuranceOrderDTO dto);
+        Task<InsuranceOrder?> UpdateInsuranceOrder(InsuranceOrderDTO dto, int id);
     }
 }

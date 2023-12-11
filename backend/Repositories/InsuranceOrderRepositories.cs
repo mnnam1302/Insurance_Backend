@@ -31,15 +31,17 @@ namespace backend.Repositories
         {
             try
             {
-                string sql = "insert into InsuranceOrder values (ContracId, TotalCost, Descriptions) values (" +
+                string sql = "exec AddInsuranceOrder " +
+                    "@id, " +
                     "@contract_id, " +
                     "@total_cost, " +
-                    "@Descriptions )";
+                    "@description";
 
                 IEnumerable<InsuranceOrder?> result = await _context.InsuranceOrders.FromSqlRaw(sql,
+                    new SqlParameter("@id", dto.Id),
                     new SqlParameter("@contract_id", dto.ContractId),
                     new SqlParameter("@total_cost", dto.TotalCost),
-                    new SqlParameter("@Descriptions", dto.Description)
+                    new SqlParameter("@description", dto.Description)
                     ).ToListAsync();
 
                 InsuranceOrder? order = result.FirstOrDefault();
@@ -49,7 +51,27 @@ namespace backend.Repositories
             {
                 throw new ArgumentException(ex.Message);
             }
+        }
 
+        public async Task<InsuranceOrder?> UpdateInsuranceOrder(InsuranceOrderDTO dto, int id)
+        {
+            try
+            {
+                string sql = "update InsruanceOrder set TotalPayment = @total_payment, Status = @status where id = @id";
+
+                IEnumerable<InsuranceOrder?> result = await _context.InsuranceOrders.FromSqlRaw(sql,
+                    new SqlParameter("@total_cost", dto.TotalCost),
+                    new SqlParameter("@status", dto.Status),
+                    new SqlParameter("@id", id)
+                    ).ToListAsync();
+
+                InsuranceOrder? order = result.FirstOrDefault();
+                return order;
+            }
+            catch ( ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }

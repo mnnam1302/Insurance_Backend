@@ -26,5 +26,9 @@ namespace backend.Services
         {
             return await _service.AddInsuranceOrder(dto);
         }
+        public async Task<InsuranceOrder?> UpdateInsuranceOrder(InsuranceOrderDTO dto, int id)
+        {
+            return await _service.UpdateInsuranceOrder(dto, id);
+        }
     }
 }

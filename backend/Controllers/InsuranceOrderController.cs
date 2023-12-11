@@ -32,7 +32,7 @@ namespace backend.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { Error = ex.Message});
+                return BadRequest(new { Error = ex.Message });
             }
 
         }
@@ -57,7 +57,6 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [JwtAuthorize]
         public async Task<IActionResult> AddInsuranceOrder([FromBody] InsuranceOrderDTO dto)
         {
             if (dto == null)
@@ -67,7 +66,7 @@ namespace backend.Controllers
             try
             {
                 InsuranceOrder? order = await _orderService.AddInsuranceOrder(dto);
-                
+
                 if (order == null)
                 {
                     return BadRequest("Order not created, Please check your request!");
@@ -75,9 +74,13 @@ namespace backend.Controllers
 
                 var o_dto = new InsuranceOrderDTO
                 {
+                    Id = order.Id,
                     ContractId = order.ContractId,
                     TotalCost = order.TotalCost,
+                    TotalPayment = order.TotalPayment,
                     Description = order.Description,
+                    Status = order.Status,
+                    PaymentDate = order.PaymentDate,
                 };
 
                 return Ok(o_dto);
