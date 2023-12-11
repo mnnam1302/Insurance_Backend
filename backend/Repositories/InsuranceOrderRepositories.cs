@@ -32,13 +32,11 @@ namespace backend.Repositories
             try
             {
                 string sql = "exec AddInsuranceOrder " +
-                    "@id, " +
                     "@contract_id, " +
                     "@total_cost, " +
                     "@description";
 
                 IEnumerable<InsuranceOrder?> result = await _context.InsuranceOrders.FromSqlRaw(sql,
-                    new SqlParameter("@id", dto.Id),
                     new SqlParameter("@contract_id", dto.ContractId),
                     new SqlParameter("@total_cost", dto.TotalCost),
                     new SqlParameter("@description", dto.Description)
@@ -65,8 +63,8 @@ namespace backend.Repositories
                     new SqlParameter("@id", id)
                     ).ToListAsync();
 
-                InsuranceOrder? order = result.FirstOrDefault();
-                return order;
+                //InsuranceOrder? order = result.FirstOrDefault();
+                return null;
             }
             catch ( ArgumentException ex)
             {
