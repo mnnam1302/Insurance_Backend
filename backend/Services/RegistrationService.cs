@@ -27,7 +27,7 @@ namespace backend.Services
 
             if (beneficiary == null)
             {
-                throw new ArgumentException("Beneficiary í not valid");
+                throw new ArgumentException("Beneficiary is not valid");
             }
             // Tính tuổi người thụ hưởng
             int beneficiaryAge = DateTime.Now.Year - beneficiary.DateOfBirth.Value.Year;
