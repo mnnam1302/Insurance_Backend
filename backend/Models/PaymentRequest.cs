@@ -32,6 +32,8 @@ namespace backend.Models
         [Required]
         public int Beneficiaries_id { get; set; }
 
+        public Beneficiary? beneficiary { get; set; }
+
         public DateTime? update_date { get; set; }
     }
 }
