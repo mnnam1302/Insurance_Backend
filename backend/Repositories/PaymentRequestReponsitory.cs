@@ -37,11 +37,34 @@ namespace backend.Repositories
                     "@image";
 
                 IEnumerable<PaymentRequest?> result = await _context.PaymentRequests.FromSqlRaw(sql,
-                    new SqlParameter("@beneficiaries_id", dto.Beneficiaries_id),
+                    new SqlParameter("@beneficiaries_id", dto.beneficiary_id),
                     new SqlParameter("@total_cost", dto.total_cost),
                     new SqlParameter("@description", dto.Description),
                     new SqlParameter("@image", dto.image_identification_url)
                     ).ToListAsync();
+
+                PaymentRequest? request = result.FirstOrDefault();
+                return request;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public async Task<PaymentRequest?> UpdatePaymentRequest(int id, double payment, string status)
+        {
+            try
+            {
+                string sql = "exec UpdatePaymentRequest " +
+                    "@totalpayment, " +
+                    "@status, " +
+                    "@id";
+
+                IEnumerable<PaymentRequest?> result = await _context.PaymentRequests.FromSqlRaw(sql,
+                    new SqlParameter("@totalpayment", payment),
+                    new SqlParameter("@status", status),
+                    new SqlParameter("@id", id)).ToListAsync();
 
                 PaymentRequest? request = result.FirstOrDefault();
                 return request;

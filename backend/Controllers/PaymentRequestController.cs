@@ -1,4 +1,5 @@
-﻿using backend.DTO;
+﻿using backend.Attribute;
+using backend.DTO;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Http;
@@ -61,7 +62,8 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPaymentRequest([FromBody] PaymentRequestDTO dto)
+        //[JwtAuthorize]
+        public async Task<IActionResult> AddPaymentRequest([FromForm] PaymentRequestDTO dto)
         {
             if (dto == null)
             {
@@ -96,7 +98,7 @@ namespace backend.Controllers
                     Description = request.Description,
                     image_identification_url = request.image_identification_url,
                     Status = request.Status,
-                    Beneficiaries_id = request.Beneficiaries_id,
+                    beneficiary_id = request.beneficiary_id,
                     update_date = request.update_date,
                 };
 

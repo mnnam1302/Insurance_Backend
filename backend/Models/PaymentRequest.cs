@@ -30,8 +30,9 @@ namespace backend.Models
 
         [Column("beneficiary_id")]
         [Required]
-        public int Beneficiaries_id { get; set; }
+        public int beneficiary_id { get; set; }
 
+        [ForeignKey("beneficiary_id")]
         public Beneficiary? beneficiary { get; set; }
 
         public DateTime? update_date { get; set; }

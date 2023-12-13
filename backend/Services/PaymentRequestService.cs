@@ -28,5 +28,9 @@ namespace backend.Services
         {
             return await _payment.AddPaymentRequest(dto);
         }
+        public async Task<PaymentRequest?> UpdatePaymentRequest(int id, double payment, string status)
+        {
+            return await _payment.UpdatePaymentRequest(id, payment, status);
+        }
     }
 }

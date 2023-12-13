@@ -16,7 +16,7 @@ namespace backend.DTO
         public double total_payment { get; set; }
 
         [Column("Description")]
-        [Required]
+        [Required(ErrorMessage = "Please enter your description")]
         public string? Description { get; set; }
 
         public IFormFile? ImageIdentification { get; set; }
@@ -28,8 +28,8 @@ namespace backend.DTO
 
         [Column("beneficiary_id")]
         [Required]
-        public int Beneficiaries_id { get; set; }
+        public int beneficiary_id { get; set; }
 
-        public DateTime? update_date { get; set; } = DateTime.Now;
+        public DateTime? update_date { get; set; }
     }
 }
