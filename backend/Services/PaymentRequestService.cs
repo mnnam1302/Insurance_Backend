@@ -1,0 +1,32 @@
+﻿using Azure.Core;
+using backend.DTO;
+using backend.Models;
+using backend.Repositories;
+
+namespace backend.Services
+{
+    public class PaymentRequestService : IPaymentRequestService
+    {
+        private readonly IPaymentRequestReponsitory _payment;
+
+        public PaymentRequestService(IPaymentRequestReponsitory payment)
+        {
+            _payment = payment;
+        }
+
+        public async Task<List<PaymentRequest>> GetAll()
+        {
+            return await _payment.GetAll();
+        }
+
+        public async Task<PaymentRequest?> GetById(int id)
+        {
+            return await _payment.GetById(id);
+        }
+
+        public async Task<PaymentRequest?> AddPaymentRequest(PaymentRequestDTO dto)
+        {
+            return await _payment.AddPaymentRequest(dto);
+        }
+    }
+}
