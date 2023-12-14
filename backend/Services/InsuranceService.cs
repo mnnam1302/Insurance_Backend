@@ -1,4 +1,5 @@
-﻿using backend.Models;
+﻿using backend.DTO;
+using backend.Models;
 using backend.Repositories;
 
 namespace backend.Services
@@ -10,6 +11,11 @@ namespace backend.Services
         public InsuranceService(IInsuranceRepository insuranceRepository)
         {
             _insuranceRepository = insuranceRepository;
+        }
+
+        public async Task<List<AgeDTO>> GetAllAges()
+        {
+            return await _insuranceRepository.GetAllAges();
         }
 
         public async Task<List<Insurance>> GetAllInsurances(int fromAge, int toAge)

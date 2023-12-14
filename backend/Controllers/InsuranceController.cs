@@ -1,4 +1,5 @@
 ﻿using backend.Attribute;
+using backend.DTO;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -15,6 +16,26 @@ namespace backend.Controllers
         public InsuranceController(IInsuranceService insuranceService)
         {
             _insuranceService = insuranceService;
+        }
+
+        [HttpGet("ages")]
+        public async Task<IActionResult> GetAllAges()
+        {
+            try
+            {
+                List<AgeDTO> ages = await _insuranceService.GetAllAges();
+
+                if (ages == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(ages);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
