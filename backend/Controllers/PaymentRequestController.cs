@@ -98,7 +98,7 @@ namespace backend.Controllers
                     Description = request.Description,
                     image_identification_url = request.image_identification_url,
                     Status = request.Status,
-                    beneficiary_id = request.beneficiary_id,
+                    contract_id = request.contract_id,
                     update_date = request.update_date,
                 };
 
@@ -108,6 +108,36 @@ namespace backend.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePaymentRequest([FromRoute] int id, [FromForm] double payment, [FromForm] string status)
+        {
+            if (payment < 0 || status == null)
+            {
+                return BadRequest("Please enter your update value!");
+            }
+
+            PaymentRequest? request = await _payment.UpdatePaymentRequest(id, payment, status);
+
+            if (request == null)
+            {
+                return BadRequest("Your update request has not been fulfilled, please check your input!");
+            }
+
+            var r_dto = new PaymentRequestDTO
+            {
+                paymentrequest_id = request.paymentrequest_id,
+                total_cost = request.total_cost,
+                total_payment = request.total_payment,
+                Description = request.Description,
+                image_identification_url = request.image_identification_url,
+                Status = request.Status,
+                contract_id = request.contract_id,
+                update_date = request.update_date,
+            };
+
+            return Ok(r_dto);
         }
     }
 }

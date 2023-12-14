@@ -26,9 +26,9 @@ namespace backend.DTO
         [Column("request_status")]
         public string Status { get; set; } = "in process";
 
-        [Column("beneficiary_id")]
+        [Column("contract_id")]
         [Required]
-        public int beneficiary_id { get; set; }
+        public int contract_id { get; set; }
 
         public DateTime? update_date { get; set; }
     }

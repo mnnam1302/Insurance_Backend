@@ -28,12 +28,12 @@ namespace backend.Models
         [Column("request_status")]
         public string Status { get; set; } = "";
 
-        [Column("beneficiary_id")]
+        [Column("contract_id")]
         [Required]
-        public int beneficiary_id { get; set; }
+        public int contract_id { get; set; }
 
-        [ForeignKey("beneficiary_id")]
-        public Beneficiary? beneficiary { get; set; }
+        //[ForeignKey("beneficiary_id")]
+        //public Beneficiary? beneficiary { get; set; }
 
         public DateTime? update_date { get; set; }
     }

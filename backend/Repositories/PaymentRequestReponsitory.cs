@@ -1,5 +1,7 @@
-﻿using backend.DTO;
+﻿using Azure.Core;
+using backend.DTO;
 using backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,10 +39,10 @@ namespace backend.Repositories
                     "@image";
 
                 IEnumerable<PaymentRequest?> result = await _context.PaymentRequests.FromSqlRaw(sql,
-                    new SqlParameter("@beneficiaries_id", dto.beneficiary_id),
+                    new SqlParameter("@beneficiaries_id", dto.contract_id),
                     new SqlParameter("@total_cost", dto.total_cost),
                     new SqlParameter("@description", dto.Description),
-                    new SqlParameter("@image", dto.image_identification_url)
+                    new SqlParameter("@image", dto.image_identification_url ?? "")
                     ).ToListAsync();
 
                 PaymentRequest? request = result.FirstOrDefault();
@@ -54,25 +56,31 @@ namespace backend.Repositories
 
         public async Task<PaymentRequest?> UpdatePaymentRequest(int id, double payment, string status)
         {
-            try
-            {
-                string sql = "exec UpdatePaymentRequest " +
-                    "@totalpayment, " +
-                    "@status, " +
-                    "@id";
+            var paymentDomain = _context.PaymentRequests.FirstOrDefault(x => x.paymentrequest_id == id);
 
-                IEnumerable<PaymentRequest?> result = await _context.PaymentRequests.FromSqlRaw(sql,
-                    new SqlParameter("@totalpayment", payment),
-                    new SqlParameter("@status", status),
-                    new SqlParameter("@id", id)).ToListAsync();
-
-                PaymentRequest? request = result.FirstOrDefault();
-                return request;
-            }
-            catch (ArgumentException ex)
+            if (paymentDomain == null)
             {
-                throw new ArgumentException(ex.Message);
+                return null;
             }
+
+            paymentDomain.total_payment = payment;
+            paymentDomain.Status = status;
+
+            await _context.SaveChangesAsync();
+
+            var request = new PaymentRequest
+            {
+                paymentrequest_id = paymentDomain.paymentrequest_id,
+                total_cost = paymentDomain.total_cost,
+                total_payment = paymentDomain.total_payment,
+                Description = paymentDomain.Description,
+                image_identification_url = paymentDomain.image_identification_url,
+                Status = paymentDomain.Status,
+                contract_id = paymentDomain.contract_id,
+                update_date = paymentDomain.update_date,
+            };
+
+            return request;
         }
     }
 }
