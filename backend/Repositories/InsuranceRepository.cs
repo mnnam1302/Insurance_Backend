@@ -14,6 +14,16 @@ namespace backend.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<List<AgeDTO>> GetAllAges()
+        {
+            List<AgeDTO> uniqueAges = await _dbContext.Insurances
+                .Select(insurance => new AgeDTO { FromAge = insurance.FromAge, ToAge = insurance.ToAge })
+                .Distinct()
+                .ToListAsync();
+
+            return uniqueAges;
+        }
+
         public async Task<List<Insurance>> GetAllInsurances(int fromAge, int toAge)
         {
             string sql = "EXEC dbo.GetInsurances @fromAge, " +
