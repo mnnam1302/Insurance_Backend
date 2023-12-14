@@ -49,6 +49,9 @@ builder.Services.AddScoped<IPaymentRequestService, PaymentRequestService>();
 
 builder.Services.AddScoped<FirebaseController>();
 
+builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+
 builder.Services.AddSingleton(provider =>
 {
     // Đọc thông tin cấu hình từ IConfiguration
