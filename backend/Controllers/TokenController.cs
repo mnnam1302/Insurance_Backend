@@ -1,4 +1,7 @@
-﻿using backend.DTO;
+﻿using Azure.Core;
+using backend.Attribute;
+using backend.DTO;
+using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +13,16 @@ namespace backend.Controllers
     public class TokenController: ControllerBase
     {
         private readonly ITokenService _tokenService;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IUserService _userService;
 
-        public TokenController(ITokenService tokenService)
+        public TokenController(ITokenService tokenService, 
+                                IHttpClientFactory httpClientFactory, 
+                                IUserService userService)
         {
             _tokenService = tokenService;
+            _httpClientFactory = httpClientFactory;
+            _userService = userService;
         }
 
         [HttpPost("login")]
@@ -82,6 +91,62 @@ namespace backend.Controllers
                 {
                     access = accessToken
                 });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPost("validate-google-token")]
+        public async Task<IActionResult> ValidateGoogleToken([FromBody] GoogleTokenDTO googleTokenDTO)
+        {
+            if (googleTokenDTO == null)
+            {
+                return BadRequest(new { Error = "Email is not valid! Let's check" });
+            }
+            try
+            {
+                // Check xem email có trong hệ thống không
+                User? user = await _userService.GetUserByEmail(googleTokenDTO.Email);
+
+                if (user == null)
+                {
+                    return NotFound("Email is not valid! Let's check");
+                }
+
+                var httpClient = _httpClientFactory.CreateClient();
+                string credential_token = googleTokenDTO.CredentialToken;
+
+                // Gửi yêu cầu xác thực đến Google API
+                var googleResponse = await httpClient.GetAsync($"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={credential_token}");
+
+                // Kiểm tra xác thực thành công từ Google
+                if (googleResponse.IsSuccessStatusCode)
+                {
+                    var userData = await googleResponse.Content.ReadAsStringAsync();
+
+                    // Thực hiện xử lý với thông tin người dùng, tạo access và refresh cho user, v.v.
+                    // ... Không cần check user ở đây vì ở trên check rồi
+                    TokenDTO? token = await _tokenService.LoginGoogle(user.UserId);
+
+                    if (token is null)
+                    {
+                        return BadRequest("Login is failed");
+                    }
+
+                    // Gửi phản hồi về frontend
+                    return Ok(new
+                    {
+                        access = token.AccessToken,
+                        refresh = token.RefreshToken,
+                        user_id = token.UserId
+                    });
+                }
+                else
+                {
+                    return Unauthorized(new { success = false, message = "Invalid access token." });
+                }
             }
             catch (ArgumentException ex)
             {

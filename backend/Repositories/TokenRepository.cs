@@ -35,7 +35,7 @@ namespace backend.Repositories
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                     //new Claim(ClaimTypes.Name, user.Username)
                 }),
                 Expires = DateTime.UtcNow.Add(expirationTime),
@@ -100,12 +100,10 @@ namespace backend.Repositories
 
                 if (user != null)
                 {
-                    // Tạo access token
-                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(5), "SecreteKey");
-                    var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
-                    // Tạo refresh token
-                    //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "RefreshTokenSecret");
+                    // Tạo access token && refresh token
                     //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
+                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(5), "SecreteKey");
+                    var refreshToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(20), "SecreteKey");
 
                     // Lưu refresh token cho người dùng
                     await CreateOrUpdateRefreshToken(user.UserId, refreshToken);
@@ -163,6 +161,7 @@ namespace backend.Repositories
                 }
 
                 var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey");
+
                 return accessToken;
             }
             catch (ArgumentException ex)
@@ -223,6 +222,32 @@ namespace backend.Repositories
             catch (ArgumentException ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<TokenDTO?> LoginGoogle(int userId)
+        {
+            try
+            {
+                // Tạo access token && refresh token
+                //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
+                var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey");
+                var refreshToken = GenerateToken(userId, TimeSpan.FromMinutes(20), "SecreteKey");
+
+                // Lưu refresh token cho người dùng
+                await CreateOrUpdateRefreshToken(userId, refreshToken);
+
+                // Return access_token và refresh_token, maybe userId
+                return new TokenDTO
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserId = userId
+                };
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
             }
         }
     }
