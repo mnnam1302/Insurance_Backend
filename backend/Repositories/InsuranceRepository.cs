@@ -2,10 +2,11 @@
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace backend.Repositories
 {
-    public class InsuranceRepository: IInsuranceRepository
+    public class InsuranceRepository : IInsuranceRepository
     {
         private readonly InsuranceDbContext _dbContext;
 
@@ -37,10 +38,21 @@ namespace backend.Repositories
             return (List<Insurance>)result;
         }
 
+
+
         public async Task<Insurance?> GetInsuranceById(int id)
         {
             var insurance = await _dbContext.Insurances.FindAsync(id);
             return insurance;
+        }
+
+        public async Task<List<Insurance>> GetInsurancesByAgeCustomer(int age)
+        {
+            IEnumerable<Insurance> result = await _dbContext.Insurances.
+                Where(ins => (ins.FromAge <= age && age <= ins.ToAge))
+                .ToListAsync();
+
+            return (List<Insurance>)result;
         }
     }
 }

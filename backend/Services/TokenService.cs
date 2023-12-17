@@ -16,6 +16,11 @@ namespace backend.Services
             return await _tokenRepository.Login(loginDTO);
         }
 
+        public async Task<TokenDTO?> LoginGoogle(int userId)
+        {
+            return await _tokenRepository.LoginGoogle(userId);
+        }
+
         public async Task Logout(string refresh)
         {
             await _tokenRepository.Logout(refresh);

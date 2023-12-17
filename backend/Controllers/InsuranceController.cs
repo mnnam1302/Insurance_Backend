@@ -19,6 +19,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("ages")]
+        [JwtAuthorize]
         public async Task<IActionResult> GetAllAges()
         {
             try
@@ -39,7 +40,8 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllInsurances(int fromAge = 1, int toAge = 3) 
+        [JwtAuthorize]
+        public async Task<IActionResult> GetAllInsurances([FromQuery]int fromAge = 1, int toAge = 3) 
         {
             try
             {
@@ -54,7 +56,27 @@ namespace backend.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { Error = ex.Message });
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("filter")]
+        [JwtAuthorize]
+        public async Task<IActionResult> GetInsurancesByAgeCustomer([FromQuery] int age)
+        {
+            try
+            {
+                List<Insurance> insurances = await _insuranceService.GetInsurancesByAgeCustomer(age);
+
+                if (insurances == null)
+                {
+                    return NotFound();
+                }
+                return Ok(insurances);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
             }
         }
 

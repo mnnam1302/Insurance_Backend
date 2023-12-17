@@ -18,6 +18,11 @@ namespace backend.Services
             return await _insuranceRepository.GetAllAges();
         }
 
+        public async Task<List<Insurance>> GetInsurancesByAgeCustomer(int age)
+        {
+            return await _insuranceRepository.GetInsurancesByAgeCustomer(age);
+        }
+
         public async Task<List<Insurance>> GetAllInsurances(int fromAge, int toAge)
         {
             return await _insuranceRepository.GetAllInsurances(fromAge, toAge);

@@ -58,8 +58,6 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddSingleton(provider => new FirebaseStorage(builder.Configuration.GetSection("Firebase")["StorageBucket"]));
 builder.Services.AddSingleton<FirebaseAuthProvider>();
 
-
-
 // Filter request required Authorized
 builder.Services.AddScoped<JwtAuthorizeFilter>();
 
@@ -84,6 +82,8 @@ builder.Services.AddCors(option =>
                        .AllowAnyHeader();
         });
 });
+
+builder.Services.AddHttpClient();
 
 
 var app = builder.Build();
