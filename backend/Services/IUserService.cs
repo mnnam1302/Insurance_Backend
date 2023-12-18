@@ -10,5 +10,6 @@ namespace backend.Services
         Task<User?> GetUserById(int userId);
 
         Task<User?> GetUserByEmail(string email);
+        Task<User?> UpdateUserById(UserDTO userDTO);
     }
 }
