@@ -56,6 +56,37 @@ namespace backend.Repositories
             }
         }
 
-      
+        public async Task<User?> UpdateUserById(UserDTO userDTO)
+        {
+            var userDomain = _dbContext.Users.SingleOrDefault(x => x.UserId == userDTO.UserId);  
+            if (userDomain == null) 
+            {
+                return null;
+            }
+
+            userDomain.FullName = userDTO.FullName; 
+            userDomain.Phone = userDTO.Phone;
+            userDomain.Email = userDTO.Email;   
+            userDomain.DateOfBirth = userDTO.DateOfBirth;   
+            userDomain.CardIdentification = userDTO.CardIdentification;
+            userDomain.Sex = userDTO.Sex;
+
+            await _dbContext.SaveChangesAsync();
+
+            var request = new User
+            {
+                FullName = userDomain.FullName,
+                Phone = userDomain.Phone,
+                Email = userDomain.Email,
+                DateOfBirth = userDTO.DateOfBirth,
+                CardIdentification = userDTO.CardIdentification,
+                Sex = userDTO.Sex,
+            };
+
+            return request;
+        }
+
+
+
     }
 }

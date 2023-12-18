@@ -79,26 +79,26 @@ namespace backend.Controllers
             }
         }
 
-        //[HttpPatch("{id}")]
-        //public async Task<IActionResult> UpdateUserById([FromRoute] int id, [FromBody] UserDTO userDTO)
-        //{
-        //    try
-        //    {
-        //        User? user = await _userService.GetUserById(id);
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateUserById([FromRoute] int id, [FromBody] UserDTO userDTO)
+        {
+            try
+            {
+                User? user1 = await _userService.GetUserById(id);
 
-        //        if (user == null)
-        //        {
-        //            return NotFound();
-        //        }
+                if (user1 == null)
+                {
+                    return NotFound();
+                }
 
-        //        //User? user = await _userService.UpdateUserById(userDTO);
+                User? user = await _userService.UpdateUserById(userDTO);
 
-        //        return Ok(user);
-        //    }
-        //    catch (ArgumentException ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+                return Ok(user);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
