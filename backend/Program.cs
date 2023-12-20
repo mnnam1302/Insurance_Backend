@@ -50,6 +50,9 @@ builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IPaymentRequestRepository, PaymentRequestReponsitory>();
 builder.Services.AddScoped<IPaymentRequestService, PaymentRequestService>();
 
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IContractService, ContractService>();
+
 builder.Services.AddScoped<FirebaseController>();
 
 builder.Services.AddSingleton(provider =>

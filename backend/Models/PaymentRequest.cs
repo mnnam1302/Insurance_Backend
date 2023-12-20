@@ -17,7 +17,7 @@ namespace backend.Models
 
         [Column("total_payment")]
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        public double total_payment { get; set; }
+        public double total_payment { get; set; } = 0;
 
         [Column("Description")]
         [Required]

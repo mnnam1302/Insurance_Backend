@@ -15,6 +15,19 @@ namespace backend.Repositories
             _dbContext = context;
         }
 
+        public async Task<Registration?> GetById(int id)
+        {
+            try
+            {
+                var registration = await _dbContext.Registrations.FindAsync(id);
+                return registration;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
         public async Task<Registration?> CreateRegistrationInsurance(RegistrationDTO registrationDTO)
         {
             try

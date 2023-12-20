@@ -21,5 +21,7 @@ namespace backend.Models
         public DbSet<Registration> Registrations { get; set; }
 
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
+
+        public DbSet<Contract> Contracts { get; set; }
     }
 }
