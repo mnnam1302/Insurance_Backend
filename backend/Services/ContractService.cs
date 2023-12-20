@@ -104,6 +104,7 @@ namespace backend.Services
             return (List<Contract>)await _contract.GetByUserId(userId);
         }
 
+
         public async Task<ContractDTO?> AddNewContract(ContractDTO contract)
         {
             try

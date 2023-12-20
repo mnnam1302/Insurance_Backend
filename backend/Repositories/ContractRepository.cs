@@ -31,7 +31,7 @@ namespace backend.Repositories
         {
             try
             {
-                string sql = "select * from contract where user_id = @id";
+                string sql = "select * from contracts where user_id = @id";
 
                 IEnumerable<Contract> result = await _context.Contracts.FromSqlRaw(sql,
                     new SqlParameter("@id", user_id)).ToListAsync();

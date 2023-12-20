@@ -1,4 +1,6 @@
-﻿using backend.DTO;
+﻿using backend.Attribute;
+using backend.DTO;
+using backend.Extensions;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +13,7 @@ namespace backend.Controllers
     public class ContractsController : ControllerBase
     {
         private readonly IContractService _contractService;
+        private readonly IUserService _userService;
 
         public ContractsController(IContractService contractService)
         {
@@ -18,6 +21,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        //[JwtAuthorize]
         public async Task<IActionResult> AddNewContract([FromForm] ContractDTO dto)
         {
             if (dto == null)
@@ -26,12 +30,52 @@ namespace backend.Controllers
             }
             try
             {
-                dto.user_id = 1;
+                // Kiểm tra người mua có tồn tại không
+                //int userId = HttpContext.GetUserId();
+                //var user = await _userService.GetUserById(userId);
+
+                //if (user == null)
+                //{
+                //    return NotFound("Policyholder is not found");
+                //}
+
+                dto.user_id = 1;    //userId
                 var result = await _contractService.AddNewContract(dto);
 
                 if (result == null)
                 {
                     return BadRequest("Created registration is failed");
+                }
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("user_id")]
+        public async Task<IActionResult> GetByUserId()
+        {
+            try
+            {
+                // Kiểm tra người mua có tồn tại không
+                int userId;
+
+                //userId = HttpContext.GetUserId();
+                //var user = await _userService.GetUserById(userId);
+
+                //if (user == null)
+                //{
+                //    return NotFound("Policyholder is not found");
+                //}
+
+                userId = 1;
+                var result = await _contractService.GetByUserId(userId);
+
+                if (result == null)
+                {
+                    return BadRequest("Not Found");
                 }
                 return Ok(result);
             }
