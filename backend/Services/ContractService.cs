@@ -67,6 +67,11 @@ namespace backend.Services
             return (signing_date, contract_id);
         }
 
+        public async Task<List<Contract>> GetAll()
+        {
+            return await _contract.GetAll();
+        }
+
         public async Task<Contract?> GetByInsuranceCode(string insurance_code)
         {
             int pseudo_id;

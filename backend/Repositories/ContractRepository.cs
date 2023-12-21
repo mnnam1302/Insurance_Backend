@@ -14,6 +14,22 @@ namespace backend.Repositories
             _context = context;
         }
 
+        public async Task<List<Contract>> GetAll()
+        {
+            try
+            {
+                string sql = "select * from contracts";
+
+                IEnumerable<Contract> contracts = await _context.Contracts.FromSqlRaw(sql).ToListAsync();
+
+                return (List<Contract>)contracts;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
         public async Task<Contract?> GetById(int contract_id)
         {
             try

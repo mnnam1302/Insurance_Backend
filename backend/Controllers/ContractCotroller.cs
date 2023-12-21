@@ -20,10 +20,30 @@ namespace backend.Controllers
             _contractService = contractService;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                List<Contract> order = await _contractService.GetAll();
+                if (order == null)
+                {
+                    return NotFound();
+                }
+                return Ok(order);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        //Thêm contract
         [HttpPost]
-        //[JwtAuthorize]
+        [JwtAuthorize]
         public async Task<IActionResult> AddNewContract([FromForm] ContractDTO dto)
         {
+            
             if (dto == null)
             {
                 return BadRequest("Request is not valid");
@@ -31,17 +51,22 @@ namespace backend.Controllers
             try
             {
                 // Kiểm tra người mua có tồn tại không
-                //int userId = HttpContext.GetUserId();
-                //var user = await _userService.GetUserById(userId);
+                int userId;
 
-                //if (user == null)
-                //{
-                //    return NotFound("Policyholder is not found");
-                //}
+                userId = HttpContext.GetUserId();
+                var user = await _userService.GetUserById(userId);
 
-                dto.user_id = 1;    //userId
+                if (user == null)
+                {
+                    return NotFound("Policyholder is not found");
+                }
+
+                dto.user_id = userId;    //userId
+
+                // thêm hợp đồng
                 var result = await _contractService.AddNewContract(dto);
 
+                // kiểm tra hợp đồng thêm thành công không
                 if (result == null)
                 {
                     return BadRequest("Created registration is failed");
@@ -54,7 +79,9 @@ namespace backend.Controllers
             }
         }
 
+        // tìm kiếm contract thông qua user id
         [HttpGet("user_id")]
+        [JwtAuthorize]
         public async Task<IActionResult> GetByUserId()
         {
             try
@@ -62,17 +89,19 @@ namespace backend.Controllers
                 // Kiểm tra người mua có tồn tại không
                 int userId;
 
-                //userId = HttpContext.GetUserId();
-                //var user = await _userService.GetUserById(userId);
+                userId = HttpContext.GetUserId();
+                var user = await _userService.GetUserById(userId);
 
-                //if (user == null)
-                //{
-                //    return NotFound("Policyholder is not found");
-                //}
+                if (user == null)
+                {
+                    return NotFound("Policyholder is not found");
+                }
 
-                userId = 1;
+                //userId = 1;
+                //Lấy danh sách contact theo user id
                 var result = await _contractService.GetByUserId(userId);
 
+                // kiểm tra tồn tại
                 if (result == null)
                 {
                     return BadRequest("Not Found");
@@ -85,7 +114,8 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet]
+        //tìm kiếm theo mã bảo hiềm
+        [HttpGet("{insurance_code}")]
         public async Task<IActionResult> GetByInsuranceCode(string insurance_code)
         {
             if (insurance_code == null)
@@ -94,13 +124,16 @@ namespace backend.Controllers
             }
             try
             {
+                // lấy contract theo mã bảo hiểm người dùng nhập
                 Contract? result = await _contractService.GetByInsuranceCode(insurance_code);
 
+                // kiểm tra tồn tại
                 if (result == null)
                 {
                     return BadRequest("No result found");
                 }
 
+                // đổ kết quả vào dto
                 var dto = new ContractDTO
                 {
                     contract_id = result.contract_id,
