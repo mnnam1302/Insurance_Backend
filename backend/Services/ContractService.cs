@@ -20,16 +20,6 @@ namespace backend.Services
             _beneficiaryRepository = beneficiaryRepository;
         }
 
-        private string MakeInsuranceIdentity(int id, DateTime signing_date)
-        {
-            int devine_id = id % 1000;
-
-            string contract_id = devine_id.ToString("0000");
-            string formattedDate = signing_date.ToString("yyyyMMdd");
-
-            return contract_id + formattedDate;
-        }
-
         private int GetTotalTurn(DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
@@ -49,42 +39,7 @@ namespace backend.Services
             return monthsDifference;
         }
 
-        public (DateTime, int) SplitInsuranceIdentity(string identity)
-        {
-            if (identity.Length != 12)
-            {
-                throw new ArgumentException("Invalid insurance code, Please double check your input");
-            }
-
-            string signing_date_str = identity.Substring(0, 8);
-            string format = "yyyyMMdd";
-
-            DateTime signing_date;
-
-            if (DateTime.TryParseExact(signing_date_str, format, null, System.Globalization.DateTimeStyles.None, out DateTime result))
-            {
-                signing_date = result;
-            }
-            else
-            {
-                throw new ArgumentException("Invalid insurance code, Please double check your input");
-            }
-
-            string contract_id_str = identity.Substring(8, 4);
-            int contract_id;
-
-            // Using int.TryParse
-            if (int.TryParse(contract_id_str, out contract_id))
-            {
-
-            }
-            else
-            {
-                throw new ArgumentException("Invalid insurance code, Please double check your input");
-            }
-
-            return (signing_date, contract_id);
-        }
+        
 
         public async Task<List<Contract>> GetAll()
         {
