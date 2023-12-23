@@ -60,17 +60,15 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<Contract?> GetByInsuranceCode(int pseudo_id, DateTime signing_date)
+        public async Task<Contract?> GetByInsuranceCode(string insurance_code)
         {
             try
             {
                 string sql = "select * from contracts" +
-                    " where contract_id % 1000 = " + "@pseudo_id" +
-                    " and CONVERT(DATE, signing_Date) = @signing_date";
+                    " where insurance_code = @insurance_code";
 
                 IEnumerable<Contract> result = await _context.Contracts.FromSqlRaw(sql,
-                    new SqlParameter("@pseudo_id", pseudo_id),
-                    new SqlParameter("@signing_date", signing_date))
+                    new SqlParameter("@insurance_code", insurance_code))
                     .ToListAsync();
 
                 Contract? contract = result.FirstOrDefault();
@@ -122,5 +120,6 @@ namespace backend.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
+
     }
 }

@@ -13,6 +13,6 @@ namespace backend.Repositories
 
         Task<Contract?> AddNewContract(ContractDTO dto);
 
-        Task<Contract?> GetByInsuranceCode(int pseudo_id, DateTime signing_date);
+        Task<Contract?> GetByInsuranceCode(string insurance_code);
     }
 }

@@ -8,20 +8,23 @@ namespace backend.DTO
         [Column("contract_id")]
         public int contract_id { get; set; }
 
+        [Column("insurance_code")]
+        public string insurance_code { get; set; } = "";
+
         [Column("signing_Date")]
         //[Required]
         public DateTime? signing_date { get; set; }
 
         [Column("start_Date")]
-        [Required]
+        //[Required]
         public DateTime? start_date { get; set; }
 
         [Column("end_Date")]
-        [Required]
+        //[Required]
         public DateTime? end_date { get; set; }
 
         [Column("total_Turn")]
-        [Required]
+        //[Required]
         public int total_turn { get; set; }
 
         [Column("contract_Status")]
@@ -52,11 +55,11 @@ namespace backend.DTO
         public int user_id { get; set; }
 
         [Column("beneficiary_id")]
-        [Required]
+        //[Required]
         public int beneficial_id { get; set; }
 
         [Column("insurance_id")]
-        [Required]
+        //[Required]
         public int insurance_id { get; set; }
 
         [Column("registration_id")]

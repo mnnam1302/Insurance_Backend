@@ -15,9 +15,10 @@ namespace backend.Controllers
         private readonly IContractService _contractService;
         private readonly IUserService _userService;
 
-        public ContractsController(IContractService contractService)
+        public ContractsController(IContractService contractService, IUserService userService)
         {
             _contractService = contractService;
+            _userService = userService;
         }
 
         [HttpGet("GetAll")]
@@ -40,28 +41,30 @@ namespace backend.Controllers
 
         //Thêm contract
         [HttpPost]
-        [JwtAuthorize]
-        public async Task<IActionResult> AddNewContract([FromForm] ContractDTO dto)
+        //[JwtAuthorize]
+        public async Task<IActionResult> AddNewContract([FromForm] int registion_id)
         {
             
-            if (dto == null)
+            if (registion_id <= 0)
             {
                 return BadRequest("Request is not valid");
             }
             try
             {
                 // Kiểm tra người mua có tồn tại không
-                int userId;
+                //int userId;
 
-                userId = HttpContext.GetUserId();
-                var user = await _userService.GetUserById(userId);
+                //userId = HttpContext.GetUserId();
+                //var user = await _userService.GetUserById(userId);
 
-                if (user == null)
-                {
-                    return NotFound("Policyholder is not found");
-                }
+                //if (user == null)
+                //{
+                //    return NotFound("Policyholder is not found");
+                //}
 
-                dto.user_id = userId;    //userId
+                var dto = new ContractDTO();
+                dto.user_id = 1;
+                dto.registration_id = registion_id;//userId
 
                 // thêm hợp đồng
                 var result = await _contractService.AddNewContract(dto);
@@ -137,6 +140,7 @@ namespace backend.Controllers
                 var dto = new ContractDTO
                 {
                     contract_id = result.contract_id,
+                    insurance_code = result.insurance_code,
                     signing_date = result.signing_date,
                     start_date = result.start_date,
                     end_date = result.end_date,

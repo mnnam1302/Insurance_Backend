@@ -6,7 +6,7 @@ namespace backend.Services
 {
     public interface IContractService
     {
-        string MakeInsuranceIdentity(int id, DateTime signing_date);
+        //string MakeInsuranceIdentity(int id, DateTime signing_date);
         (DateTime, int) SplitInsuranceIdentity(string identity);
         Task<List<Contract>> GetAll();
         Task<List<Contract>> GetByUserId(int userId);

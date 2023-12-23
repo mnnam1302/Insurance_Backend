@@ -20,7 +20,7 @@ namespace backend.Services
             _beneficiaryRepository = beneficiaryRepository;
         }
 
-        public string MakeInsuranceIdentity(int id, DateTime signing_date)
+        private string MakeInsuranceIdentity(int id, DateTime signing_date)
         {
             int devine_id = id % 1000;
 
@@ -28,6 +28,25 @@ namespace backend.Services
             string formattedDate = signing_date.ToString("yyyyMMdd");
 
             return contract_id + formattedDate;
+        }
+
+        private int GetTotalTurn(DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+            {
+                throw new ArgumentException("Start date must be earlier than end date");
+            }
+
+            int monthsDifference = 0;
+            DateTime currentDate = startDate;
+
+            while (currentDate < endDate)
+            {
+                currentDate = currentDate.AddMonths(1);
+                monthsDifference++;
+            }
+
+            return monthsDifference;
         }
 
         public (DateTime, int) SplitInsuranceIdentity(string identity)
@@ -74,17 +93,10 @@ namespace backend.Services
 
         public async Task<Contract?> GetByInsuranceCode(string insurance_code)
         {
-            int pseudo_id;
-            DateTime signing_date;
 
             try
             {
-                var result = SplitInsuranceIdentity(insurance_code);
-
-                signing_date = result.Item1;
-                pseudo_id = result.Item2;
-
-                var contract = await _contract.GetByInsuranceCode(pseudo_id, signing_date);
+                var contract = await _contract.GetByInsuranceCode(insurance_code);
 
                 if (contract == null)
                 {
@@ -121,21 +133,20 @@ namespace backend.Services
                     throw new ArgumentException("Registration is not valid");
                 }
 
-                Beneficiary? beneficiary = await _beneficiaryRepository.GetBeneficiaryById(contract.beneficial_id);
-
-                if (beneficiary == null)
-                {
-                    throw new ArgumentException("Beneficiary is not valid");
-                }
-
                 decimal basic_fee = registration.BasicInsuranceFee;
-
                 decimal discount = registration.Discount;
+
+                DateTime start_date = registration.StartDate;
+                DateTime end_date = registration.EndDate;
 
                 contract.initial_fee_per_turn = basic_fee;
                 contract.discount = discount;
                 contract.total_fee = basic_fee * (1 - discount);
+                contract.total_turn = GetTotalTurn(start_date, end_date);
+                contract.start_date = start_date;
+                contract.end_date = end_date;
                 contract.periodic_fee = contract.total_fee / contract.total_turn;
+                contract.beneficial_id = registration.BeneficiaryId;
                 contract.insurance_id = registration.InsuranceId;
 
                 Contract? result = await _contract.AddNewContract(contract);
@@ -148,6 +159,7 @@ namespace backend.Services
                 var dto = new ContractDTO
                 {
                     contract_id = result.contract_id,
+                    insurance_code = result.insurance_code,
                     signing_date = result.signing_date,
                     start_date = result.start_date,
                     end_date = result.end_date,
