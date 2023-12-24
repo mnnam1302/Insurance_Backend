@@ -48,7 +48,6 @@ namespace backend.Services
             {
                 // Lưu đơn đăng ký xuống db
                 Registration? registration = await _registrationRepository.CreateRegistrationInsurance(registrationDTO);
-                //return registration;
 
                 if (registration == null)
                 {
@@ -69,8 +68,7 @@ namespace backend.Services
                     InsuranceId = registration.InsuranceId
                 };
 
-                return registrationResponse;
-                
+                return registrationResponse;                
             }
             // Tuổi người thụ hưởng nằm ngoài gói bảo hiểm
             throw new ArgumentException("Beneficiary's age is not correct. Let's check information again");

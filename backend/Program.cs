@@ -1,5 +1,7 @@
-﻿using backend.Controllers;
+﻿using AspNetCore.Email;
+using backend.Controllers;
 using backend.Filters;
+using backend.Helper;
 using backend.Models;
 using backend.Repositories;
 using backend.Services;
@@ -47,7 +49,14 @@ builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
+builder.Services.AddScoped<IVerificationPasswordRepository, VerificationPasswordRepository>();
+builder.Services.AddScoped<IVerificationPasswordService, VerificationPasswordService>();
+
 builder.Services.AddScoped<FirebaseController>();
+
+// Email - verfication password
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService,EmailService>();
 
 builder.Services.AddSingleton(provider =>
 {

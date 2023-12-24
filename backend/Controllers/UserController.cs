@@ -79,6 +79,9 @@ namespace backend.Controllers
             }
         }
 
+        //[HttpPost("resetpassword")]
+        //public async Task<IActionResult> 
+
         //[HttpPatch("{id}")]
         //public async Task<IActionResult> UpdateUserById([FromRoute] int id, [FromBody] UserDTO userDTO)
         //{
