@@ -33,5 +33,10 @@ namespace backend.Services
 
             return await _userRepository.Create(registerDTO);
         }
+
+        public async Task<User?> UpdateUserById(UserDTO userDTO) 
+        {
+            return await _userRepository.UpdateUserById(userDTO);
+        }
     }
 }

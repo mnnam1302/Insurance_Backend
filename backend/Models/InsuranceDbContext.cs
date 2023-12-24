@@ -22,6 +22,10 @@ namespace backend.Models
 
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
 
+<<<<<<< HEAD
         public DbSet<VerificationPassword> VerificationPasswords { get; set; }
+=======
+        public DbSet<Contract> Contracts { get; set; }
+>>>>>>> e20d6a1fd482a03d9d355b485ac5cd64d39c674c
     }
 }
