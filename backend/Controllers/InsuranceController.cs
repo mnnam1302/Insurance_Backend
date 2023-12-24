@@ -2,7 +2,6 @@
 using backend.DTO;
 using backend.Models;
 using backend.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -12,6 +11,7 @@ namespace backend.Controllers
     public class InsuranceController: ControllerBase
     {
         private readonly IInsuranceService _insuranceService;
+        //private readonly IMemoryCache _memoryCache;
 
         public InsuranceController(IInsuranceService insuranceService)
         {

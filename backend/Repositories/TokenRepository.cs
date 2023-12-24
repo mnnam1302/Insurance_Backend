@@ -102,7 +102,7 @@ namespace backend.Repositories
                 {
                     // Tạo access token && refresh token
                     //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
-                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(5), "SecreteKey");
+                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(15), "SecreteKey");
                     var refreshToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(20), "SecreteKey");
 
                     // Lưu refresh token cho người dùng

@@ -22,6 +22,8 @@ namespace backend.Models
 
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
 
+        public DbSet<VerificationPassword> VerificationPasswords { get; set; }
+
         public DbSet<Contract> Contracts { get; set; }
     }
 }
