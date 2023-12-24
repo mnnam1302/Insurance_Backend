@@ -49,16 +49,15 @@ builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IRegistrationRepository, RegistrationRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
-<<<<<<< HEAD
+
 builder.Services.AddScoped<IVerificationPasswordRepository, VerificationPasswordRepository>();
 builder.Services.AddScoped<IVerificationPasswordService, VerificationPasswordService>();
-=======
+
 builder.Services.AddScoped<IPaymentRequestRepository, PaymentRequestReponsitory>();
 builder.Services.AddScoped<IPaymentRequestService, PaymentRequestService>();
 
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IContractService, ContractService>();
->>>>>>> e20d6a1fd482a03d9d355b485ac5cd64d39c674c
 
 builder.Services.AddScoped<FirebaseController>();
 

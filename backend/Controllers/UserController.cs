@@ -79,24 +79,12 @@ namespace backend.Controllers
             }
         }
 
-<<<<<<< HEAD
-        //[HttpPost("resetpassword")]
-        //public async Task<IActionResult> 
-
-        //[HttpPatch("{id}")]
-        //public async Task<IActionResult> UpdateUserById([FromRoute] int id, [FromBody] UserDTO userDTO)
-        //{
-        //    try
-        //    {
-        //        User? user = await _userService.GetUserById(id);
-=======
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateUserById([FromRoute] int id, [FromBody] UserDTO userDTO)
         {
             try
             {
                 User? user1 = await _userService.GetUserById(id);
->>>>>>> e20d6a1fd482a03d9d355b485ac5cd64d39c674c
 
                 if (user1 == null)
                 {
