@@ -27,7 +27,7 @@ builder.Services.AddDbContext<InsuranceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("InsuranceConnectionString")));
 
 
-// Repositories, Services
+// Repositories && Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -58,6 +58,9 @@ builder.Services.AddScoped<IPaymentRequestService, PaymentRequestService>();
 
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IContractService, ContractService>();
+
+builder.Services.AddScoped<IBenefitDetailRepository, BenefitDetailRepository>();
+builder.Services.AddScoped<IBenefitDetailService, BenefitDetailService>();
 
 builder.Services.AddScoped<FirebaseController>();
 

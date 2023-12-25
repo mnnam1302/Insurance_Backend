@@ -35,7 +35,7 @@ namespace backend.Services
             }
 
             // Check thời gian xem hết hạn
-            if (verification.Expired > DateTime.Now)
+            if (verification.Expired < DateTime.Now)
             {
                 throw new ArgumentException("OTP code is expired");
             }
