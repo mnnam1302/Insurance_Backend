@@ -21,7 +21,7 @@ namespace backend.Controllers
             _userService = userService;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -41,7 +41,7 @@ namespace backend.Controllers
 
         //Thêm contract
         [HttpPost]
-        //[JwtAuthorize]
+        [JwtAuthorize]
         public async Task<IActionResult> AddNewContract([FromForm] int registion_id)
         {
             
@@ -51,16 +51,16 @@ namespace backend.Controllers
             }
             try
             {
-                // Kiểm tra người mua có tồn tại không
-                //int userId;
+                //Kiểm tra người mua có tồn tại không
+                int userId;
 
-                //userId = HttpContext.GetUserId();
-                //var user = await _userService.GetUserById(userId);
+                userId = HttpContext.GetUserId();
+                var user = await _userService.GetUserById(userId);
 
-                //if (user == null)
-                //{
-                //    return NotFound("Policyholder is not found");
-                //}
+                if (user == null)
+                {
+                    return NotFound("Policyholder is not found");
+                }
 
                 var dto = new ContractDTO();
                 dto.user_id = 1;
@@ -83,7 +83,7 @@ namespace backend.Controllers
         }
 
         // tìm kiếm contract thông qua user id
-        [HttpGet("user_id")]
+        [HttpGet("user")]
         [JwtAuthorize]
         public async Task<IActionResult> GetByUserId()
         {

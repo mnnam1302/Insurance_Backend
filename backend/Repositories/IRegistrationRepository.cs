@@ -8,5 +8,7 @@ namespace backend.Repositories
         Task<Registration?> CreateRegistrationInsurance(RegistrationDTO registrationDTO);
 
         Task<Registration?> GetById(int id);
+
+        Task<Registration?> UpdateRegistrationStatus(int registrationId, string status);
     }
 }

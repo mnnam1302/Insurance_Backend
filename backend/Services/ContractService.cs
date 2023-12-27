@@ -131,6 +131,14 @@ namespace backend.Services
                     registration_id = result.registration_id,
                 };
 
+                Registration? uResutl = await _registrationRepository.UpdateRegistrationStatus
+                                        (registration.RegistrationId, "Đã lập hợp đồng");
+
+                if (uResutl == null)
+                {
+                    throw new ArgumentException("Contract not created!");
+                }
+
                 return dto;
             }
             catch (ArgumentException ex)
