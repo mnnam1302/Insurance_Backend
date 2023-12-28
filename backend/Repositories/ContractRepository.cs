@@ -113,6 +113,10 @@ namespace backend.Repositories
 
                 Contract? contract = result.FirstOrDefault();
 
+                var registration = _context.Registrations.FirstOrDefault(x => x.RegistrationId == dto.registration_id);
+                registration.RegistrationStatus = "Đã lập hợp đồng";
+                _context.SaveChanges();
+
                 return contract;
             }
             catch (ArgumentException ex)

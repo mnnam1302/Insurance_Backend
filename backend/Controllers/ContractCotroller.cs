@@ -41,11 +41,11 @@ namespace backend.Controllers
 
         //Thêm contract
         [HttpPost]
-        [JwtAuthorize]
-        public async Task<IActionResult> AddNewContract([FromForm] int registion_id)
+        //[JwtAuthorize]
+        public async Task<IActionResult> AddNewContract([FromForm] AddContractDTO dto)
         {
             
-            if (registion_id <= 0)
+            if (dto == null)
             {
                 return BadRequest("Request is not valid");
             }
@@ -54,20 +54,20 @@ namespace backend.Controllers
                 //Kiểm tra người mua có tồn tại không
                 int userId;
 
-                userId = HttpContext.GetUserId();
-                var user = await _userService.GetUserById(userId);
+                //userId = HttpContext.GetUserId();
+                //var user = await _userService.GetUserById(userId);
 
-                if (user == null)
-                {
-                    return NotFound("Policyholder is not found");
-                }
+                //if (user == null)
+                //{
+                //    return NotFound("Policyholder is not found");
+                //}
 
-                var dto = new ContractDTO();
-                dto.user_id = 1;
-                dto.registration_id = registion_id;//userId
+                var contract_dto = new ContractDTO();
+                contract_dto.user_id = 1;
+                contract_dto.registration_id = dto.registration_id;//userId
 
                 // thêm hợp đồng
-                var result = await _contractService.AddNewContract(dto);
+                var result = await _contractService.AddNewContract(contract_dto);
 
                 // kiểm tra hợp đồng thêm thành công không
                 if (result == null)
