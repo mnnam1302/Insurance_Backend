@@ -101,7 +101,6 @@ namespace backend.Repositories
                 if (user != null)
                 {
                     // Tạo access token && refresh token
-                    //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
                     var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(15), "SecreteKey");
                     var refreshToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(20), "SecreteKey");
 
@@ -113,7 +112,8 @@ namespace backend.Repositories
                     {
                         AccessToken = accessToken,
                         RefreshToken = refreshToken,
-                        UserId = user.UserId
+                        UserId = user.UserId,
+                        Email = user.Email
                     };
                 }
                 else
@@ -230,7 +230,6 @@ namespace backend.Repositories
             try
             {
                 // Tạo access token && refresh token
-                //var refreshToken = GenerateToken(user.UserId, TimeSpan.FromDays(1), "SecreteKey");
                 var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey");
                 var refreshToken = GenerateToken(userId, TimeSpan.FromMinutes(20), "SecreteKey");
 

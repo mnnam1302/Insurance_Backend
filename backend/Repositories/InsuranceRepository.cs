@@ -34,7 +34,6 @@ namespace backend.Repositories
                 new SqlParameter("@fromAge", fromAge),
                 new SqlParameter("@toAge", toAge)).ToListAsync();
 
-            //List<Insurance> insurances = await _dbContext.Insurances.Where(insurance => insurance.FromAge == fromAge && insurance.ToAge == toAge).ToListAsync();
             return (List<Insurance>)result;
         }
 
