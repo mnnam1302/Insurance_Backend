@@ -81,7 +81,7 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<Contract?> AddNewContract(ContractDTO dto)
+        public async Task<Contract?> AddNewContract(ContractDTO contractDTO)
         {
             try
             {
@@ -99,21 +99,21 @@ namespace backend.Repositories
                                 "@total_turn ";
 
                 IEnumerable<Contract> result = await _context.Contracts.FromSqlRaw(sql,
-                    new SqlParameter("@start_date", dto.start_date),
-                    new SqlParameter("@end_date", dto.end_date),
-                    new SqlParameter("@registion_id", dto.registration_id),
-                    new SqlParameter("@beneficiary_id", dto.beneficial_id),
-                    new SqlParameter("@insurance_id", dto.insurance_id),
-                    new SqlParameter("@initial_fee", dto.initial_fee_per_turn),
-                    new SqlParameter("@discount", dto.discount),
-                    new SqlParameter("@total_fee", dto.total_fee),
-                    new SqlParameter("@periodic_fee", dto.periodic_fee),
-                    new SqlParameter("@user_id", dto.user_id),
-                    new SqlParameter("@total_turn", dto.total_turn)).ToListAsync();
+                    new SqlParameter("@start_date", contractDTO.start_date),
+                    new SqlParameter("@end_date", contractDTO.end_date),
+                    new SqlParameter("@registion_id", contractDTO.registration_id),
+                    new SqlParameter("@beneficiary_id", contractDTO.beneficial_id),
+                    new SqlParameter("@insurance_id", contractDTO.insurance_id),
+                    new SqlParameter("@initial_fee", contractDTO.initial_fee_per_turn),
+                    new SqlParameter("@discount", contractDTO.discount),
+                    new SqlParameter("@total_fee", contractDTO.total_fee),
+                    new SqlParameter("@periodic_fee", contractDTO.periodic_fee),
+                    new SqlParameter("@user_id", contractDTO.user_id),
+                    new SqlParameter("@total_turn", contractDTO.total_turn)).ToListAsync();
 
                 Contract? contract = result.FirstOrDefault();
 
-                var registration = _context.Registrations.FirstOrDefault(x => x.RegistrationId == dto.registration_id);
+                var registration = _context.Registrations.FirstOrDefault(x => x.RegistrationId == contractDTO.registration_id);
                 registration.RegistrationStatus = "Đã lập hợp đồng";
                 _context.SaveChanges();
 

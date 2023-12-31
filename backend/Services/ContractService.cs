@@ -77,11 +77,11 @@ namespace backend.Services
         }
 
 
-        public async Task<ContractDTO?> AddNewContract(ContractDTO contract)
+        public async Task<ContractDTO?> AddNewContract(ContractDTO contractDTO)
         {
             try
             {
-                Registration? registration = await _registrationRepository.GetById(contract.registration_id);
+                Registration? registration = await _registrationRepository.GetById(contractDTO.registration_id);
 
                 if (registration == null)
                 {
@@ -94,24 +94,24 @@ namespace backend.Services
                 DateTime start_date = registration.StartDate;
                 DateTime end_date = registration.EndDate;
 
-                contract.initial_fee_per_turn = basic_fee;
-                contract.discount = discount;
-                contract.total_fee = basic_fee * (1 - discount);
-                contract.total_turn = GetTotalTurn(start_date, end_date);
-                contract.start_date = start_date;
-                contract.end_date = end_date;
-                contract.periodic_fee = contract.total_fee / contract.total_turn;
-                contract.beneficial_id = registration.BeneficiaryId;
-                contract.insurance_id = registration.InsuranceId;
+                contractDTO.initial_fee_per_turn = basic_fee;
+                contractDTO.discount = discount;
+                contractDTO.total_fee = basic_fee * (1 - discount);
+                contractDTO.total_turn = GetTotalTurn(start_date, end_date);
+                contractDTO.start_date = start_date;
+                contractDTO.end_date = end_date;
+                contractDTO.periodic_fee = contractDTO.total_fee / contractDTO.total_turn;
+                contractDTO.beneficial_id = registration.BeneficiaryId;
+                contractDTO.insurance_id = registration.InsuranceId;
 
-                Contract? result = await _contract.AddNewContract(contract);
+                Contract? result = await _contract.AddNewContract(contractDTO);
 
                 if (result == null)
                 {
                     throw new ArgumentException("Contract not created!");
                 }
 
-                var dto = new ContractDTO
+                var contract = new ContractDTO
                 {
                     contract_id = result.contract_id,
                     insurance_code = result.insurance_code,
@@ -131,7 +131,7 @@ namespace backend.Services
                     registration_id = result.registration_id,
                 };
 
-                return dto;
+                return contract;
             }
             catch (ArgumentException ex)
             {

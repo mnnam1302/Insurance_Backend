@@ -41,10 +41,10 @@ namespace backend.Controllers
 
 
         [HttpPost]
-        //[JwtAuthorize]
-        public async Task<IActionResult> AddNewContract([FromBody] AddContractDTO dto)
+        [JwtAuthorize]
+        public async Task<IActionResult> AddNewContract([FromBody] AddContractDTO addContract)
         {
-            if (dto == null)
+            if (addContract == null)
             {
                 return BadRequest("Request is not valid");
             }
@@ -53,17 +53,17 @@ namespace backend.Controllers
                 //Kiểm tra người mua có tồn tại không
                 int userId;
 
-                //userId = HttpContext.GetUserId();
-                //var user = await _userService.GetUserById(userId);
+                userId = HttpContext.GetUserId();
+                var user = await _userService.GetUserById(userId);
 
-                //if (user == null)
-                //{
-                //    return NotFound("Policyholder is not found");
-                //}
+                if (user == null)
+                {
+                    return NotFound("Policyholder is not found");
+                }
 
                 var contract_dto = new ContractDTO();
-                contract_dto.user_id = 1;
-                contract_dto.registration_id = dto.registration_id;//userId
+                contract_dto.user_id = userId;
+                contract_dto.registration_id = addContract.registration_id;//userId
 
                 // thêm hợp đồng
                 var result = await _contractService.AddNewContract(contract_dto);
@@ -136,7 +136,7 @@ namespace backend.Controllers
                 }
 
                 // đổ kết quả vào dto
-                var dto = new ContractDTO
+                var contractDTO = new ContractDTO
                 {
                     contract_id = result.contract_id,
                     insurance_code = result.insurance_code,
@@ -156,7 +156,7 @@ namespace backend.Controllers
                     registration_id = result.registration_id,
                 };
 
-                return Ok(dto);
+                return Ok(contractDTO);
             }
             catch (ArgumentException ex)
             {
