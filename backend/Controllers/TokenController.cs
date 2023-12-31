@@ -45,7 +45,8 @@ namespace backend.Controllers
                 {
                     access = token.AccessToken,
                     refresh = token.RefreshToken,
-                    user_id = token.UserId
+                    user_id = token.UserId,
+                    email = token.Email,
                 });
             }
             catch (ArgumentException ex)
@@ -140,7 +141,8 @@ namespace backend.Controllers
                     {
                         access = token.AccessToken,
                         refresh = token.RefreshToken,
-                        user_id = token.UserId
+                        user_id = token.UserId,
+                        email = user.Email,
                     });
                 }
                 else

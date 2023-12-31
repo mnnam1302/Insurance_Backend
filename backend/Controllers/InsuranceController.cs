@@ -18,7 +18,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("ages")]
-        [JwtAuthorize]
+        //[JwtAuthorize]
         public async Task<IActionResult> GetAllAges()
         {
             try
@@ -39,12 +39,12 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [JwtAuthorize]
+        //[JwtAuthorize]
         public async Task<IActionResult> GetAllInsurances([FromQuery]int fromAge = 1, int toAge = 3) 
         {
             try
             {
-                List<Insurance> insurances = await _insuranceService.GetAllInsurances(fromAge, toAge);
+                List<InsuranceDTO> insurances = await _insuranceService.GetAllInsurances(fromAge, toAge);
 
                 if (insurances == null)
                 {
@@ -55,17 +55,17 @@ namespace backend.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { error = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("filter")]
-        [JwtAuthorize]
+        //[JwtAuthorize]
         public async Task<IActionResult> GetInsurancesByAgeCustomer([FromQuery] int age)
         {
             try
             {
-                List<Insurance> insurances = await _insuranceService.GetInsurancesByAgeCustomer(age);
+                List<InsuranceDTO> insurances = await _insuranceService.GetInsurancesByAgeCustomer(age);
 
                 if (insurances == null)
                 {
@@ -75,7 +75,7 @@ namespace backend.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { error = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
@@ -84,7 +84,7 @@ namespace backend.Controllers
         {
             try
             {
-                Insurance? insurance = await _insuranceService.GetInsuranceById(id);
+                InsuranceDTO? insurance = await _insuranceService.GetInsuranceById(id);
 
                 if (insurance == null)
                 {
@@ -95,7 +95,7 @@ namespace backend.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new {Error = ex.Message});
+                return BadRequest(ex.Message);
             }
         }
     }

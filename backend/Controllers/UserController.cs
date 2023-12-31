@@ -17,7 +17,7 @@ namespace backend.Controllers
         }
 
         // https:localhost:port/api/v1/user/register
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
         {
             try

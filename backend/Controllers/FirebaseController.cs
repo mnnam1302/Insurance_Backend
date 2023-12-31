@@ -37,39 +37,6 @@ namespace backend.Controllers
             }
             try
             {
-                //var stream = file.OpenReadStream();
-
-                //var authProvider = new FirebaseAuthProvider(new FirebaseConfig(_configuration["Firebase:ApiKey"]));
-                //var auth = await authProvider.SignInWithEmailAndPasswordAsync(
-                //                                            _configuration["Firebase:AuthEmail"], 
-                //                                            _configuration["Firebase:AuthPassword"]);
-
-                //var firebaseStorageOptions = new FirebaseStorageOptions
-                //{
-                //    AuthTokenAsyncFactory = () => Task.FromResult(_configuration["Firebase:ApiKey"]),
-                //    ThrowOnCancel = true,
-                //    // có thể set thêm timeout ở đây
-                //};
-
-                //// Replace 'your-firebase-storage-bucket-url' with your actual Firebase Storage bucket URL
-                //var firebaseStorage = new FirebaseStorage(_configuration["Firebase:StorageBucket"]);
-
-                //// Get name && extension
-                //var name = file.FileName.Split(".")[0];
-                //var extension = "." + file.FileName.Split(".")[file.FileName.Split(".").Length - 1];
-                //// Generate a unique name for the file or use the original name
-                //// nên gắn thêm fileName cho dễ nhìn
-                //string fileName = name + DateTime.Now.Ticks.ToString() + extension;
-
-                //var imageUrl = await firebaseStorage
-                //    .Child("images")
-                //    .Child(fileName)
-                //    .PutAsync(stream);
-                //    //.DeleteAsync(stream);
-
-                //// You can use imageUrl to store in your database or return to the client
-                //return Ok(imageUrl);
-
                 // Clean code
                 var stream = file.OpenReadStream();
 

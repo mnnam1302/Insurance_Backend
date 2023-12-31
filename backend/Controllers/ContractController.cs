@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ContractsController : ControllerBase
     {
@@ -39,12 +39,11 @@ namespace backend.Controllers
             }
         }
 
-        //Thêm contract
+
         [HttpPost]
         //[JwtAuthorize]
-        public async Task<IActionResult> AddNewContract([FromForm] AddContractDTO dto)
+        public async Task<IActionResult> AddNewContract([FromBody] AddContractDTO dto)
         {
-            
             if (dto == null)
             {
                 return BadRequest("Request is not valid");

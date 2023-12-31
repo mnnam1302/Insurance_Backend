@@ -15,7 +15,6 @@ namespace backend.Controllers
             _benefitDetailService = benefitDetailService;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetBenefitDetailByInsuranceId([FromQuery] int insuranceId)
         {

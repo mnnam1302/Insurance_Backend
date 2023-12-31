@@ -1,6 +1,7 @@
 ﻿using backend.DTO;
 using backend.Models;
 using backend.Repositories;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace backend.Services
 {
@@ -18,19 +19,79 @@ namespace backend.Services
             return await _insuranceRepository.GetAllAges();
         }
 
-        public async Task<List<Insurance>> GetInsurancesByAgeCustomer(int age)
+        public async Task<List<InsuranceDTO>> GetInsurancesByAgeCustomer(int age)
         {
-            return await _insuranceRepository.GetInsurancesByAgeCustomer(age);
+            List<Insurance> insurances = await _insuranceRepository.GetInsurancesByAgeCustomer(age);
+            List<InsuranceDTO> result = new List<InsuranceDTO>();
+
+            foreach (var item in insurances)
+            {
+
+                InsuranceDTO insuranceDTO = new InsuranceDTO
+                {
+                    InsuranceId = item.InsuranceId,
+                    NameInsurance = item.NameInsurance,
+                    FromAge = item.FromAge,
+                    ToAge = item.ToAge,
+                    Price = item.Price,
+                    Discount = item.Discount,
+                    // Tính giá khuyến mãi - Business
+                    PriceDiscount = item.Price * ((100 - item.Discount) / 100),
+                    Status = item.Status,
+                    InsuranceTypeId = item.InsuranceTypeId,
+                };
+
+                result.Add(insuranceDTO);
+            }
+            return result;
         }
 
-        public async Task<List<Insurance>> GetAllInsurances(int fromAge, int toAge)
+        public async Task<List<InsuranceDTO>> GetAllInsurances(int fromAge, int toAge)
         {
-            return await _insuranceRepository.GetAllInsurances(fromAge, toAge);
+            List<Insurance> insurances =   await _insuranceRepository.GetAllInsurances(fromAge, toAge);
+            List<InsuranceDTO> result = new List<InsuranceDTO>();
+
+            foreach(var item in insurances)
+            {
+
+                InsuranceDTO insuranceDTO = new InsuranceDTO
+                {
+                    InsuranceId = item.InsuranceId,
+                    NameInsurance = item.NameInsurance,
+                    FromAge = item.FromAge,
+                    ToAge = item.ToAge,
+                    Price = item.Price,
+                    Discount = item.Discount,
+                    // Tính giá khuyến mãi - Business
+                    PriceDiscount = item.Price * ((100 - item.Discount) / 100),
+                    Status = item.Status,
+                    InsuranceTypeId = item.InsuranceTypeId,
+                };
+
+                result.Add(insuranceDTO);
+            }
+            return result;
         }
 
-        public async Task<Insurance?> GetInsuranceById(int id)
+        public async Task<InsuranceDTO?> GetInsuranceById(int id)
         {
-            return await _insuranceRepository.GetInsuranceById(id);
+            Insurance? insurance = await _insuranceRepository.GetInsuranceById(id);
+            
+            InsuranceDTO insuranceDTO = new InsuranceDTO
+            {
+                InsuranceId = insurance.InsuranceId,
+                NameInsurance = insurance.NameInsurance,
+                FromAge = insurance.FromAge,
+                ToAge = insurance.ToAge,
+                Price = insurance.Price,
+                Discount = insurance.Discount,
+                // Tính giá khuyến mãi - Business
+                PriceDiscount = insurance.Price * ((100 - insurance.Discount) / 100),
+                Status = insurance.Status,
+                InsuranceTypeId = insurance.InsuranceTypeId,
+            };
+
+            return insuranceDTO;
         }
     }
 }
