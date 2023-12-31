@@ -59,5 +59,27 @@ namespace backend.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
+
+        public async Task<Registration?> UpdateRegistrationStatus (int registrationId, string status)
+        {
+            try
+            {
+                string sql = "exec UpdateRegistrationStatus " +
+                    "@id, " + 
+                    "@status";
+
+                IEnumerable<Registration?> result = await _dbContext.Registrations.FromSqlRaw(sql,
+                    new SqlParameter("@id", registrationId),
+                    new SqlParameter("@status", status)
+                    ).ToListAsync();
+
+                Registration? registration = result.FirstOrDefault();
+                return registration;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
     }
 }
