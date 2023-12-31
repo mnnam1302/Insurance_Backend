@@ -11,7 +11,7 @@ namespace backend.Repositories
 
         Task<List<Contract>> GetByUserId(int userId);
 
-        Task<Contract?> AddNewContract(ContractDTO contractDTO);
+        Task<Contract?> AddNewContract(ContractDTO dto);
 
         Task<Contract?> GetByInsuranceCode(string insurance_code);
     }
