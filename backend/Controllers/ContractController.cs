@@ -42,7 +42,7 @@ namespace backend.Controllers
 
         [HttpPost]
         //[JwtAuthorize]
-        public async Task<IActionResult> AddNewContract([FromForm] AddContractDTO dto)
+        public async Task<IActionResult> AddNewContract([FromBody] AddContractDTO dto)
         {
             if (dto == null)
             {

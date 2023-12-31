@@ -125,8 +125,6 @@ namespace backend.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
-
         }
-
     }
 }
