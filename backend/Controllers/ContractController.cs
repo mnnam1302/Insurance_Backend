@@ -39,12 +39,11 @@ namespace backend.Controllers
             }
         }
 
-        //Thêm contract
+
         [HttpPost]
         //[JwtAuthorize]
         public async Task<IActionResult> AddNewContract([FromForm] AddContractDTO dto)
         {
-            
             if (dto == null)
             {
                 return BadRequest("Request is not valid");
