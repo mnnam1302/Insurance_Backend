@@ -1,33 +1,30 @@
-﻿using backend.DTO;
+﻿using backend.DTO.User;
+using backend.IRepositories;
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository: GenericRepository<User>, IUserRepository
     {
         private readonly InsuranceDbContext _dbContext;
-        //private readonly IConfiguration _config;
 
-        //public UserRepository(InsuranceDbContext context, IConfiguration config)
-        public UserRepository(InsuranceDbContext context)
+        public UserRepository(InsuranceDbContext dbContext) : base(dbContext) 
         {
-            _dbContext = context;
-            //_config = config;
-        }
-
-        public async Task<User?> GetUserById(int userId)
-        {
-            return await _dbContext.Users.FindAsync(userId);
+            _dbContext = dbContext;
         }
 
         public async Task<User?> GetUserByEmail(string email)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+        public async Task<User?> GetUserByCardIdentication(string identification)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.CardIdentification == identification);
+        }
 
-        public async Task<User?> Create(RegisterDTO registerDTO)
+        public async Task<User?> CreateUser(User user)
         {
             try
             {
@@ -40,53 +37,20 @@ namespace backend.Repositories
                            "@card_identification";
 
                 IEnumerable<User> result = await _dbContext.Users.FromSqlRaw(sql,
-                    new SqlParameter("@email", registerDTO.Email ?? ""),
-                    new SqlParameter("@password", registerDTO.Password),
-                    new SqlParameter("@full_name", registerDTO.FullName),
-                    new SqlParameter("@phone", registerDTO.Phone ?? ""),
-                    new SqlParameter("@sex", registerDTO.Sex ?? ""),
-                    new SqlParameter("@date_of_birth", registerDTO.DateOfBirth),
-                    new SqlParameter("@card_identification", registerDTO.CardIdentification)).ToListAsync();
+                    new SqlParameter("@email", user.Email ?? ""),
+                    new SqlParameter("@password", user.Password),
+                    new SqlParameter("@full_name", user.FullName),
+                    new SqlParameter("@phone", user.Phone ?? ""),
+                    new SqlParameter("@sex", user.Sex ?? ""),
+                    new SqlParameter("@date_of_birth", user.DateOfBirth),
+                    new SqlParameter("@card_identification", user.CardIdentification)).ToListAsync();
 
-                User? user = result.FirstOrDefault();
-                return user;
+                var response = result.FirstOrDefault();
+                return response;
             }
             catch (ArgumentException ex) {
                 throw new ArgumentException(ex.Message);
             }
         }
-
-        public async Task<User?> UpdateUserById(UserDTO userDTO)
-        {
-            var userDomain = _dbContext.Users.SingleOrDefault(x => x.UserId == userDTO.UserId);  
-            if (userDomain == null) 
-            {
-                return null;
-            }
-
-            userDomain.FullName = userDTO.FullName; 
-            userDomain.Phone = userDTO.Phone;
-            userDomain.Email = userDTO.Email;   
-            userDomain.DateOfBirth = userDTO.DateOfBirth;   
-            userDomain.CardIdentification = userDTO.CardIdentification;
-            userDomain.Sex = userDTO.Sex;
-
-            await _dbContext.SaveChangesAsync();
-
-            var request = new User
-            {
-                FullName = userDomain.FullName,
-                Phone = userDomain.Phone,
-                Email = userDomain.Email,
-                DateOfBirth = userDTO.DateOfBirth,
-                CardIdentification = userDTO.CardIdentification,
-                Sex = userDTO.Sex,
-            };
-
-            return request;
-        }
-
-
-
     }
 }

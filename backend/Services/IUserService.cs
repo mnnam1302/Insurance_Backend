@@ -1,15 +1,19 @@
-﻿using backend.DTO;
+﻿using backend.DTO.User;
 using backend.Models;
+using backend.Responses;
 
 namespace backend.Services
 {
     public interface IUserService
     {
-        Task<User?> Register(RegisterDTO registerDTO);
+        Task<BaseCommandResponse> Register(CreateUserDTO createUserDTO);
 
-        Task<User?> GetUserById(int userId);
+        Task<UserDTO?> GetUserById(int userId);
 
-        Task<User?> GetUserByEmail(string email);
-        Task<User?> UpdateUserById(UserDTO userDTO);
+        Task<bool> CheckUserExists(int id);
+
+        Task<UserDTO?> GetUserByEmail(string email);
+
+        Task<UserDTO?> UpdateUserById(UpdateUserDTO userDTO);
     }
 }

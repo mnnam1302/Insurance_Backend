@@ -29,6 +29,7 @@ namespace backend.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(InsuranceDbContext).Assembly);
 
             // primary key của bảng BenefitDetail
             modelBuilder.Entity<BenefitDetail>()

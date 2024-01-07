@@ -1,5 +1,7 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Auth;
+using backend.IRepositories;
 using backend.Models;
+using Firebase.Auth;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -85,18 +87,18 @@ namespace backend.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<TokenDTO?> Login(LoginDTO loginDTO)
+        public async Task<BaseTokenDTO> Login(LoginDTO loginDTO)
         {
             try
             {
                 // Đoạn này sẽ gọi 1 procedure trong SQL - Check User có tồn tại
                 string sql = "EXEC dbo.CheckLogin @email, @password";
-                IEnumerable<User> result = await _dbContext.Users.FromSqlRaw(sql,
+                IEnumerable<Models.User> result = await _dbContext.Users.FromSqlRaw(sql,
                     new SqlParameter("@email", loginDTO.Email),
                     new SqlParameter("@password", loginDTO.Password)
                     ).ToListAsync();
 
-                User? user = result.FirstOrDefault();
+                var user = result.FirstOrDefault();
 
                 if (user != null)
                 {
@@ -108,10 +110,11 @@ namespace backend.Repositories
                     await CreateOrUpdateRefreshToken(user.UserId, refreshToken);
 
                     // Return access_token và refresh_token, maybe userId
-                    return new TokenDTO
+                    return new BaseTokenDTO
                     {
-                        AccessToken = accessToken,
-                        RefreshToken = refreshToken,
+                        Type = "Bearer",
+                        Access = accessToken,
+                        Refresh = refreshToken,
                         UserId = user.UserId,
                         Email = user.Email
                     };
@@ -127,7 +130,7 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<string?> Refresh(string refresh)
+        public async Task<string> Refresh(string refresh)
         {
             // Tạo đối tượng xử lý refresh token
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -153,7 +156,8 @@ namespace backend.Repositories
                 // Kiểm tra userId có tồn tại không
                 var userId = int.Parse(refreshToken.Claims.First().Value);
 
-                User? user = await _userRepository.GetUserById(userId);
+                //var user = await _userRepository.GetUserById(userId);
+                var user = await _userRepository.Get(userId);
 
                 if (user == null)
                 {
@@ -172,13 +176,11 @@ namespace backend.Repositories
 
         public async Task Logout(string refresh)
         {
-            // Tạo đối tượng xử lý refresh token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config["Jwt:SecreteKey"] ?? "");
 
             try
             {
-                // Tạo đối tượng xử lý token
                 var claimsPrincipal = tokenHandler.ValidateToken(refresh, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -193,7 +195,8 @@ namespace backend.Repositories
                 // Kiểm tra userId có tồn tại không
                 var userId = int.Parse(refreshToken.Claims.First().Value);
 
-                User? user = await _userRepository.GetUserById(userId);
+                //var user = await _userRepository.GetUserById(userId);
+                var user = await _userRepository.Get(userId);
 
                 if (user == null)
                 {
@@ -225,7 +228,7 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<TokenDTO?> LoginGoogle(int userId)
+        public async Task<BaseTokenDTO> LoginGoogle(int userId)
         {
             try
             {
@@ -237,11 +240,11 @@ namespace backend.Repositories
                 await CreateOrUpdateRefreshToken(userId, refreshToken);
 
                 // Return access_token và refresh_token, maybe userId
-                return new TokenDTO
+                return new BaseTokenDTO
                 {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken,
-                    UserId = userId
+                    Type = "Bearer",
+                    Access = accessToken,
+                    Refresh = refreshToken
                 };
             }
             catch (ArgumentException ex)

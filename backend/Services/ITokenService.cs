@@ -1,15 +1,13 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Auth;
 
 namespace backend.Services
 {
     public interface ITokenService
     {
-        Task<TokenDTO?> Login(LoginDTO loginDTO);
-        Task<TokenDTO?> LoginGoogle(int userId);
-
+        Task<BaseTokenDTO> Login(LoginDTO loginDTO);
         Task Logout(string refresh);
-
-        Task<string?> Refresh(string refresh);
+        Task<BaseTokenDTO> LoginGoogle(int userId);
+        Task<string> Refresh(string refresh);
 
     }
 }

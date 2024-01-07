@@ -1,16 +1,17 @@
 ﻿using AspNetCore.Email;
+using AutoMapper;
 using backend.Controllers;
 using backend.Filters;
 using backend.Helper;
+using backend.IRepositories;
 using backend.Models;
 using backend.Repositories;
 using backend.Services;
 using Firebase.Auth;
 using Firebase.Storage;
-using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ builder.Services.AddDbContext<InsuranceDbContext>(options =>
 
 
 // Repositories && Services
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -77,10 +80,13 @@ builder.Services.AddSingleton(provider =>
 builder.Services.AddSingleton(provider => new FirebaseStorage(builder.Configuration.GetSection("Firebase")["StorageBucket"]));
 builder.Services.AddSingleton<FirebaseAuthProvider>();
 
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 // Filter request required Authorized
 builder.Services.AddScoped<JwtAuthorizeFilter>();
 
 builder.Services.AddAuthorization();
+
 
 // JWT
 builder.Services.AddAuthentication(options =>

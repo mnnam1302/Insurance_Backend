@@ -5,6 +5,12 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend", "backend\backend.csproj", "{FDC9FDF4-9922-4D90-9BB8-AD7AAB8FADFC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DE41703F-F381-4B93-9769-C19332C5EE1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2D2AD1C7-05DF-4479-9563-CE981160C98B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceManagement.UnitTests", "InsuranceManagement.UnitTests\InsuranceManagement.UnitTests.csproj", "{C8082AA4-5916-4F2A-AA55-37714309ED2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,17 @@ Global
 		{FDC9FDF4-9922-4D90-9BB8-AD7AAB8FADFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDC9FDF4-9922-4D90-9BB8-AD7AAB8FADFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDC9FDF4-9922-4D90-9BB8-AD7AAB8FADFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8082AA4-5916-4F2A-AA55-37714309ED2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8082AA4-5916-4F2A-AA55-37714309ED2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8082AA4-5916-4F2A-AA55-37714309ED2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8082AA4-5916-4F2A-AA55-37714309ED2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FDC9FDF4-9922-4D90-9BB8-AD7AAB8FADFC} = {DE41703F-F381-4B93-9769-C19332C5EE1A}
+		{C8082AA4-5916-4F2A-AA55-37714309ED2F} = {2D2AD1C7-05DF-4479-9563-CE981160C98B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFEC9230-DE2F-47C6-86F1-CE35948D8DFD}

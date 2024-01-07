@@ -1,5 +1,5 @@
-﻿using backend.DTO;
-using backend.Repositories;
+﻿using backend.DTO.Auth;
+using backend.IRepositories;
 
 namespace backend.Services
 {
@@ -11,12 +11,12 @@ namespace backend.Services
         {
             _tokenRepository = tokenRepository;
         }
-        public async Task<TokenDTO?> Login(LoginDTO loginDTO)
+        public async Task<BaseTokenDTO> Login(LoginDTO loginDTO)
         {
             return await _tokenRepository.Login(loginDTO);
         }
 
-        public async Task<TokenDTO?> LoginGoogle(int userId)
+        public async Task<BaseTokenDTO> LoginGoogle(int userId)
         {
             return await _tokenRepository.LoginGoogle(userId);
         }
@@ -26,7 +26,7 @@ namespace backend.Services
             await _tokenRepository.Logout(refresh);
         }
 
-        public async Task<string?> Refresh(string refresh)
+        public async Task<string> Refresh(string refresh)
         {
             return await _tokenRepository.Refresh(refresh);
         }

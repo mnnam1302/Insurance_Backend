@@ -20,7 +20,7 @@ namespace backend.Models
         [Required(ErrorMessage = "Hashed password is required.")]
         [MaxLength(200, ErrorMessage = "Hashed password cannot exceed 200 characters.")]
         [Column("hashed_password")]
-        public string HashedPassword { get; set; } = "";
+        public string Password { get; set; } = "";
 
         [MaxLength(255, ErrorMessage = "Full name cannot exceed 255 characters.")]
         [Column("full_name")]
@@ -38,11 +38,11 @@ namespace backend.Models
 
 
         [Column("date_of_birth")]
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Card identification is required")]
         [MaxLength(20, ErrorMessage = "Card identification cannot exceed 00 characters.")]
         [Column("card_identification")]
-        public string? CardIdentification { get; set; }
+        public string CardIdentification { get; set; }
     }
 }
