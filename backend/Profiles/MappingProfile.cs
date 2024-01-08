@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using backend.DTO.Insurance;
+using backend.DTO.InsuranceType;
 using backend.DTO.User;
 using backend.Models;
 
@@ -14,7 +16,12 @@ namespace backend.Profiles
             CreateMap<UserDTO, User>().ReverseMap();
             CreateMap<UpdateUserDTO, User>().ReverseMap();
 
+            CreateMap<InsuranceTypeDTO, InsuranceType>().ReverseMap();
 
+            //CreateMap<InsuranceDTO, Insurance>().ReverseMap();
+            CreateMap<Insurance, InsuranceDTO>()
+                .ForMember(dest => dest.PriceDiscount, opt => opt.MapFrom(src => src.Price * ((100 - src.Discount) / 100)))
+                .ReverseMap();
         }
     }
 }

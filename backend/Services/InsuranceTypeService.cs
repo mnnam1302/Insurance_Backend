@@ -1,25 +1,30 @@
-﻿using backend.Models;
-using backend.Repositories;
+﻿using AutoMapper;
+using backend.DTO.InsuranceType;
+using backend.IRepositories;
+using backend.Models;
 
 namespace backend.Services
 {
     public class InsuranceTypeService : IInsuranceTypeService
     {
         private readonly IInsuranceTypeRepository _insuranceRepository;
-
-        public InsuranceTypeService(IInsuranceTypeRepository insuranceRepository)
+        private readonly IMapper _mapper;
+        public InsuranceTypeService(IInsuranceTypeRepository insuranceRepository, IMapper mapper)
         {
             _insuranceRepository = insuranceRepository;
+            _mapper = mapper;
         }
 
-        public async Task<List<InsuranceType>> GetAllInsuranceTypes()
+        public async Task<List<InsuranceTypeDTO>> GetAllInsuranceTypes()
         {
-            return await _insuranceRepository.GetAllInsuranceTypes();
+            var result = await _insuranceRepository.GetAll();
+            return _mapper.Map<List<InsuranceTypeDTO>>(result);
         }
 
-        public async Task<InsuranceType?> GetInsuranceTypeById(int id)
+        public async Task<InsuranceTypeDTO?> GetInsuranceTypeById(int id)
         {
-            return await _insuranceRepository.GetInsuranceTypeById(id);
+            var result = await _insuranceRepository.Get(id);
+            return _mapper.Map<InsuranceTypeDTO>(result);
         }
     }
 }

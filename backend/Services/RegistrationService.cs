@@ -1,4 +1,5 @@
 ﻿using backend.DTO;
+using backend.IRepositories;
 using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -33,7 +34,7 @@ namespace backend.Services
             int beneficiaryAge = DateTime.Now.Year - beneficiary.DateOfBirth.Value.Year;
 
             // Kiểm tra gói bảo hiểm tồn tại
-            Insurance? insurance = await _insuranceRepository.GetInsuranceById(registrationDTO.InsuranceId);
+            Insurance? insurance = await _insuranceRepository.Get(registrationDTO.InsuranceId);
 
             if (insurance == null)
             {
