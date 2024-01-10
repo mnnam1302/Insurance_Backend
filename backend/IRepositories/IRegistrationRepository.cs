@@ -3,9 +3,9 @@ using backend.Models;
 
 namespace backend.IRepositories
 {
-    public interface IRegistrationRepository
+    public interface IRegistrationRepository: IGenericRepository<Registration>
     {
-        Task<Registration?> CreateRegistrationInsurance(RegistrationDTO registrationDTO);
+        //Task<Registration?> CreateRegistrationInsurance(CreateRegistrationDTO registrationDTO);
 
         Task<Registration?> GetById(int id);
 

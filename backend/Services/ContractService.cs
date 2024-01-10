@@ -92,8 +92,8 @@ namespace backend.Services
                 decimal basic_fee = registration.BasicInsuranceFee;
                 decimal discount = registration.Discount;
 
-                DateTime start_date = registration.StartDate;
-                DateTime end_date = registration.EndDate;
+                DateTime start_date = (DateTime)registration.StartDate;
+                DateTime end_date = (DateTime)registration.EndDate;
 
                 contractDTO.initial_fee_per_turn = basic_fee;
                 contractDTO.discount = discount;

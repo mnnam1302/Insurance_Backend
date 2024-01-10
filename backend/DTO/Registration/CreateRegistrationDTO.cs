@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.DTO.Registration
 {
@@ -10,18 +11,18 @@ namespace backend.DTO.Registration
         [Required(ErrorMessage = "End date is required.")]
         public DateTime EndDate { get; set; }
 
+        [Required(ErrorMessage = "Basic insurance fee is required.")]
         public decimal BasicInsuranceFee { get; set; }
 
-        public decimal Discount { get; set; } = 0;
+        [Required(ErrorMessage = "Discount is required.")]
+        public decimal Discount { get; set; }
 
         public decimal TotalSupplementalBenefitFee { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string RegistrationStatus { get; set; }
-
+        [Required(ErrorMessage = "Beneficiary id is required.")]
         public int BeneficiaryId { get; set; }
 
+        [Required(ErrorMessage = "Insurance id is required.")]
         public int InsuranceId { get; set; }
     }
 }
