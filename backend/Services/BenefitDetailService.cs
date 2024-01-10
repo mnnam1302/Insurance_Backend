@@ -1,12 +1,11 @@
-﻿using backend.DTO;
-using backend.Repositories;
+﻿using backend.DTO.BenefitDetail;
+using backend.IRepositories;
 
 namespace backend.Services
 {
     public class BenefitDetailService: IBenefitDetailService
     {
         private readonly IBenefitDetailRepository _benefitDetailRepository;
-
 
         public BenefitDetailService(IBenefitDetailRepository benefitDetailRepository)
         {

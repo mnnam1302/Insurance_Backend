@@ -14,6 +14,6 @@ namespace backend.Models
         [Required]
         [Column("NameBenefitType")]
         [StringLength(255)]
-        public string NameBenefitType { get; set; } = "";
+        public string NameBenefitType { get; set; }
     }
 }

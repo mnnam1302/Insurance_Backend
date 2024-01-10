@@ -14,7 +14,7 @@ namespace backend.Models
         [Required(ErrorMessage = "Name insurance is required")]
         [Column("NameInsurance")]
         [StringLength(255)]
-        public string NameInsurance { get; set; } = "";
+        public string NameInsurance { get; set; }
 
         [Required]
         [Column("FromAge")]
@@ -34,7 +34,7 @@ namespace backend.Models
 
         [Column("Status")]
         [StringLength(40)]
-        public string Status { get; set; } = "Active";
+        public string Status { get; set; } = "Đang hoạt động";
 
         [Column("InsuranceType_ID")]
         public int InsuranceTypeId { get; set; }

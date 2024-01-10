@@ -19,6 +19,7 @@ namespace backend.Repositories
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+
         public async Task<User?> GetUserByCardIdentication(string identification)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.CardIdentification == identification);

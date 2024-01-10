@@ -1,11 +1,12 @@
-﻿using backend.Models;
+﻿using backend.DTO.InsuranceType;
+using backend.Models;
 
 namespace backend.Services
 {
     public interface IInsuranceTypeService
     {
-        Task<List<InsuranceType>> GetAllInsuranceTypes();
+        Task<List<InsuranceTypeDTO>> GetAllInsuranceTypes();
 
-        Task<InsuranceType?> GetInsuranceTypeById(int id);
+        Task<InsuranceTypeDTO?> GetInsuranceTypeById(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using backend.DTO;
+﻿using backend.DTO.BenefitDetail;
+using backend.IRepositories;
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

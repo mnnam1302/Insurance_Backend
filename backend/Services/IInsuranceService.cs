@@ -1,4 +1,4 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Insurance;
 using backend.Models;
 
 namespace backend.Services
@@ -12,6 +12,5 @@ namespace backend.Services
         Task<List<InsuranceDTO>> GetInsurancesByAgeCustomer(int age);
 
         Task<InsuranceDTO?> GetInsuranceById(int id);
-
     }
 }

@@ -13,7 +13,7 @@ namespace backend.Models
         public int RegistrationId { get; set; }
 
         [Column("registration_Date")]
-        public DateTime RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         [Required]
         [Column("start_Date")]
@@ -27,7 +27,7 @@ namespace backend.Models
         public decimal BasicInsuranceFee { get; set; }
 
         [Column("discount")]
-        public decimal Discount { get; set; } = 0;
+        public decimal Discount { get; set; }
 
         [Column("totalSupplementalBenefitFee")]
         public decimal TotalSupplementalBenefitFee { get; set; }
@@ -35,7 +35,7 @@ namespace backend.Models
         [Required]
         [StringLength(100)]
         [Column("registration_Status")]
-        public string RegistrationStatus { get; set; } = "";
+        public string RegistrationStatus { get; set; }
 
         [Column("beneficiary_id")]
         public int BeneficiaryId { get; set; }
@@ -44,9 +44,9 @@ namespace backend.Models
         public int InsuranceId { get; set; }
 
         [ForeignKey("BeneficiaryId")]
-        public Beneficiary? Beneficiary { get; set; }
+        public Beneficiary Beneficiary { get; set; }
 
         [ForeignKey("InsuranceId")]
-        public Insurance? Insurance { get; set; }
+        public Insurance Insurance { get; set; }
     }
 }
