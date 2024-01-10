@@ -1,4 +1,4 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Registration;
 using backend.Models;
 
 namespace backend.Services

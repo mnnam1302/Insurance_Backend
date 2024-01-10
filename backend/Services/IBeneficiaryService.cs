@@ -1,12 +1,13 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Beneficiary;
 using backend.Models;
+using backend.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
 {
     public interface IBeneficiaryService
     {
-        Task<Beneficiary?> GetBeneficiaryById(int beneficiaryId);
-        Task<Beneficiary?> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO);
+        Task<BeneficiaryDTO?> GetBeneficiaryById(int beneficiaryId);
+        Task<BaseCommandResponse> CreateBeneficiary(CreateBeneficiaryDTO beneficiaryDTO);
     }
 }

@@ -14,16 +14,16 @@ namespace backend.Models
         [Required]
         [Column("NameBenefit")]
         [StringLength(255)]
-        public string NameBenefit { get; set; } = "";
+        public string NameBenefit { get; set; }
 
         [Column("Period")]
         [StringLength(50)]
-        public string Period { get; set; } = "";
+        public string Period { get; set; }
 
         [Column("BenefitType_ID")]
         public int BenefitTypeId { get; set; }
 
         [ForeignKey("BenefitTypeId")]
-        public BenefitType? BenefitType { get; set; }
+        public BenefitType BenefitType { get; set; }
     }
 }

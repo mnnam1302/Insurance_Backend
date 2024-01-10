@@ -1,4 +1,5 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Registration;
+using backend.IRepositories;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;

@@ -1,4 +1,4 @@
-﻿using backend.DTO;
+﻿using backend.DTO.BenefitDetail;
 using backend.Models;
 
 namespace backend.Services

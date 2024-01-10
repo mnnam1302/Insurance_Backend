@@ -1,7 +1,6 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Registration;
 using backend.IRepositories;
 using backend.Models;
-using backend.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace backend.Services
@@ -24,14 +23,14 @@ namespace backend.Services
         public async Task<RegistrationDTO?> CreateRegistrationInsurance(RegistrationDTO registrationDTO)
         {
             // Kiểm tra beneficiary
-            Beneficiary? beneficiary = await _beneficiaryRepository.GetBeneficiaryById(registrationDTO.BeneficiaryId);
+            Beneficiary? beneficiary = await _beneficiaryRepository.Get(registrationDTO.BeneficiaryId);
 
             if (beneficiary == null)
             {
                 throw new ArgumentException("Beneficiary is not valid");
             }
             // Tính tuổi người thụ hưởng
-            int beneficiaryAge = DateTime.Now.Year - beneficiary.DateOfBirth.Value.Year;
+            int beneficiaryAge = DateTime.Now.Year - beneficiary.DateOfBirth.Year;
 
             // Kiểm tra gói bảo hiểm tồn tại
             Insurance? insurance = await _insuranceRepository.Get(registrationDTO.InsuranceId);
