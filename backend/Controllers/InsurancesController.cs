@@ -34,7 +34,7 @@ namespace backend.Controllers
 
         [HttpGet]
         //[JwtAuthorize]
-        public async Task<IActionResult> GetAllInsurances([FromQuery]int fromAge = 1, int toAge = 3) 
+        public async Task<IActionResult> GetAllInsurances([FromQuery] int fromAge = 1, int toAge = 3) 
         {
             try
             {

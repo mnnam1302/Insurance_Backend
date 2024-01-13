@@ -29,6 +29,20 @@ namespace backend.Repositories
             }
         }
 
+        public async Task<Registration> UpdateRegistrationStatus(Registration registration, string status)
+        {
+            try
+            {
+                registration.RegistrationStatus = status;
+                _dbContext.Entry(registration).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return registration;
+            } catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         //public async Task<Registration?> CreateRegistrationInsurance(CreateRegistrationDTO registrationDTO)
         //{
         //    try
@@ -61,26 +75,26 @@ namespace backend.Repositories
         //    }
         //}
 
-        public async Task<Registration?> UpdateRegistrationStatus (int registrationId, string status)
-        {
-            try
-            {
-                string sql = "exec UpdateRegistrationStatus " +
-                    "@id, " + 
-                    "@status";
+        //public async Task<Registration?> UpdateRegistrationStatus (int registrationId, string status)
+        //{
+        //    try
+        //    {
+        //        string sql = "exec UpdateRegistrationStatus " +
+        //            "@id, " + 
+        //            "@status";
 
-                IEnumerable<Registration?> result = await _dbContext.Registrations.FromSqlRaw(sql,
-                    new SqlParameter("@id", registrationId),
-                    new SqlParameter("@status", status)
-                    ).ToListAsync();
+        //        IEnumerable<Registration?> result = await _dbContext.Registrations.FromSqlRaw(sql,
+        //            new SqlParameter("@id", registrationId),
+        //            new SqlParameter("@status", status)
+        //            ).ToListAsync();
 
-                Registration? registration = result.FirstOrDefault();
-                return registration;
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
+        //        Registration? registration = result.FirstOrDefault();
+        //        return registration;
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        throw new ArgumentException(ex.Message);
+        //    }
+        //}
     }
 }

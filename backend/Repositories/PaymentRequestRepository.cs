@@ -1,84 +1,60 @@
-﻿using backend.DTO;
+﻿using backend.DTO.PaymentRequest;
+using backend.IRepositories;
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
 {
-    public class PaymentRequestReponsitory : IPaymentRequestRepository
+    public class PaymentRequestReponsitory : GenericRepository<PaymentRequest>, IPaymentRequestRepository
     {
         private readonly InsuranceDbContext _context;
-        public PaymentRequestReponsitory(InsuranceDbContext context)
+        public PaymentRequestReponsitory(InsuranceDbContext context) : base(context)
         {
             _context = context;
         }
-        public async Task<List<PaymentRequest>> GetAll()
-        {
-            string sql = "select * from payment_request";
-            IEnumerable<PaymentRequest> result = await _context.PaymentRequests.FromSqlRaw(sql).ToListAsync();
 
-            return (List<PaymentRequest>)result;
-        }
-
-        public async Task<PaymentRequest?> GetById(int id)
-        {
-            var request = await _context.PaymentRequests.FindAsync(id);
-            return request;
-        }
-
-        public async Task<PaymentRequest?> AddPaymentRequest(PaymentRequestDTO dto)
+        public async Task<PaymentRequest?> CreatePaymentRequest(CreatePaymentRequestDTO dto)
         {
             try
             {
                 string sql = "exec AddPaymentRequest " +
-                    "@beneficiaries_id, " +
+                    "@contract_id, " +
                     "@total_cost, " +
                     "@description, " +
                     "@image";
 
                 IEnumerable<PaymentRequest?> result = await _context.PaymentRequests.FromSqlRaw(sql,
-                    new SqlParameter("@beneficiaries_id", dto.contract_id),
-                    new SqlParameter("@total_cost", dto.total_cost),
+                    new SqlParameter("@contract_id", dto.ContractId),
+                    new SqlParameter("@total_cost", dto.TotalCost),
                     new SqlParameter("@description", dto.Description),
-                    new SqlParameter("@image", dto.image_identification_url ?? "")
+                    new SqlParameter("@image", dto.ImagePaymentRequestUrl)
                     ).ToListAsync();
 
-                PaymentRequest? request = result.FirstOrDefault();
+                var request = result.FirstOrDefault();
                 return request;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task<PaymentRequest?> UpdatePaymentRequest(int id, double payment, string status)
+        public async Task<PaymentRequest?> UpdatePaymentRequest(PaymentRequest paymentRequest, UpdatePaymentRequestDTO updatePaymentRequestDTO)
         {
-            var paymentDomain = _context.PaymentRequests.FirstOrDefault(x => x.paymentrequest_id == id);
-
-            if (paymentDomain == null)
+            try
             {
-                return null;
+                paymentRequest.TotalPayment = updatePaymentRequestDTO.Payment;
+                paymentRequest.RequestStatus = updatePaymentRequestDTO.Status;
+
+                _context.Entry(paymentRequest).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return paymentRequest;
             }
-
-            paymentDomain.total_payment = payment;
-            paymentDomain.Status = status;
-
-            await _context.SaveChangesAsync();
-
-            var request = new PaymentRequest
+            catch (Exception ex)
             {
-                paymentrequest_id = paymentDomain.paymentrequest_id,
-                total_cost = paymentDomain.total_cost,
-                total_payment = paymentDomain.total_payment,
-                Description = paymentDomain.Description,
-                image_identification_url = paymentDomain.image_identification_url,
-                Status = paymentDomain.Status,
-                contract_id = paymentDomain.contract_id,
-                update_date = paymentDomain.update_date,
-            };
-
-            return request;
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -6,35 +6,36 @@ namespace backend.Models
     [Table("payment_request")]
     public class PaymentRequest
     {
-        [Column("paymentrequest_id")]
+        [Key] 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key] public int paymentrequest_id { get; set; }
+        [Column("paymentrequest_id")]
+        public int PaymentRequestId { get; set; }
 
-        [Column("total_cost")]
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        public double total_cost { get; set; }
+        [Column("total_cost")]
+        public double TotalCost { get; set; }
 
-        [Column("total_payment")]
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        public double total_payment { get; set; } = 0;
+        [Column("total_payment")]
+        public double TotalPayment { get; set; }
 
         [Column("Description")]
-        [Required]
-        public string Description { get; set; } = "";
+        public string Description { get; set; } = string.Empty;
 
-        public string? image_identification_url { get; set; } = "none";
+        [Column("image_identification_url")]
+        public string? ImagePaymentRequestUrl { get; set; }
 
         [Column("request_status")]
-        public string Status { get; set; } = "";
+        public string RequestStatus { get; set; } = string.Empty;
 
         [Column("contract_id")]
-        [Required]
-        public int contract_id { get; set; }
+        public int ContractId { get; set; }
 
-        //[ForeignKey("beneficiary_id")]
-        //public Beneficiary? beneficiary { get; set; }
+        [Column("update_date")]
+        public DateTime? UpdatedDate { get; set; }
 
-        public DateTime? update_date { get; set; }
+        [ForeignKey("ContractId")]
+        public Contract? Contract { get; set; }
     }
 }

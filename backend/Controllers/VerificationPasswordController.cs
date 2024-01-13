@@ -1,5 +1,5 @@
 ﻿using AspNetCore.Email;
-using backend.DTO;
+using backend.DTO.Email;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
@@ -23,7 +23,11 @@ namespace backend.Controllers
             _emailService = emailService;
         }
 
-
+        /// <summary>
+        /// Request reset password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] EmailRequestDTO request)
         {
@@ -47,18 +51,19 @@ namespace backend.Controllers
                     Email = user.Email,
                     Message = otp,
                 };
+
                 // Send email to gmail using Memikit
                 await _emailService.SendEmaiAsync(EmailMessage);
 
-                return Ok("Sucess. Let's check your email to get otp code");
-            } catch(ArgumentException ex)
+                return Ok("Success. Let's check your email to get otp code");
+            } catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
         /// <summary>
-        /// 
+        /// Verify otp code
         /// </summary>
         /// <param name="request">
         /// 1. Email
@@ -81,12 +86,9 @@ namespace backend.Controllers
                     return NotFound("User is not valid!");
                 }
 
-                // Kiểm tra mã OTP
-                // 1. Check thời gian expired
-                // 2. Check mã OTP gửi có chính xác
                 await _verificationPasswordService.VerificationOTP(user.UserId, request.Message);
 
-                return Ok("Sucess. Verify OTP code right, let's reset password");
+                return Ok("Success. Verify OTP code right, let's reset password");
             }
             catch (ArgumentException ex)
             {
@@ -95,7 +97,7 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Reset password
         /// </summary>
         /// <param name="request">
         /// 1. Email
@@ -121,7 +123,7 @@ namespace backend.Controllers
                 // reset password mới
                 await _verificationPasswordService.ResetPassword(user.UserId, request.Message);
 
-                return Ok("Sucess. Reset password success");
+                return Ok("Succsess. Reset password success");
             }
             catch (ArgumentException ex)
             {
