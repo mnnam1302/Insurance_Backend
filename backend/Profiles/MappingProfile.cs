@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.DTO;
 using backend.DTO.Beneficiary;
 using backend.DTO.Contract;
 using backend.DTO.Insurance;
@@ -35,6 +36,8 @@ namespace backend.Profiles
             CreateMap<CreateRegistrationDTO, Registration>().ReverseMap();
 
             CreateMap<ContractDTO, Contract>().ReverseMap();
+
+            CreateMap<PaymentRequestDTO, PaymentRequest>().ReverseMap();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using backend.Attribute;
-using backend.DTO;
+using backend.DTO.PaymentRequest;
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Http;
@@ -9,58 +9,69 @@ namespace backend.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PaymentRequestController : ControllerBase
+    public class PaymentRequestsController : ControllerBase
     {
         private readonly IPaymentRequestService _payment;
         private readonly FirebaseController _firebaseController;
 
-        public PaymentRequestController(IPaymentRequestService payment,
+        public PaymentRequestsController(IPaymentRequestService payment,
                                         FirebaseController firebaseController)
         {
             _payment = payment;
             _firebaseController = firebaseController;
         }
 
+        /// <summary>
+        /// Get all payment request
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllOrder()
+        public async Task<IActionResult> GetAllPaymentRequests()
         {
             try
             {
-                List<PaymentRequest> order = await _payment.GetAll();
-                if (order == null)
-                {
-                    return NotFound();
-                }
-                return Ok(order);
+                var paymentRequests = await _payment.GetAll();
+                return Ok(paymentRequests);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { Error = ex.Message });
+                return BadRequest(new { errors = ex.Message });
             }
         }
 
+        /// <summary>
+        /// Get payment request base on PaymentRequestId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                PaymentRequest? order = await _payment.GetById(id);
+                var paymentRequest = await _payment.GetById(id);
 
-                if (order == null)
+                if (paymentRequest == null)
                 {
                     return NotFound();
                 }
-                return Ok(order);
+
+                return Ok(paymentRequest);
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { Error = ex.Message });
+                return BadRequest(new { errors = ex.Message });
             }
         }
 
+        /// <summary>
+        /// Create payment request
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         [HttpPost]
         //[JwtAuthorize]
-        public async Task<IActionResult> AddPaymentRequest([FromForm] PaymentRequestDTO dto)
+        public async Task<IActionResult> CreatePaymentRequest([FromForm] CreatePaymentRequestDTO dto)
         {
             if (dto == null)
             {
@@ -68,73 +79,52 @@ namespace backend.Controllers
             }
             try
             {
-                if (dto.ImageIdentification is not null)
+                if (dto.ImagePaymentRequest is not null)
                 {
-                    IActionResult response = await _firebaseController.UploadImage(dto.ImageIdentification);
+                    IActionResult response = await _firebaseController.UploadImage(dto.ImagePaymentRequest);
 
                     if (response is OkObjectResult okResult)
                     {
                         // Phương thức UploadImage trả về dữ liệu thành công, lấy dữ liệu từ okResult.Value
                         string imageUrl = okResult.Value.ToString();
-                        dto.image_identification_url = imageUrl;
+                        dto.ImagePaymentRequestUrl = imageUrl;
                     }
                 }
 
-                PaymentRequest? request = await _payment.AddPaymentRequest(dto);
+                var result = await _payment.CreatePaymentRequest(dto);
 
-                if (request == null)
-                {
-                    return BadRequest("Request not created, Please check your request!");
-                }
-
-                var r_dto = new PaymentRequestDTO
-                {
-                    paymentrequest_id = request.paymentrequest_id,
-                    total_cost = request.total_cost,
-                    total_payment = request.total_payment,
-                    Description = request.Description,
-                    image_identification_url = request.image_identification_url,
-                    Status = request.Status,
-                    contract_id = request.contract_id,
-                    update_date = request.update_date,
-                };
-
-                return Ok(r_dto);
+                return Ok(result);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 return BadRequest(new { error = ex.Message });
             }
         }
 
+        /// <summary>
+        /// Update payment request { Payment, Status }
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="payment"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePaymentRequest([FromRoute] int id, [FromForm] double payment, [FromForm] string status)
+        public async Task<IActionResult> UpdatePaymentRequest([FromRoute] int id, UpdatePaymentRequestDTO updatePaymentRequestDTO)
         {
-            if (payment < 0 || status == null)
+            if (updatePaymentRequestDTO == null)
             {
-                return BadRequest("Please enter your update value!");
+                return BadRequest("Request is not valid");
             }
-
-            PaymentRequest? request = await _payment.UpdatePaymentRequest(id, payment, status);
-
-            if (request == null)
+            try
             {
-                return BadRequest("Your update request has not been fulfilled, please check your input!");
+                var result = await _payment.UpdatePaymentRequest(id, updatePaymentRequestDTO);
+
+                return Ok(result);
+            } 
+            catch (Exception ex) 
+            {
+                return BadRequest(new { errors = ex.Message });
             }
-
-            var r_dto = new PaymentRequestDTO
-            {
-                paymentrequest_id = request.paymentrequest_id,
-                total_cost = request.total_cost,
-                total_payment = request.total_payment,
-                Description = request.Description,
-                image_identification_url = request.image_identification_url,
-                Status = request.Status,
-                contract_id = request.contract_id,
-                update_date = request.update_date,
-            };
-
-            return Ok(r_dto);
         }
     }
 }

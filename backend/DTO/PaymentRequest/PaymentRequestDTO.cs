@@ -1,41 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models
+namespace backend.DTO
 {
-    [Table("payment_request")]
-    public class PaymentRequest
+    public class PaymentRequestDTO
     {
-        [Key] 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("paymentrequest_id")]
         public int PaymentRequestId { get; set; }
 
-        [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        [Column("total_cost")]
         public double TotalCost { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        [Column("total_payment")]
         public double TotalPayment { get; set; }
 
-        [Column("Description")]
-        public string Description { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Please enter your description")]
+        public string? Description { get; set; }
 
-        [Column("image_identification_url")]
         public string? ImagePaymentRequestUrl { get; set; }
 
-        [Column("request_status")]
         public string RequestStatus { get; set; } = string.Empty;
 
-        [Column("contract_id")]
         public int ContractId { get; set; }
 
-        [Column("update_date")]
         public DateTime? UpdatedDate { get; set; }
-
-        [ForeignKey("ContractId")]
-        public Contract? Contract { get; set; }
     }
 }
