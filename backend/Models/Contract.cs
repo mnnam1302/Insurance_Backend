@@ -7,68 +7,59 @@ namespace backend.Models
     public class Contract
     {
         [Column("contract_id")]
-        [Key] public int contract_id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ContractId { get; set; }
 
-        [Column("insurance_code")]
-        public string insurance_code { get; set; } = "";
+        [Column("insurance_Code")]
+        public string InsuranceCode { get; set; } = string.Empty;
 
         [Column("signing_Date")]
-        public DateTime? signing_date { get; set; }
+        public DateTime? SigningDate { get; set; }
 
         [Column("start_Date")]
-        //[Required]
-        public DateTime? start_date { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [Column("end_Date")]
-        //[Required]
-        public DateTime? end_date { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [Column("total_Turn")]
-        public int total_turn { get; set; }
+        public int TotalTurn { get; set; }
 
         [Column("contract_Status")]
-        public string contract_status { get; set; } = "";
+        public string ContractStatus { get; set; } = string.Empty;
 
         [Column("initial_Fee")]
-        public decimal initial_fee_per_turn { get; set; }
+        public decimal InitialFeePerTurn { get; set; }
 
         [Column("bonus_Fee")]
-        public decimal bonus_fee { get; set; } = 0;
+        public decimal BonusFee { get; set; }
 
         [Column("discount")]
-        public decimal discount { get; set; }
+        public decimal Discount { get; set; }
 
         [Column("periodic_Fee")]
-        public decimal periodic_fee { get; set; }
+        public decimal PeriodFee { get; set; }
 
         [Column("total_Fee")]
-        public decimal total_fee { get; set; }
+        public decimal TotalFee { get; set; }
 
         [Column("user_id")]
-        public int user_id { get; set; }
+        public int UserId { get; set; }
 
         [Column("beneficiary_id")]
-        //[Required]
-        public int beneficial_id { get; set; }
-
-        [Column("insurance_id")]
-        //[Required]
-        public int insurance_id { get; set; }
+        public int BeneficiaryId { get; set; }
 
         [Column("registration_id")]
-        [Required]
-        public int registration_id { get; set; }
+        public int RegistrationId { get; set; }
 
-        [ForeignKey("user_id")]
-        public User? user { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
 
-        [ForeignKey("beneficial_id")]
-        public Beneficiary? beneficiary { get; set; }
+        [ForeignKey("BeneficiaryId")]
+        public Beneficiary Beneficiary { get; set; }
 
-        [ForeignKey("registration_id")]
-        public Registration? registration { get; set; }
-
-        [ForeignKey("insurance_id")]
-        public Insurance? insurance { get; set; }
+        [ForeignKey("RegistrationId")]
+        public Registration Registration { get; set; }
     }
 }

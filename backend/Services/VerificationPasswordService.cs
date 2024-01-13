@@ -1,5 +1,5 @@
-﻿using backend.Models;
-using backend.Repositories;
+﻿using backend.IRepositories;
+using backend.Models;
 
 namespace backend.Services
 {
@@ -31,18 +31,18 @@ namespace backend.Services
 
             if (verification == null)
             {
-                throw new ArgumentException("User's verification OTP is not valid");
+                throw new Exception("User's verification OTP is not valid");
             }
-
+            
             // Check thời gian xem hết hạn
             if (verification.Expired < DateTime.Now)
             {
-                throw new ArgumentException("OTP code is expired");
+                throw new Exception("OTP code is expired");
             }
             // Check OTP có đúng không
             if (!verification.OTPCode.Equals(otp))
             {
-                throw new ArgumentException("OTP is not correct");
+                throw new Exception("OTP is not correct");
             }
             return;
         }

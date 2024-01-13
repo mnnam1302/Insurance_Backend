@@ -1,7 +1,10 @@
-﻿using backend.DTO;
+﻿using AutoMapper;
+using backend.DTO.Contract;
 using backend.IRepositories;
 using backend.Models;
 using backend.Repositories;
+using backend.Responses;
+using Firebase.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.SqlServer.Server;
 using System.Runtime.CompilerServices;
@@ -10,22 +13,24 @@ namespace backend.Services
 {
     public class ContractService : IContractService
     {
-        private readonly IContractRepository _contract;
+        private readonly IContractRepository _contractRepository;
         private readonly IRegistrationRepository _registrationRepository;
-        private readonly IBeneficiaryRepository _beneficiaryRepository;
+        private readonly IMapper _mapper;
 
-        public ContractService(IContractRepository contract, IRegistrationRepository registrationRepository, IBeneficiaryRepository beneficiaryRepository)
+        public ContractService(IContractRepository contractRepository, 
+                                IRegistrationRepository registrationRepository,
+                                IMapper mapper)
         {
-            _contract = contract;
+            _contractRepository = contractRepository;
             _registrationRepository = registrationRepository;
-            _beneficiaryRepository = beneficiaryRepository;
+            _mapper = mapper;
         }
 
         private int GetTotalTurn(DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
             {
-                throw new ArgumentException("Start date must be earlier than end date");
+                throw new Exception("Start date must be earlier than end date");
             }
 
             int monthsDifference = 0;
@@ -40,103 +45,93 @@ namespace backend.Services
             return monthsDifference;
         }
 
-        
-
-        public async Task<List<Contract>> GetAll()
+        public async Task<List<ContractDTO>> GetListContracts()
         {
-            return await _contract.GetAll();
+            var result = await _contractRepository.GetAll();
+
+            var response = _mapper.Map<List<ContractDTO>>(result);
+            return response;
         }
 
-        public async Task<Contract?> GetByInsuranceCode(string insurance_code)
+        public async Task<ContractDTO> GetContractById(int contract_id)
         {
+            var result = await _contractRepository.Get(contract_id);
 
-            try
-            {
-                var contract = await _contract.GetByInsuranceCode(insurance_code);
-
-                if (contract == null)
-                {
-                    throw new ArgumentException("Invalid insurance code, Please double check your input");
-                }
-
-                return contract;
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
+            var response = _mapper.Map<ContractDTO>(result);
+            return response;
         }
 
-        public async Task<Contract?> GetById(int contract_id)
-        {
-            return await _contract.GetById(contract_id);
-        }
-
-        public async Task<List<Contract>> GetByUserId(int userId)
-        {
-            return (List<Contract>)await _contract.GetByUserId(userId);
-        }
-
-
-        public async Task<ContractDTO?> AddNewContract(ContractDTO contractDTO)
+        public async Task<ContractDTO?> GetByInsuranceCode(string insurance_code)
         {
             try
             {
-                Registration? registration = await _registrationRepository.GetById(contractDTO.registration_id);
+                var result = await _contractRepository.GetContractByInsuranceCode(insurance_code);
+
+                var response = _mapper.Map<ContractDTO>(result);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<ContractDTO>> GetByUserId(int userId)
+        {
+            var result = await _contractRepository.GetContractByUserId(userId);
+
+            var response = _mapper.Map<List<ContractDTO>>(result);
+            return response;
+        }
+
+
+        public async Task<BaseCommandResponse> CreateContract(ContractDTO contractDTO)
+        {
+            try
+            {
+                var response = new BaseCommandResponse();
+                var registration = await _registrationRepository.Get(contractDTO.RegistrationId);
 
                 if (registration == null)
                 {
-                    throw new ArgumentException("Registration is not valid");
+                    response.Success = false;
+                    response.Message = "Creation failed.";
+                    response.Errors = new List<string> { "Registration is not valid." };
+                    return response;
                 }
 
                 decimal basic_fee = registration.BasicInsuranceFee;
                 decimal discount = registration.Discount;
+                DateTime start_date = registration.StartDate;
+                DateTime end_date = registration.EndDate;
+                contractDTO.InitialFeePerTurn = basic_fee;
+                contractDTO.Discount = discount;
+                contractDTO.TotalFee = basic_fee * (1 - discount);
+                contractDTO.TotalTurn = GetTotalTurn(start_date, end_date);
+                contractDTO.StartDate = start_date;
+                contractDTO.EndDate = end_date;
+                contractDTO.PeriodFee = contractDTO.TotalFee / contractDTO.TotalTurn;
+                contractDTO.BeneficiayId = registration.BeneficiaryId;
 
-                DateTime start_date = (DateTime)registration.StartDate;
-                DateTime end_date = (DateTime)registration.EndDate;
+                // Tạo contract
+                var result  = await _contractRepository.CreateContract(contractDTO);
 
-                contractDTO.initial_fee_per_turn = basic_fee;
-                contractDTO.discount = discount;
-                contractDTO.total_fee = basic_fee * (1 - discount);
-                contractDTO.total_turn = GetTotalTurn(start_date, end_date);
-                contractDTO.start_date = start_date;
-                contractDTO.end_date = end_date;
-                contractDTO.periodic_fee = contractDTO.total_fee / contractDTO.total_turn;
-                contractDTO.beneficial_id = registration.BeneficiaryId;
-                contractDTO.insurance_id = registration.InsuranceId;
+                // Cập nhật trạng thái đơn đăng ký
+                string status = "Đã lập hợp đồng";
+                var updateStatusRegistration = await _registrationRepository.UpdateRegistrationStatus(registration, status);
 
-                Contract? result = await _contract.AddNewContract(contractDTO);
-
-                if (result == null)
+                if (result != null)
                 {
-                    throw new ArgumentException("Contract not created!");
+                    response.Success = true;
+                    response.Message = "Creation successful";
+                    response.Id = result.ContractId;
                 }
 
-                var contract = new ContractDTO
-                {
-                    contract_id = result.contract_id,
-                    insurance_code = result.insurance_code,
-                    signing_date = result.signing_date,
-                    start_date = result.start_date,
-                    end_date = result.end_date,
-                    contract_status = result.contract_status,
-                    initial_fee_per_turn = result.initial_fee_per_turn,
-                    discount = result.discount,
-                    total_fee = result.total_fee,
-                    total_turn = result.total_turn,
-                    periodic_fee = result.periodic_fee,
-                    bonus_fee = result.total_fee,
-                    beneficial_id = result.beneficial_id,
-                    insurance_id = result.insurance_id,
-                    user_id = result.user_id,
-                    registration_id = result.registration_id,
-                };
-
-                return contract;
+                return response;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }

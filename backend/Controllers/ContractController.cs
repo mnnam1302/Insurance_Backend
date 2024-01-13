@@ -1,5 +1,6 @@
 ﻿using backend.Attribute;
 using backend.DTO;
+using backend.DTO.Contract;
 using backend.Extensions;
 using backend.Models;
 using backend.Services;
@@ -21,28 +22,107 @@ namespace backend.Controllers
             _userService = userService;
         }
 
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        /// <summary>
+        /// Get all contracts
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAllContracts()
         {
             try
             {
-                List<Contract> order = await _contractService.GetAll();
-                if (order == null)
+                var contracts = await _contractService.GetListContracts();
+                return Ok(contracts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get contract base on ContractId
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetContractById([FromRoute] int id)
+        {
+            try
+            {
+                var contracts = await _contractService.GetContractById(id);
+                return Ok(contracts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get contracts by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("filter")]
+        //[JwtAuthorize]
+        public async Task<IActionResult> GetByUserId([FromQuery] int userId)
+        {
+            try
+            {
+                var user = await _userService.GetUserById(userId);
+
+                if (user == null)
                 {
-                    return NotFound();
+                    return NotFound("Policyholder is not found");
                 }
-                return Ok(order);
+
+                var result = await _contractService.GetByUserId(userId);
+                return Ok(result);
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(new { Error = ex.Message });
+                return BadRequest(new { errors = ex.Message });
+            }
+        }
+
+        ///// <summary>
+        ///// Get Insurance base on Insurance code
+        ///// </summary>
+        ///// <param name="insurance_code"></param>
+        ///// <returns></returns>
+        [HttpGet("search")]
+        public async Task<IActionResult> GetByInsuranceCode([FromQuery] string insurance_code)
+        {
+            if (insurance_code == null)
+            {
+                return BadRequest("please insert your insurance code");
+            }
+            try
+            {
+                var result = await _contractService.GetByInsuranceCode(insurance_code);
+
+                if (result == null)
+                {
+                    return NotFound("Contract is not found");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
             }
         }
 
 
+        /// <summary>
+        /// Create contract
+        /// </summary>
+        /// <param name="addContract"></param>
+        /// <returns></returns>
         [HttpPost]
         [JwtAuthorize]
-        public async Task<IActionResult> AddNewContract([FromBody] AddContractDTO addContract)
+        public async Task<IActionResult> CreateContract([FromBody] CreateContractDTO addContract)
         {
             if (addContract == null)
             {
@@ -51,9 +131,7 @@ namespace backend.Controllers
             try
             {
                 //Kiểm tra người mua có tồn tại không
-                int userId;
-
-                userId = HttpContext.GetUserId();
+                int userId = HttpContext.GetUserId();
                 var user = await _userService.GetUserById(userId);
 
                 if (user == null)
@@ -62,105 +140,17 @@ namespace backend.Controllers
                 }
 
                 var contract_dto = new ContractDTO();
-                contract_dto.user_id = userId;
-                contract_dto.registration_id = addContract.registration_id;//userId
+                contract_dto.UserId = userId;
+                contract_dto.RegistrationId = addContract.Registration_Id;
 
                 // thêm hợp đồng
-                var result = await _contractService.AddNewContract(contract_dto);
+                var result = await _contractService.CreateContract(contract_dto);
 
-                // kiểm tra hợp đồng thêm thành công không
-                if (result == null)
-                {
-                    return BadRequest("Created registration is failed");
-                }
                 return Ok(result);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // tìm kiếm contract thông qua user id
-        [HttpGet("user")]
-        [JwtAuthorize]
-        public async Task<IActionResult> GetByUserId()
-        {
-            try
-            {
-                // Kiểm tra người mua có tồn tại không
-                int userId;
-
-                userId = HttpContext.GetUserId();
-                var user = await _userService.GetUserById(userId);
-
-                if (user == null)
-                {
-                    return NotFound("Policyholder is not found");
-                }
-
-                //userId = 1;
-                //Lấy danh sách contact theo user id
-                var result = await _contractService.GetByUserId(userId);
-
-                // kiểm tra tồn tại
-                if (result == null)
-                {
-                    return BadRequest("Not Found");
-                }
-                return Ok(result);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        //tìm kiếm theo mã bảo hiềm
-        [HttpGet("{insurance_code}")]
-        public async Task<IActionResult> GetByInsuranceCode(string insurance_code)
-        {
-            if (insurance_code == null)
-            {
-                return BadRequest("please insert your insurance code");
-            }
-            try
-            {
-                // lấy contract theo mã bảo hiểm người dùng nhập
-                Contract? result = await _contractService.GetByInsuranceCode(insurance_code);
-
-                // kiểm tra tồn tại
-                if (result == null)
-                {
-                    return BadRequest("No result found");
-                }
-
-                // đổ kết quả vào dto
-                var contractDTO = new ContractDTO
-                {
-                    contract_id = result.contract_id,
-                    insurance_code = result.insurance_code,
-                    signing_date = result.signing_date,
-                    start_date = result.start_date,
-                    end_date = result.end_date,
-                    contract_status = result.contract_status,
-                    initial_fee_per_turn = result.initial_fee_per_turn,
-                    discount = result.discount,
-                    total_fee = result.total_fee,
-                    total_turn = result.total_turn,
-                    periodic_fee = result.periodic_fee,
-                    bonus_fee = result.total_fee,
-                    beneficial_id = result.beneficial_id,
-                    insurance_id = result.insurance_id,
-                    user_id = result.user_id,
-                    registration_id = result.registration_id,
-                };
-
-                return Ok(contractDTO);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
+                return BadRequest(new { errors = ex.Message });
             }
         }
     }

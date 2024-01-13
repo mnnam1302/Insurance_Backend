@@ -7,5 +7,7 @@ namespace backend.Services
     public interface IRegistrationService
     {
         Task<BaseCommandResponse> CreateRegistrationInsurance(CreateRegistrationDTO registrationDTO);
+        Task<RegistrationDTO> ChangeStatusRegistration(int id, UpdateStatusRegistrationDTO updateRegistration);
+
     }
 }

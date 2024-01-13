@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.DTO.Beneficiary;
+using backend.DTO.Contract;
 using backend.DTO.Insurance;
 using backend.DTO.InsuranceType;
 using backend.DTO.Registration;
@@ -32,6 +33,8 @@ namespace backend.Profiles
 
             // Cái này có vấn đề
             CreateMap<CreateRegistrationDTO, Registration>().ReverseMap();
+
+            CreateMap<ContractDTO, Contract>().ReverseMap();
         }
     }
 }

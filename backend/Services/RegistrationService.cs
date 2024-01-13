@@ -25,6 +25,15 @@ namespace backend.Services
             _mapper = mapper;
         }
 
+        public async Task<RegistrationDTO> ChangeStatusRegistration(int id, UpdateStatusRegistrationDTO updateRegistration)
+        {
+            var registration = await _registrationRepository.Get(id);
+            var result = await _registrationRepository.UpdateRegistrationStatus(registration, updateRegistration.Status);
+
+            var response = _mapper.Map<RegistrationDTO>(result);
+            return response;
+        }
+
         public async Task<BaseCommandResponse> CreateRegistrationInsurance(CreateRegistrationDTO registrationDTO)
         {
             var response = new BaseCommandResponse();
@@ -36,7 +45,7 @@ namespace backend.Services
                 response.Success = false;
                 response.Message = "Creation failed";
                 response.Errors = new List<string> { "Beneficiary is not valid." };
-                //return response;
+                return response;
             }
 
             // Kiểm tra gói bảo hiểm tồn tại
@@ -46,7 +55,7 @@ namespace backend.Services
                 response.Success = false;
                 response.Message = "Creation failed";
                 response.Errors = new List<string> { "Insurance is not valid." };
-                //return response;
+                return response;
             }
 
             // Kiểm tra tuổi người thụ hưởng có hợp lệ với gói bảo hiểm
@@ -90,8 +99,7 @@ namespace backend.Services
             var result = await _registrationRepository.Add(registration);
             //var result = await _registrationRepository.CreateRegistrationInsurance(registrationDTO);
 
-
-            if (result == null)
+            if (result is null)
             {
                 response.Success = false;
                 response.Message = "Creation failed";

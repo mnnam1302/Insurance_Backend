@@ -1,4 +1,5 @@
 ﻿using backend.DTO;
+using backend.IRepositories;
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +25,7 @@ namespace backend.Repositories
                 Random random = new Random();
                 string otp_code = random.Next(100000, 999999).ToString();
 
-                // Lưu dữ liệu vào database
                 string sql = "EXEC dbo.VerificationPassword @otp_code, @expired, @user_id";
-
-                //new SqlParameter("@expired", DateTime.UtcNow.Add(TimeSpan.FromSeconds(90))),
-                //DateTime expired = DateTime.Now.AddSeconds(90);
 
                 IEnumerable<VerificationPassword> result = await _dbContext.VerificationPasswords.FromSqlRaw(sql,
                     new SqlParameter("@otp_code", otp_code),
@@ -37,12 +34,11 @@ namespace backend.Repositories
                     ).ToListAsync();
 
                 var verificationPassword = result.FirstOrDefault();
-
                 return verificationPassword.OTPCode;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -54,11 +50,10 @@ namespace backend.Repositories
                                             .OrderByDescending(v => v.Expired)
                                             .FirstOrDefaultAsync(v => v.UserId == userId);
                 return result;
-
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -67,30 +62,15 @@ namespace backend.Repositories
             try
             {
                 string sql = "EXEC dbo.ResetPassword @user_id, @newPassword";
-                // ExecuteSqlRawAsync - ERROR
-                //Ở phiên bản cũ, ExecuteSqlRawAsync là một phương thức mở rộng của DbSet<TEntity>. Tuy nhiên, trong một số phiên bản mới, nó đã được chuyển sang DatabaseFacade. Do đó, bạn cần gọi ExecuteSqlRawAsync trên đối tượng Database thay vì trực tiếp trên DbSet< TEntity >.
-                // Cách này OK - _dbContext.Database.ExecuteSqlRawAsync
-                
+
                 await _dbContext.Database.ExecuteSqlRawAsync(sql,
                        new SqlParameter("@user_id", userId),
-                        new SqlParameter("@newPassword", newPassword)
-                );
-
-                // Cách này trả về dòng dữ liệu dư thừa
-                //IEnumerable<User> result = await _dbContext.Users.FromSqlRaw(sql,
-                //    new SqlParameter("@user_id", userId),
-                //    new SqlParameter("@newPassword", newPassword)
-                //).ToListAsync();
-
-                //if (result == null)
-                //{
-                //    throw new ArgumentException("Something was wrong in database");
-                //}
+                        new SqlParameter("@newPassword", newPassword));
                 return;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using backend.DTO;
-using backend.Helper;
+﻿using backend.Helper;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
@@ -7,6 +6,7 @@ using MimeKit;
 using static System.Net.WebRequestMethods;
 using System.Net.Mail;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using backend.DTO.Email;
 
 namespace backend.Services
 {

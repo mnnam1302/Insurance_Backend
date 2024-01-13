@@ -26,7 +26,26 @@ namespace backend.Controllers
             }
             try
             {
-                var result  = await _registrationService.CreateRegistrationInsurance(registrationDTO);
+                var result = await _registrationService.CreateRegistrationInsurance(registrationDTO);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPatch]
+        [Route("{id}/change-status")]
+        public async Task<IActionResult> ChangeStatusRegistration([FromRoute] int id, [FromBody] UpdateStatusRegistrationDTO updateStatusRegistrationDTO)
+        {
+            if (updateStatusRegistrationDTO == null)
+            {
+                return BadRequest("Request is not valid.");
+            }
+            try
+            {
+                var result = await _registrationService.ChangeStatusRegistration(id, updateStatusRegistrationDTO);
                 return Ok(result);
             }
             catch (ArgumentException ex)

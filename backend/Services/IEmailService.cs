@@ -1,4 +1,4 @@
-﻿using backend.DTO;
+﻿using backend.DTO.Email;
 
 namespace backend.Services
 {
