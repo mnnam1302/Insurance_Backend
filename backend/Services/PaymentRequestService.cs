@@ -5,6 +5,8 @@ using backend.DTO.Registration;
 using backend.IRepositories;
 using backend.Models;
 using backend.Repositories;
+using backend.Responses;
+using Newtonsoft.Json;
 
 namespace backend.Services
 {
@@ -36,9 +38,25 @@ namespace backend.Services
             return response;
         }
 
-        public async Task<PaymentRequest?> CreatePaymentRequest(CreatePaymentRequestDTO dto)
+        public async Task<BaseCommandResponse> CreatePaymentRequest(CreatePaymentRequestDTO dto)
         {
-            return await _payment.CreatePaymentRequest(dto);
+            var response = new BaseCommandResponse();
+            var result = await _payment.CreatePaymentRequest(dto);
+
+            if (result == null)
+            {
+                response.Success = false;
+                response.Message = "Create payment request failed";
+                response.Errors = new List<string>() { "Something was wrong while creating payment request" };
+            }
+            else
+            {
+                response.Success = true;
+                response.Message = "Create payment request successfully";
+                response.Id = result.PaymentRequestId;
+            }
+
+            return response;
         }
         public async Task<PaymentRequestDTO?> UpdatePaymentRequest(int id, UpdatePaymentRequestDTO updatePaymentRequestDTO)
         {
