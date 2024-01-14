@@ -4,8 +4,8 @@ namespace backend.Services
 {
     public interface IVnPayService
     {
-        Task<string> CreatePaymentUrl(HttpContent content, VnPayRequestModel model);
+        string CreatePaymentUrl(HttpContext context, VnPayRequestModel model);
 
-        Task<VnPaymentResponseModel> PaymentExecute(IQueryCollection collections);
+        VnPaymentResponseModel PaymentExecute(IQueryCollection collections);
     }
 }

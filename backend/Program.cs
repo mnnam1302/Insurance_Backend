@@ -108,6 +108,9 @@ builder.Services.AddCors(option =>
         });
 });
 
+// VnPay
+builder.Services.AddSingleton<IVnPayService, VnPayService>();
+
 builder.Services.AddHttpClient();
 
 
