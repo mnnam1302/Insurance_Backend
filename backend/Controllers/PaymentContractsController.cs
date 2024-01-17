@@ -90,7 +90,7 @@ namespace backend.Controllers
 
                 // cập nhật trạng thái payment contract - Đã thanh toán
                 var result_success = await _contractPaymentHistoryService.UpdatePaymentContract(paymentContract);
-                return Ok("Payment success");
+                return Redirect("http://localhost:5173/contracts/payment");
             } 
             catch(Exception ex)
             {
