@@ -1,6 +1,7 @@
 ﻿using backend.DTO.Vnpay;
 using backend.Helper;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 
 namespace backend.Services
 {
@@ -15,25 +16,27 @@ namespace backend.Services
 
         public string CreatePaymentUrl(HttpContext context, VnPayRequestModel model)
         {
-            //var tick = DateTime.Now.ToString(); // Nếu chưa có contractId thì test bằng cái này
             VnPayLibrary vnpay = new VnPayLibrary();
 
             vnpay.AddRequestData("vnp_Version", _config["VnPay:Version"]);
             vnpay.AddRequestData("vnp_Command", _config["VnPay:Command"]);
             vnpay.AddRequestData("vnp_TmnCode", _config["VnPay:TmnCode"]);
-            vnpay.AddRequestData("vnp_Amount", model.Amount.ToString());            // Số tiền 
-
-            vnpay.AddRequestData("vnp_CreatDate", model.CreateDate.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_Amount", (model.Amount * 100).ToString());
+            
+            vnpay.AddRequestData("vnp_CreateDate", model.CreateDate.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", _config["VnPay:CurrCode"]);
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(context));
             vnpay.AddRequestData("vnp_Locale", _config["VnPay:Locale"]);
 
-            vnpay.AddRequestData("vnp_OrderInfo", model.Description + model.ContractId); // Thanh toán cho hợp đồng: int // Nhớ cách ra khoảng trắng
-            vnpay.AddRequestData("vnp_ReturnUrl", _config["VnPay:PaymentBackReturnUrl"]); // Thanh toán xong sẽ trả về trang này
-            vnpay.AddRequestData("vnp_TxnRef", model.ContractId.ToString()); // Mã giao dịch tại hệ thống của merchant site
+            vnpay.AddRequestData("vnp_OrderInfo", $"Thanh toán hợp đồng: {model.ContractId} - ứng với Payment contract history: {model.PaymentContractId}");
+            vnpay.AddRequestData("vnp_OrderType", "other"); // Lỗi tối thiếu OrderType, nhưng thuộc tính này optional
+
+            vnpay.AddRequestData("vnp_ReturnUrl", _config["VnPay:PaymentBackReturnUrl"]); // URL thông báo kết quả giao dịch
+
+            // PaymentContractId không trùng
+            vnpay.AddRequestData("vnp_TxnRef", model.PaymentContractId.ToString()); // Mã tham chiếu của giao dịch
 
             var paymentUrl = vnpay.CreateRequestUrl(_config["VnPay:BaseUrl"], _config["VnPay:HashSecret"]);
-            
             return paymentUrl;
         }
 
@@ -49,13 +52,14 @@ namespace backend.Services
                 }
             }
 
-            var vnp_contractId = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
-            var vnp_TransactionId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
+            var vnp_PaymentContractId = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
+            var vnp_BankCode = vnpay.GetResponseData("vnp_BankCode");
+            var vnp_BankTranNo = vnpay.GetResponseData("vnp_BankTranNo");
             var vnp_SecureHash = collections.FirstOrDefault(p => p.Key == "vnp_SecureHash").Value;
             var vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
             var vnp_OrderInfo = vnpay.GetResponseData("vnp_OrderInfo");
 
-            // check xem có ai giả HashSecret không
+            // check xem có ai giả HashSecret không/
             bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, _config["VnPay:HashSecret"]);
 
             if (!checkSignature)
@@ -68,14 +72,14 @@ namespace backend.Services
 
             return new VnPaymentResponseModel
             {
-                Success = true,
+                PaymentContractId = (int)vnp_PaymentContractId,
                 PaymentMethod = "VnPay",
+                Success = true,
+                BankCode = vnp_BankCode,
+                BankTransactioNo = vnp_BankTranNo,
                 OrderDescription = vnp_OrderInfo,
-                ContractId = (int)vnp_contractId,
-                TransactionId = vnp_TransactionId.ToString(),
                 Token = vnp_SecureHash,
-                VnPayResponseCode = vnp_ResponseCode // Giống như Status trong request hay response
-
+                VnPayResponseCode = vnp_ResponseCode
             };
         }
     }

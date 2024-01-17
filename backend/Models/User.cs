@@ -44,5 +44,9 @@ namespace backend.Models
         [MaxLength(20, ErrorMessage = "Card identification cannot exceed 00 characters.")]
         [Column("card_identification")]
         public string CardIdentification { get; set; }
+
+
+        [Column("is_admin")]
+        public bool IsAdmin { get; set; }
     }
 }

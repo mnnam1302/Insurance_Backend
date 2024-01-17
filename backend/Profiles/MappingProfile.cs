@@ -4,9 +4,11 @@ using backend.DTO.Beneficiary;
 using backend.DTO.Contract;
 using backend.DTO.Insurance;
 using backend.DTO.InsuranceType;
+using backend.DTO.PaymentContractHistory;
 using backend.DTO.Registration;
 using backend.DTO.User;
 using backend.Models;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace backend.Profiles
 {
@@ -30,7 +32,12 @@ namespace backend.Profiles
             CreateMap<CreateBeneficiaryDTO, Beneficiary>().ReverseMap();
 
             // cái này ok
-            CreateMap<RegistrationDTO, Registration>().ReverseMap();
+            //CreateMap<RegistrationDTO, Registration>();
+            CreateMap<Registration, RegistrationDTO>()
+                .ForMember(dest => dest.TotalFee, 
+                            opt => opt.MapFrom(src => 
+                                                src.BasicInsuranceFee - ((src.BasicInsuranceFee * src.Discount) / 100)))
+                .ReverseMap();
 
             // Cái này có vấn đề
             CreateMap<CreateRegistrationDTO, Registration>().ReverseMap();
@@ -38,6 +45,10 @@ namespace backend.Profiles
             CreateMap<ContractDTO, Contract>().ReverseMap();
 
             CreateMap<PaymentRequestDTO, PaymentRequest>().ReverseMap();
+
+            CreateMap<CreatePaymentContractHistoryDTO, ContractPaymentHistory>();
+            CreateMap<UpdatePaymentContractHistoryDTO, ContractPaymentHistory>();
+            CreateMap<PaymentContractHistoryDTO, ContractPaymentHistory>().ReverseMap();
         }
     }
 }

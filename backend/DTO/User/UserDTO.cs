@@ -29,5 +29,7 @@ namespace backend.DTO.User
         [Required(ErrorMessage = "Card identification is required")]
         [MaxLength(20, ErrorMessage = "Card identification cannot exceed 00 characters.")]
         public string CardIdentification { get; set; }
+
+        public bool IsAdmin { get; set; } = false;
     }
 }

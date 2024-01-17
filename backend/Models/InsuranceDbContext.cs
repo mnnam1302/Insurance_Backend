@@ -26,6 +26,8 @@ namespace backend.Models
 
         public DbSet<Contract> Contracts { get; set; }
 
+        public DbSet<ContractPaymentHistory> ContractPaymentHistories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

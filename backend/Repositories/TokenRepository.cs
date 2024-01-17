@@ -116,17 +116,18 @@ namespace backend.Repositories
                         Access = accessToken,
                         Refresh = refreshToken,
                         UserId = user.UserId,
-                        Email = user.Email
+                        Email = user.Email,
+                        IsAdmin = user.IsAdmin
                     };
                 }
                 else
                 {
-                    throw new ArgumentException("Wrong email or password");
+                    throw new Exception("Wrong email or password");
                 }
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -161,16 +162,16 @@ namespace backend.Repositories
 
                 if (user == null)
                 {
-                    throw new ArgumentException("User is not valid");
+                    throw new Exception("User is not valid");
                 }
 
                 var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey");
 
                 return accessToken;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -200,7 +201,7 @@ namespace backend.Repositories
 
                 if (user == null)
                 {
-                    throw new ArgumentException("User is not valid");
+                    throw new Exception("User is not valid");
                 }
 
                 // Xóa refresh token ở database
@@ -211,7 +212,7 @@ namespace backend.Repositories
 
                 if (existingToken == null)
                 {
-                    throw new ArgumentException("Token is not valid in database");
+                    throw new Exception("Token is not valid in database");
                 }
                 else
                 {
@@ -222,7 +223,7 @@ namespace backend.Repositories
                 // Lưu thay đổi vào cơ sở dữ liệu
                 await _dbContext.SaveChangesAsync();
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -247,9 +248,22 @@ namespace backend.Repositories
                     Refresh = refreshToken
                 };
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> CheckUserIsAdmin(string email)
+        {
+            try
+            {
+                var isAdmin = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.IsAdmin == true);
+                return isAdmin != null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

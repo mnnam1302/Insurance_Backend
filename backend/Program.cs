@@ -65,21 +65,29 @@ builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddScoped<IBenefitDetailRepository, BenefitDetailRepository>();
 builder.Services.AddScoped<IBenefitDetailService, BenefitDetailService>();
 
-builder.Services.AddScoped<FirebaseController>();
+builder.Services.AddScoped<IContractPaymentHistoryRepository, ContractPaymentHistoryRepository>();
+builder.Services.AddScoped<IContractPaymentHistoryService, ContractPaymentHistoryService>();
 
-// Email - verfication password
+// Email - Verfication password
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailService,EmailService>();
 
-builder.Services.AddSingleton(provider =>
+
+// Firebase service
+builder.Services.AddScoped<FirebaseController>();
+
+builder.Services.AddTransient(provider =>
 {
     // Đọc thông tin cấu hình từ IConfiguration
     var firebaseConfig = new FirebaseConfig(builder.Configuration.GetSection("Firebase")["ApiKey"]);
     return firebaseConfig;
 });
-builder.Services.AddSingleton(provider => new FirebaseStorage(builder.Configuration.GetSection("Firebase")["StorageBucket"]));
-builder.Services.AddSingleton<FirebaseAuthProvider>();
 
+builder.Services.AddTransient(provider => new FirebaseStorage(builder.Configuration.GetSection("Firebase")["StorageBucket"]));
+
+builder.Services.AddTransient<FirebaseAuthProvider>();
+
+// AutoMapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Filter request required Authorized
@@ -101,8 +109,10 @@ builder.Services.AddCors(option =>
     option.AddPolicy("AllowSpecificOrigins",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173", "http://127.0.0.1:5173",
-                                "http://localhost:5174", "http://127.0.0.1:5174")
+            policy.WithOrigins("https://sandbox.vnpayment.vn",
+                                "http://sandbox.vnpayment.vn",
+                                "http://localhost:5173", 
+                                "http://127.0.0.1:5173")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
         });

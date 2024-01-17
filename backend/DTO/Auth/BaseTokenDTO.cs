@@ -7,5 +7,6 @@
         public string Refresh { get; set; }
         public int UserId { get; set; }
         public string Email { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

@@ -38,11 +38,29 @@ namespace backend.Controllers
                 var result = await _tokenService.Login(loginDTO);
                 return Ok(result);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { Errors = ex.Message });
+                return BadRequest(new { errors = ex.Message });
             }
         }
+
+        [HttpPost("login-admin")]
+        public async Task<IActionResult> LoginAdmin([FromBody] LoginDTO loginDTO)
+        {
+            if (loginDTO is null)
+            {
+                return BadRequest("Invalid client request");
+            }
+            try
+            {
+                var result = await _tokenService.LoginAdmin(loginDTO);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
+        }   
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] TokenDTO tokenDTO)
@@ -60,9 +78,9 @@ namespace backend.Controllers
                     message = "Logout successful"
                 });
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { Errors = ex.Message });
+                return BadRequest(new { errors = ex.Message });
             }
         }
 
@@ -82,9 +100,9 @@ namespace backend.Controllers
                     access = accessToken
                 });
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { Errors = ex.Message });
+                return BadRequest(new { errors = ex.Message });
             }
         }
 
@@ -122,6 +140,7 @@ namespace backend.Controllers
 
                     result.UserId = user.UserId;
                     result.Email = user.Email;
+                    result.IsAdmin = user.IsAdmin;
 
                     if (result is null)
                     {
@@ -135,9 +154,9 @@ namespace backend.Controllers
                     return Unauthorized(new { success = false, message = "Invalid access token." });
                 }
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { Errors = ex.Message });
+                return BadRequest(new { errors = ex.Message });
             }
         }
     }
