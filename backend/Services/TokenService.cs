@@ -16,6 +16,19 @@ namespace backend.Services
             return await _tokenRepository.Login(loginDTO);
         }
 
+        public async Task<BaseTokenDTO> LoginAdmin(LoginDTO loginDTO)
+        {
+            var isAdmin = await _tokenRepository.CheckUserIsAdmin(loginDTO.Email);
+
+            if (!isAdmin)
+            {
+                throw new ArgumentException("User is not admin");
+            }
+
+            var result = await _tokenRepository.Login(loginDTO);
+            return result;
+        }
+
         public async Task<BaseTokenDTO> LoginGoogle(int userId)
         {
             return await _tokenRepository.LoginGoogle(userId);

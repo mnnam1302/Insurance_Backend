@@ -85,19 +85,15 @@ namespace backend.Services
         }
 
 
-        public async Task<BaseCommandResponse> CreateContract(ContractDTO contractDTO)
+        public async Task<ContractDTO> CreateContract(ContractDTO contractDTO)
         {
             try
             {
-                var response = new BaseCommandResponse();
                 var registration = await _registrationRepository.Get(contractDTO.RegistrationId);
 
                 if (registration == null)
                 {
-                    response.Success = false;
-                    response.Message = "Creation failed.";
-                    response.Errors = new List<string> { "Registration is not valid." };
-                    return response;
+                    throw new Exception("Registration is not found");
                 }
 
                 decimal basic_fee = registration.BasicInsuranceFee;
@@ -120,13 +116,8 @@ namespace backend.Services
                 string status = "Đã lập hợp đồng";
                 var updateStatusRegistration = await _registrationRepository.UpdateRegistrationStatus(registration, status);
 
-                if (result != null)
-                {
-                    response.Success = true;
-                    response.Message = "Creation successful";
-                    response.Id = result.ContractId;
-                }
-
+                
+                var response = _mapper.Map<ContractDTO>(result);
                 return response;
             }
             catch (Exception ex)

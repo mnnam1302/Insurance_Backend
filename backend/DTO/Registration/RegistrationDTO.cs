@@ -17,6 +17,8 @@ namespace backend.DTO.Registration
 
         public decimal Discount { get; set; }
 
+        public decimal TotalFee { get; set; }
+
         public decimal TotalSupplementalBenefitFee { get; set; }
 
         public string RegistrationStatus { get; set; }

@@ -114,5 +114,13 @@ namespace backend.Services
 
             return response;
         }
+
+        public async Task<RegistrationDTO> GetRegistrationById(int id)
+        {
+            var result = await _registrationRepository.Get(id);
+
+            var response = _mapper.Map<RegistrationDTO>(result);
+            return response;
+        }
     }
 }

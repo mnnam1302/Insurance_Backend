@@ -157,5 +157,4 @@ namespace backend.Helper
             return vnpCompare.Compare(x, y, CompareOptions.Ordinal);
         }
     }
-
 }

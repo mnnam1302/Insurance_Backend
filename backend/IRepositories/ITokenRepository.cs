@@ -13,5 +13,6 @@ namespace backend.IRepositories
 
         Task<string> Refresh(string refresh);
 
+        Task<bool> CheckUserIsAdmin(string email);
     }
 }

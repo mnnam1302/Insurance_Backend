@@ -9,7 +9,7 @@ namespace backend.Services
     {
         Task<List<PaymentRequestDTO>> GetAll();
         Task<PaymentRequestDTO?> GetById(int id);
-        Task<PaymentRequest?> CreatePaymentRequest(CreatePaymentRequestDTO dto);
+        Task<BaseCommandResponse> CreatePaymentRequest(CreatePaymentRequestDTO dto);
         Task<PaymentRequestDTO?> UpdatePaymentRequest(int id, UpdatePaymentRequestDTO updatePaymentRequestDTO);
     }
 }

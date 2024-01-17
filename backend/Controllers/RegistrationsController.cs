@@ -17,6 +17,19 @@ namespace backend.Controllers
             _registrationService = registrationService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRegistrationById([FromRoute] int id)
+        {
+            try
+            {
+                var result = await _registrationService.GetRegistrationById(id);
+                return Ok(result);
+            } catch(Exception ex)
+            {
+                return BadRequest(new {errors = ex.Message });
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRegistrationInsurance([FromBody] CreateRegistrationDTO registrationDTO)
         {
