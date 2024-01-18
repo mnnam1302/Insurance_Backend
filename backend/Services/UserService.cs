@@ -18,9 +18,32 @@ namespace backend.Services
             _mapper = mapper;
         }
 
-        public Task<bool> CheckUserExists(int id)
+        public Task<bool> CheckUserExists(int id)       
         {
             return _userRepository.Exists(id);
+        }
+
+        public BasePagingResponse<UserDTO> GetAllPaging(int page, int pageSize)
+        {
+            var result = _userRepository.GetMultiPaging(x => x.Status, 
+                                                        out int totalRowSelected, 
+                                                        out int totalRow, 
+                                                        out int totalPage, 
+                                                        page, 
+                                                        pageSize);
+
+            var users = _mapper.Map<List<UserDTO>>(result);
+
+            var response = new BasePagingResponse<UserDTO>
+            {
+                Data = users,                           // Danh sách user
+                TotalItemSelected = totalRowSelected,   // Số lượng record trả về
+                TotalItems = totalRow,                  // Tổng số record trong db
+                PageSize = pageSize,                    // Page size
+                CurrentPage = page,                       // Current page
+                TotalPages = totalPage                   // Total page
+            };
+            return response;
         }
 
         public async Task<UserDTO?> GetUserByEmail(string email)

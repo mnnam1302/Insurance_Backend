@@ -15,5 +15,7 @@ namespace backend.Services
         Task<UserDTO?> GetUserByEmail(string email);
 
         Task<UserDTO?> UpdateUserById(UpdateUserDTO userDTO);
+
+        BasePagingResponse<UserDTO> GetAllPaging(int page, int pageSize);
     }
 }

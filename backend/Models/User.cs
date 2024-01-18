@@ -48,5 +48,8 @@ namespace backend.Models
 
         [Column("is_admin")]
         public bool IsAdmin { get; set; }
+
+        [Column("status")]
+        public bool Status { get; set; } = true;
     }
 }
