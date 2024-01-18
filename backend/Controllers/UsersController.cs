@@ -33,6 +33,20 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUsers([FromQuery] int page, int pageSize)
+        {
+            try
+            {
+                var result = _userService.GetAllPaging(page, pageSize);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserByID([FromRoute] int id)
         {

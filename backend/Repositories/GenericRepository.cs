@@ -2,8 +2,10 @@
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace backend.Repositories
@@ -51,6 +53,39 @@ namespace backend.Repositories
         {
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, 
+                                                    out int totalRowSelected,
+                                                    out int totalRow,
+                                                    out int totalPage,
+                                                    int index = 1,
+                                                    int size = 5, 
+                                                    string[] includes = null)
+        {
+            int skipCount = (index - 1) * size;
+            IQueryable<T> _resetSet;
+
+            //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
+            if (includes != null && includes.Any())
+            {
+                var query = _dbContext.Set<T>().Include(includes.First());
+                foreach (var include in includes.Skip(1))
+                    query = query.Include(include);
+
+                _resetSet = predicate != null ? query.Where<T>(predicate).AsQueryable() : query.AsQueryable();
+                totalRow = _resetSet.Count();
+            }
+            else
+            {
+                _resetSet = predicate != null ? _dbContext.Set<T>().Where<T>(predicate).AsQueryable() : _dbContext.Set<T>().AsQueryable();
+                totalRow = _resetSet.Count();
+            }
+
+            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
+            totalRowSelected = _resetSet.Count();
+            totalPage = (int)Math.Ceiling((double)totalRow / size);
+            return _resetSet.AsQueryable();
         }
     }
 }

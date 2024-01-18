@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bfEtGrrgjlt1SSPeKyrK/R0qwRjJeuZLiBTPZv4pye0akmjCEn8xtwyotCTkTIaK1qvKnTzHsCjJxorkeLsy2w==",
+  "dgSpecHash": "nQJsc5p2fpf6OeupX0htcWG9wgW3JRQSkpzpGaYPzWM5YjxmzgpsFtzt6p/TVmlPUMImQwcM3HaOaKBqnZvPvg==",
   "success": true,
   "projectFilePath": "D:\\NhatNam\\4th\\HK1\\PTUDHTTT_HD\\project\\Code\\backend\\InsuranceManagement.UnitTests\\InsuranceManagement.UnitTests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ADMIN\\.nuget\\packages\\ardalis.smartenum\\8.0.0\\ardalis.smartenum.8.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\aspnetcore.email\\2.1.403\\aspnetcore.email.2.1.403.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
@@ -105,6 +106,7 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.1\\system.configuration.configurationmanager.6.0.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.console\\4.3.0\\system.console.4.3.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",

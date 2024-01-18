@@ -220,3 +220,4 @@ D:\NhatNam\4th\HK1\PTUDHTTT_HD\project\Code\backend\InsuranceManagement.UnitTest
 D:\NhatNam\4th\HK1\PTUDHTTT_HD\project\Code\backend\InsuranceManagement.UnitTests\obj\Debug\net7.0\InsuranceManagement.UnitTests.pdb
 D:\NhatNam\4th\HK1\PTUDHTTT_HD\project\Code\backend\InsuranceManagement.UnitTests\obj\Debug\net7.0\InsuranceManagement.UnitTests.genruntimeconfig.cache
 D:\NhatNam\4th\HK1\PTUDHTTT_HD\project\Code\backend\InsuranceManagement.UnitTests\obj\Debug\net7.0\ref\InsuranceManagement.UnitTests.dll
+D:\NhatNam\4th\HK1\PTUDHTTT_HD\project\Code\backend\InsuranceManagement.UnitTests\bin\Debug\net7.0\Ardalis.SmartEnum.dll
