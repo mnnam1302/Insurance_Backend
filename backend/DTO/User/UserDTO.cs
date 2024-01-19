@@ -12,5 +12,6 @@ namespace backend.DTO.User
         public string CardIdentification { get; set; }
         public bool IsAdmin { get; set; } = false;
         public bool Status { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

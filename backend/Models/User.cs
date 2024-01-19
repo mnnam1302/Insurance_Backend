@@ -45,6 +45,8 @@ namespace backend.Models
         [Column("card_identification")]
         public string CardIdentification { get; set; }
 
+        [Column("created_date")]
+        public DateTime? CreatedDate { get; set; }
 
         [Column("is_admin")]
         public bool IsAdmin { get; set; }

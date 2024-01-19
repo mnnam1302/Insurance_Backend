@@ -54,6 +54,9 @@ namespace backend.Models
         [StringLength(100)]
         public string RelationshipPolicyholder { get; set; }
 
+        [Column("created_date")]
+        public DateTime? CreatedDate { get; set; }
+
         [Column("user_id")]
         public int UserId { get; set; }
 

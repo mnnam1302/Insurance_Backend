@@ -85,6 +85,20 @@ namespace backend.Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<Contract> UpdateContractStatus(Contract contract, string status)
+        {
+            try
+            {
+                contract.ContractStatus = status;
+                _dbContext.Entry(contract).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return contract;
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -125,5 +125,14 @@ namespace backend.Services
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<ContractDTO> UpdateStatusContract(int contractId, string status)
+        {
+            var contract = await _contractRepository.Get(contractId);
+
+            var result = await _contractRepository.UpdateContractStatus(contract, status);
+
+            var response = _mapper.Map<ContractDTO>(result);
+            return response;
+        }
     }
 }
