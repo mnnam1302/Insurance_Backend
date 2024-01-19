@@ -84,5 +84,19 @@ namespace backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummaryBeneficiaryByAge()
+        {
+            try
+            {
+                var result = await _beneficiaryService.SummaryBeneficiary();
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

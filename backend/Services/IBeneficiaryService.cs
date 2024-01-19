@@ -9,5 +9,6 @@ namespace backend.Services
     {
         Task<BeneficiaryDTO?> GetBeneficiaryById(int beneficiaryId);
         Task<BaseCommandResponse> CreateBeneficiary(CreateBeneficiaryDTO beneficiaryDTO);
+        Task<List<BeneficiaryCountDTO>> SummaryBeneficiary();
     }
 }

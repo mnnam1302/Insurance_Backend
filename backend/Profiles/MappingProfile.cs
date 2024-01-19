@@ -49,6 +49,11 @@ namespace backend.Profiles
             CreateMap<CreatePaymentContractHistoryDTO, ContractPaymentHistory>();
             CreateMap<UpdatePaymentContractHistoryDTO, ContractPaymentHistory>();
             CreateMap<PaymentContractHistoryDTO, ContractPaymentHistory>().ReverseMap();
+
+
+            CreateMap<BeneficiaryCount, BeneficiaryCountDTO>()
+                .ForMember(dest => dest.x, opt => opt.MapFrom(src => src.Label))
+                .ForMember(dest => dest.y, opt => opt.MapFrom(src => src.Total));
         }
     }
 }

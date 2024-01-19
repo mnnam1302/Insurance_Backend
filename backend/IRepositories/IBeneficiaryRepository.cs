@@ -8,5 +8,7 @@ namespace backend.IRepositories
     {
         //Task<Beneficiary?> GetBeneficiaryById(int beneficiaryId);
         //Task<Beneficiary?> CreateBeneficiary(BeneficiaryDTO beneficiaryDTO);
+
+        Task<List<BeneficiaryCount>> SummaryBeneficiary();
     }
 }
