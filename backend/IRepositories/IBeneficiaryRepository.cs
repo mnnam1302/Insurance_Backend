@@ -1,5 +1,6 @@
 ﻿using backend.DTO.Beneficiary;
 using backend.Models;
+using backend.Models.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.IRepositories

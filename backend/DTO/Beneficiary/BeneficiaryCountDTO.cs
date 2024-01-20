@@ -2,7 +2,7 @@
 {
     public class BeneficiaryCountDTO
     {
-        public string x { get; set; } = string.Empty;
-        public int y { get; set; }
+        public string X { get; set; } = string.Empty;
+        public int Y { get; set; }
     }
 }

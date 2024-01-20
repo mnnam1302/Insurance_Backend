@@ -51,7 +51,7 @@ namespace backend.Controllers
                     PaymentContractId = paymentContract.Id,
                     ContractId = paymentContractDTO.ContractId,
                     Description = $"{user.FullName} {user.Phone}",
-                    Amount = paymentContractDTO.PaymentAmount,
+                    Amount = (int)paymentContractDTO.PaymentAmount,
                     CreateDate = DateTime.Now
                 };
 
@@ -96,6 +96,20 @@ namespace backend.Controllers
             {
                 return BadRequest(new {errors = ex.Message });
             } 
+        }
+
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummaryPaymentContract([FromQuery] int year)
+        {
+            try
+            {
+                var result = await _contractPaymentHistoryService.GetSummaryPaymentContract(year);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
         }
     }
 }

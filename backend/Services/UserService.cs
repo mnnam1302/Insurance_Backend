@@ -123,6 +123,25 @@ namespace backend.Services
             var response = _mapper.Map<UserDTO>(result);
             return response;
         }
+
+        public async Task<SummaryUserDTO> GetSummaryUser()
+        {
+            var response = new SummaryUserDTO();
+            var result = await _userRepository.GetSummaryUser();
+
+            if (result.Count >= 2)
+            {
+                // Độ chênh lệch chia cho tổng 2 tháng
+                var rating = (decimal)(result[0].Total - result[1].Total) / (decimal)(result[0].Total + result[1].Total) * 100;
+
+                int totalSum = result.Sum(item => item.Total);
+
+                response.Total = totalSum;
+                response.Rating = Math.Round(rating, 2);
+            }
+            
+            return response;
+        }
     }
 }
  

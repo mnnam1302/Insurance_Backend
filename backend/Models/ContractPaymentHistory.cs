@@ -19,7 +19,7 @@ namespace backend.Models
         public DateTime? PaymentDate { get; set; } = DateTime.Now;
 
         [Column("payment_Amount")]
-        public int PaymentAmount { get; set; }
+        public decimal PaymentAmount { get; set; }
 
         [Column("service_Payment")]
         [MaxLength(20)]

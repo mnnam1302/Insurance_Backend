@@ -66,5 +66,13 @@ namespace backend.Services
             var response = _mapper.Map<PaymentRequestDTO>(result);
             return response;
         }
+
+        public async Task<List<SummaryPaymentRequestDTO>> GetSummaryPaymentRequest(int year)
+        {
+            var result = await _payment.GetSummaryPaymentRequest(year);
+
+            var response =  _mapper.Map<List<SummaryPaymentRequestDTO>>(result);
+            return response;
+        }
     }
 }

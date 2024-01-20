@@ -1,6 +1,7 @@
 ﻿using backend.DTO.Contract;
 using backend.IRepositories;
 using backend.Models;
+using backend.Models.Views;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -86,5 +87,17 @@ namespace backend.Repositories
             }
         }
 
+        public async Task<List<ContractRevenue>> GetSummaryContract()
+        {
+            try
+            {
+                var result = await _dbContext.ContractRevenues.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

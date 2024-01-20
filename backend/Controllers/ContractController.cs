@@ -153,5 +153,23 @@ namespace backend.Controllers
                 return BadRequest(new { errors = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Get summary totalFee contract over year, month
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummaryContract()
+        {
+            try
+            {
+                var result = await _contractService.GetSummaryContract();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
+        }   
     }
 }

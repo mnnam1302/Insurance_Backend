@@ -12,6 +12,8 @@ namespace backend.Services
         Task<List<ContractDTO>> GetByUserId(int userId);
         Task<ContractDTO?> GetByInsuranceCode(string insurance_code);
         Task<ContractDTO> CreateContract(ContractDTO contract);
+
+        Task<SummaryContractDTO> GetSummaryContract();
     }
 
 }

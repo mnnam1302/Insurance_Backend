@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using backend.DTO.Contract;
 using backend.IRepositories;
 using backend.Models;
@@ -8,6 +9,7 @@ using Firebase.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.SqlServer.Server;
 using System.Runtime.CompilerServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace backend.Services
 {
@@ -124,6 +126,26 @@ namespace backend.Services
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<SummaryContractDTO> GetSummaryContract()
+        {
+            var response = new SummaryContractDTO();
+            // Lấy danh thu 2 tháng gần đây nhất
+            var result = await _contractRepository.GetSummaryContract();
+
+            // Tính tỷ lệ tháng này bằng bao nhiêu phần trăm tháng trước
+           if (result.Count >= 2)
+           {
+                var rating = (result[0].Revenue - result[1].Revenue) / (result[0].Revenue + result[1].Revenue) * 100;
+
+                response.RevenueCurrentMonth = result[0].Revenue;
+                response.RateRevenueCurrentMonth = Math.Round(rating, 2);
+
+            }
+
+            return response;
+
         }
     }
 }

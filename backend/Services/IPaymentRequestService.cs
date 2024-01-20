@@ -11,5 +11,7 @@ namespace backend.Services
         Task<PaymentRequestDTO?> GetById(int id);
         Task<BaseCommandResponse> CreatePaymentRequest(CreatePaymentRequestDTO dto);
         Task<PaymentRequestDTO?> UpdatePaymentRequest(int id, UpdatePaymentRequestDTO updatePaymentRequestDTO);
+
+        Task<List<SummaryPaymentRequestDTO>> GetSummaryPaymentRequest(int year);
     }
 }

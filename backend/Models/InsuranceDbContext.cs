@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using backend.Models.Views;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Models
 {
@@ -24,6 +25,46 @@ namespace backend.Models
                     eb.Property(v => v.Label).HasColumnName("Label");
                 }
             );
+            modelBuilder.Entity<ContractRevenue>(
+                cr =>
+                {
+                    cr.HasNoKey();
+                    cr.ToView("View_RevenueContract");
+                    cr.Property(v => v.Year).HasColumnName("Year");
+                    cr.Property(v => v.Month).HasColumnName("Month");
+                    cr.Property(v => v.Revenue).HasColumnName("Revenue");
+                }
+            );
+            modelBuilder.Entity<UserCount>(
+                cr =>
+                {
+                    cr.HasNoKey();
+                    cr.ToView("View_CountUser");
+                    cr.Property(v => v.Year).HasColumnName("Year");
+                    cr.Property(v => v.Month).HasColumnName("Month");
+                    cr.Property(v => v.Total).HasColumnName("Total");
+                }
+            );
+            modelBuilder.Entity<SummaryPaymentContract>(
+               cr =>
+               {
+                   cr.HasNoKey();
+                   cr.ToView("View_Icome_PaymentContract");
+                   cr.Property(v => v.Year).HasColumnName("Year");
+                   cr.Property(v => v.Month).HasColumnName("Month");
+                   cr.Property(v => v.Amount).HasColumnName("Amount");
+               }
+            );
+            modelBuilder.Entity<SummaryPaymentRequest>(
+               cr =>
+               {
+                   cr.HasNoKey();
+                   cr.ToView("View_Payment_PaymentRequest");
+                   cr.Property(v => v.Year).HasColumnName("Year");
+                   cr.Property(v => v.Month).HasColumnName("Month");
+                   cr.Property(v => v.Amount).HasColumnName("Amount");
+               }
+            );
         }
 
         public DbSet<User> Users { get; set; }
@@ -42,5 +83,9 @@ namespace backend.Models
 
 
         public DbSet<BeneficiaryCount> BeneficiaryCounts { get; set; }
+        public DbSet<ContractRevenue> ContractRevenues { get; set; }
+        public DbSet<UserCount> UserCounts { get; set; }
+        public DbSet<SummaryPaymentContract> SummaryPaymentContracts { get; set; }
+        public DbSet<SummaryPaymentRequest> SummaryPaymentRequests { get; set; }
     }
 }

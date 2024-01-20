@@ -8,10 +8,10 @@ namespace backend.DTO
         public int PaymentRequestId { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        public double TotalCost { get; set; }
+        public decimal TotalCost { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
-        public double TotalPayment { get; set; }
+        public decimal TotalPayment { get; set; }
 
         [Required(ErrorMessage = "Please enter your description")]
         public string? Description { get; set; }

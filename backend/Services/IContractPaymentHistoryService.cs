@@ -1,4 +1,5 @@
 ﻿using backend.DTO.PaymentContractHistory;
+using backend.Models.Views;
 using backend.Responses;
 
 namespace backend.Services
@@ -10,5 +11,7 @@ namespace backend.Services
         Task<PaymentContractHistoryDTO> UpdateStatusContractPayment(int paymentContractId, string status);
 
         Task<PaymentContractHistoryDTO> UpdatePaymentContract(UpdatePaymentContractHistoryDTO paymentContract);
+
+        Task<List<SummaryPaymentContractDTO>> GetSummaryPaymentContract(int year);
     }
 }

@@ -2,6 +2,7 @@
 using backend.DTO.PaymentContractHistory;
 using backend.IRepositories;
 using backend.Models;
+using backend.Models.Views;
 using backend.Responses;
 
 namespace backend.Services
@@ -67,6 +68,14 @@ namespace backend.Services
             var result = await _contractPaymentHistoryRepository.UpdateStatusContractPayment(contractPayment, status);
 
             var response = _mapper.Map<PaymentContractHistoryDTO>(result);
+            return response;
+        }
+
+        public async Task<List<SummaryPaymentContractDTO>> GetSummaryPaymentContract(int year)
+        {
+            var result = await _contractPaymentHistoryRepository.GetSummaryPaymentContract(year);
+
+            var response = _mapper.Map<List<SummaryPaymentContractDTO>>(result);
             return response;
         }
     }

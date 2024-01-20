@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System;
+using backend.Models.Views;
 
 namespace backend.Repositories
 {
