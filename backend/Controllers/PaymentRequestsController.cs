@@ -26,11 +26,11 @@ namespace backend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllPaymentRequests()
+        public async Task<IActionResult> GetAllPaymentRequests([FromQuery] int page, int pageSize)
         {
             try
             {
-                var paymentRequests = await _payment.GetAll();
+                var paymentRequests = _payment.GetAllPaging(page, pageSize);
                 return Ok(paymentRequests);
             }
             catch (Exception ex)

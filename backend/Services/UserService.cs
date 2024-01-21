@@ -40,8 +40,8 @@ namespace backend.Services
                 TotalItemSelected = totalRowSelected,   // Số lượng record trả về
                 TotalItems = totalRow,                  // Tổng số record trong db
                 PageSize = pageSize,                    // Page size
-                CurrentPage = page,                       // Current page
-                TotalPages = totalPage                   // Total page
+                CurrentPage = page,                     // Current page
+                TotalPages = totalPage                  // Total page
             };
             return response;
         }
