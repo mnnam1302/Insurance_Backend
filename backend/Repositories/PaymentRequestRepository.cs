@@ -45,7 +45,7 @@ namespace backend.Repositories
             try
             {
                 paymentRequest.TotalPayment = updatePaymentRequestDTO.Payment;
-                paymentRequest.RequestStatus = updatePaymentRequestDTO.Status;
+                paymentRequest.RequestStatus = "Đã xử lý";
 
                 _context.Entry(paymentRequest).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
