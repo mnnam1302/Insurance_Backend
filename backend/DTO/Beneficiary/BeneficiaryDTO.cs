@@ -22,5 +22,7 @@ namespace backend.DTO.Beneficiary
         public string RelationshipPolicyholder { get; set; }
 
         public int UserId { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
     }
 }

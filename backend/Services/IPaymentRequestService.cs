@@ -13,5 +13,6 @@ namespace backend.Services
         Task<PaymentRequestDTO?> UpdatePaymentRequest(int id, UpdatePaymentRequestDTO updatePaymentRequestDTO);
 
         Task<List<SummaryPaymentRequestDTO>> GetSummaryPaymentRequest(int year);
+        BasePagingResponse<PaymentRequestDTO> GetAllPaging(int page, int pageSize);
     }
 }

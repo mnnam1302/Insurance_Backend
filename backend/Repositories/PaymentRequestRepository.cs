@@ -63,7 +63,7 @@ namespace backend.Repositories
             try
             {
                 paymentRequest.TotalPayment = updatePaymentRequestDTO.Payment;
-                paymentRequest.RequestStatus = updatePaymentRequestDTO.Status;
+                paymentRequest.RequestStatus = "Đã xử lý";
 
                 _dbContext.Entry(paymentRequest).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();

@@ -16,14 +16,17 @@ namespace backend.Controllers
         private readonly IVnPayService _vnPayService;
         private readonly IUserService _userService;
         private readonly IContractPaymentHistoryService _contractPaymentHistoryService;
+        private readonly IContractService _contractService;
 
         public PaymentContractsController(IVnPayService vnPayService, 
                                             IUserService userService,
-                                            IContractPaymentHistoryService contractPaymentHistoryService)
+                                            IContractPaymentHistoryService contractPaymentHistoryService,
+                                            IContractService contractService)
         {
             _vnPayService = vnPayService;
             _userService = userService;
             _contractPaymentHistoryService = contractPaymentHistoryService;
+            _contractService = contractService;
         }
 
 
@@ -90,6 +93,13 @@ namespace backend.Controllers
 
                 // cập nhật trạng thái payment contract - Đã thanh toán
                 var result_success = await _contractPaymentHistoryService.UpdatePaymentContract(paymentContract);
+
+                // cập nhật trạng thái contract - Đã thanh toán
+                if (result_success.ContractId != null)
+                {
+                    int contractId = result_success.ContractId.GetValueOrDefault();
+                    var update_contract_result = await _contractService.UpdateStatusContract(contractId, "Đã thanh toán");
+                }
                 return Redirect("http://localhost:5173/contracts/payment");
             } 
             catch(Exception ex)
