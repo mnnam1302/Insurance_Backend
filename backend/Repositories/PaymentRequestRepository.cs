@@ -1,6 +1,7 @@
 ﻿using backend.DTO.PaymentRequest;
 using backend.IRepositories;
 using backend.Models;
+using backend.Models.Views;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +9,10 @@ namespace backend.Repositories
 {
     public class PaymentRequestReponsitory : GenericRepository<PaymentRequest>, IPaymentRequestRepository
     {
-        private readonly InsuranceDbContext _context;
-        public PaymentRequestReponsitory(InsuranceDbContext context) : base(context)
+        private readonly InsuranceDbContext _dbContext;
+        public PaymentRequestReponsitory(InsuranceDbContext dbContext) : base(dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
         public async Task<PaymentRequest?> CreatePaymentRequest(CreatePaymentRequestDTO dto)
@@ -24,7 +25,7 @@ namespace backend.Repositories
                     "@description, " +
                     "@image";
 
-                IEnumerable<PaymentRequest?> result = await _context.PaymentRequests.FromSqlRaw(sql,
+                IEnumerable<PaymentRequest?> result = await _dbContext.PaymentRequests.FromSqlRaw(sql,
                     new SqlParameter("@contract_id", dto.ContractId),
                     new SqlParameter("@total_cost", dto.TotalCost),
                     new SqlParameter("@description", dto.Description),
@@ -40,6 +41,23 @@ namespace backend.Repositories
             }
         }
 
+        public async Task<List<SummaryPaymentRequest>> GetSummaryPaymentRequest(int year)
+        {
+            try
+            {
+                var result = await _dbContext.SummaryPaymentRequests
+                    .Where(x => x.Year == year)
+                    .OrderBy(x => x.Month)
+                    .ToListAsync();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<PaymentRequest?> UpdatePaymentRequest(PaymentRequest paymentRequest, UpdatePaymentRequestDTO updatePaymentRequestDTO)
         {
             try
@@ -47,8 +65,8 @@ namespace backend.Repositories
                 paymentRequest.TotalPayment = updatePaymentRequestDTO.Payment;
                 paymentRequest.RequestStatus = "Đã xử lý";
 
-                _context.Entry(paymentRequest).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _dbContext.Entry(paymentRequest).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
                 return paymentRequest;
             }
             catch (Exception ex)

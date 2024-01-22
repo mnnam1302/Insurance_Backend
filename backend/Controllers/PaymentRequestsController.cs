@@ -126,5 +126,20 @@ namespace backend.Controllers
                 return BadRequest(new { errors = ex.Message });
             }
         }
+
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummaryPaymentRequest([FromQuery] int year)
+        {
+            try
+            {
+                var result = await _payment.GetSummaryPaymentRequest(year);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
+        }
     }
 }

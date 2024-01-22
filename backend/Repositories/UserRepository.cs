@@ -1,6 +1,6 @@
-﻿using backend.DTO.User;
-using backend.IRepositories;
+﻿using backend.IRepositories;
 using backend.Models;
+using backend.Models.Views;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,6 +51,19 @@ namespace backend.Repositories
             }
             catch (ArgumentException ex) {
                 throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public async Task<List<UserCount>> GetSummaryUser()
+        {
+            try
+            {
+                var result = await _dbContext.UserCounts.ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -84,5 +84,23 @@ namespace backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Summary user based on month, year
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummaryUser()
+        {
+            try
+            {
+                var result = await _userService.GetSummaryUser();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { errors = ex.Message });
+            }
+        }
     }
 }

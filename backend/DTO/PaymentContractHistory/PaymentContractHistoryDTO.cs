@@ -11,7 +11,7 @@ namespace backend.DTO.PaymentContractHistory
 
         public DateTime? PaymentDate { get; set; }
 
-        public int PaymentAmount { get; set; }
+        public decimal PaymentAmount { get; set; }
 
         public string ServicePayment { get; set; }
 

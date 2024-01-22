@@ -47,5 +47,13 @@ namespace backend.Services
             var result = _mapper.Map<BeneficiaryDTO>(beneficiary);
             return result;
         }
+
+        public async Task<List<BeneficiaryCountDTO>> SummaryBeneficiary()
+        {
+            var result = await _beneficiaryRepository.SummaryBeneficiary();
+
+            var response = _mapper.Map<List<BeneficiaryCountDTO>>(result);
+            return response;
+        }
     }
 }

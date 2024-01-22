@@ -17,5 +17,7 @@ namespace backend.Services
         Task<UserDTO?> UpdateUserById(UpdateUserDTO userDTO);
 
         BasePagingResponse<UserDTO> GetAllPaging(int page, int pageSize);
+
+        Task<SummaryUserDTO> GetSummaryUser();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using backend.DTO.Contract;
 using backend.Models;
+using backend.Models.Views;
 
 namespace backend.IRepositories
 {
@@ -9,6 +10,8 @@ namespace backend.IRepositories
         Task<Contract?> GetContractByInsuranceCode(string insurance_code);
         Task<Contract?> CreateContract(ContractDTO dto);
         Task<Contract> UpdateContractStatus(Contract contract, string status);
+
+        Task<List<ContractRevenue>> GetSummaryContract();
 
     }
 }

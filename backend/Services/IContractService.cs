@@ -13,6 +13,8 @@ namespace backend.Services
         Task<ContractDTO?> GetByInsuranceCode(string insurance_code);
         Task<ContractDTO> CreateContract(ContractDTO contract);
         Task<ContractDTO> UpdateStatusContract(int contractId, string status);
+
+        Task<SummaryContractDTO> GetSummaryContract();
     }
 
 }

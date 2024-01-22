@@ -1,5 +1,5 @@
-﻿using backend.DTO.User;
-using backend.Models;
+﻿using backend.Models;
+using backend.Models.Views;
 
 namespace backend.IRepositories
 {
@@ -11,5 +11,7 @@ namespace backend.IRepositories
         Task<User?> GetUserByCardIdentication(string identification);
 
         Task<User?> CreateUser(User user);
+
+        Task<List<UserCount>> GetSummaryUser();
     }
 }

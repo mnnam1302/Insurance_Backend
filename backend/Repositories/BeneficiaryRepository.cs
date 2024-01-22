@@ -3,6 +3,10 @@ using backend.IRepositories;
 using backend.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System;
+using backend.Models.Views;
 
 namespace backend.Repositories
 {
@@ -13,6 +17,20 @@ namespace backend.Repositories
         public BeneficiaryRepository(InsuranceDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<List<BeneficiaryCount>> SummaryBeneficiary()
+        {
+            try
+            {
+                var result = await _dbContext.BeneficiaryCounts.ToListAsync();
+                return result;
+
+
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         //public async Task<Beneficiary?> GetBeneficiaryById(int beneficiaryId)

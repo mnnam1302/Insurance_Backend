@@ -12,11 +12,9 @@ namespace backend.Models
         public int PaymentRequestId { get; set; }
 
         [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
         [Column("total_cost")]
         public decimal TotalCost { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Must be greater than or equal to 0")]
         [Column("total_payment")]
         public decimal TotalPayment { get; set; }
 
