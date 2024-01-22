@@ -18,6 +18,8 @@ namespace backend.Services
 
         BasePagingResponse<UserDTO> GetAllPaging(int page, int pageSize);
 
+        BasePagingResponse<UserDTO> SearchUserByEmail(string email, int page, int pageSize);
+
         Task<SummaryUserDTO> GetSummaryUser();
     }
 }

@@ -47,6 +47,20 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SeacrhUsersByEmail([FromQuery] string email, int page, int pageSize)
+        {
+            try
+            {
+                var result = _userService.SearchUserByEmail(email, page, pageSize);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserByID([FromRoute] int id)
         {

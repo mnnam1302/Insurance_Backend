@@ -46,6 +46,29 @@ namespace backend.Services
             return response;
         }
 
+        public BasePagingResponse<UserDTO> SearchUserByEmail(string email, int page, int pageSize)
+        {
+            var result = _userRepository.GetMultiPaging(x => x.Email.Contains(email),
+                                                        out int totalRowSelected,
+                                                        out int totalRow,
+                                                        out int totalPage,
+                                                        page,
+                                                        pageSize);
+
+            var users = _mapper.Map<List<UserDTO>>(result);
+
+            var response = new BasePagingResponse<UserDTO>
+            {
+                Data = users,                           // Danh sách user
+                TotalItemSelected = totalRowSelected,   // Số lượng record trả về
+                TotalItems = totalRow,                  // Tổng số record trong db
+                PageSize = pageSize,                    // Page size
+                CurrentPage = page,                     // Current page
+                TotalPages = totalPage                  // Total page
+            };
+            return response;
+        }
+
         public async Task<UserDTO?> GetUserByEmail(string email)
         {
             var user = await _userRepository.GetUserByEmail(email);
@@ -129,14 +152,14 @@ namespace backend.Services
             var response = new SummaryUserDTO();
             var result = await _userRepository.GetSummaryUser();
 
+            int totalSum = result.Sum(item => item.Total);
+            response.Total = totalSum;
+
             if (result.Count >= 2)
             {
                 // Độ chênh lệch chia cho tổng 2 tháng
                 var rating = (decimal)(result[0].Total - result[1].Total) / (decimal)(result[0].Total + result[1].Total) * 100;
 
-                int totalSum = result.Sum(item => item.Total);
-
-                response.Total = totalSum;
                 response.Rating = Math.Round(rating, 2);
             }
             
