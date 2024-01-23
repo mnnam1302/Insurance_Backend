@@ -24,10 +24,5 @@
   <ItemGroup>
     <ProjectReference Include="..\backend\backend.csproj" />
   </ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Mocks\" />
-    <Folder Include="UnitTestRepositories\" />
-  </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using backend.DTO.InsuranceType;
 using backend.IRepositories;
-using backend.Models;
 
 namespace backend.Services
 {
@@ -9,6 +8,7 @@ namespace backend.Services
     {
         private readonly IInsuranceTypeRepository _insuranceRepository;
         private readonly IMapper _mapper;
+
         public InsuranceTypeService(IInsuranceTypeRepository insuranceRepository, IMapper mapper)
         {
             _insuranceRepository = insuranceRepository;
