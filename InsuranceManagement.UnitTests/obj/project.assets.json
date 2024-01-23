@@ -140,39 +140,6 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
-      "DiffEngine/11.3.0": {
-        "type": "package",
-        "dependencies": {
-          "EmptyFiles": "4.4.0",
-          "System.Management": "6.0.1"
-        },
-        "compile": {
-          "lib/net7.0/DiffEngine.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0/DiffEngine.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "EmptyFiles/4.4.0": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0/EmptyFiles.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0/EmptyFiles.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/EmptyFiles.targets": {}
-        }
-      },
       "Firebase.Auth/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -198,6 +165,22 @@
         },
         "runtime": {
           "lib/netstandard1.1/Firebase.Storage.dll": {}
+        }
+      },
+      "FluentAssertions/6.12.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "4.4.0"
+        },
+        "compile": {
+          "lib/net6.0/FluentAssertions.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FluentAssertions.dll": {
+            "related": ".pdb;.xml"
+          }
         }
       },
       "Google.Api.Gax/4.4.0": {
@@ -1358,7 +1341,7 @@
       "Microsoft.Win32.SystemEvents/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
             "related": ".xml"
           }
         },
@@ -1654,26 +1637,6 @@
           }
         }
       },
-      "Shouldly/4.2.1": {
-        "type": "package",
-        "dependencies": {
-          "DiffEngine": "11.3.0",
-          "EmptyFiles": "4.4.0"
-        },
-        "compile": {
-          "lib/net5.0/Shouldly.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net5.0/Shouldly.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/Shouldly.targets": {}
-        }
-      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "type": "package",
         "dependencies": {
@@ -1832,7 +1795,7 @@
           "System.Security.Permissions": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
@@ -1950,7 +1913,7 @@
           "Microsoft.Win32.SystemEvents": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Drawing.Common.dll": {
             "related": ".xml"
           }
         },
@@ -2642,7 +2605,7 @@
       "System.Security.AccessControl/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Security.AccessControl.dll": {
             "related": ".xml"
           }
         },
@@ -2929,7 +2892,7 @@
           "System.Windows.Extensions": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
@@ -3120,7 +3083,7 @@
           "System.Drawing.Common": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Windows.Extensions.dll": {
             "related": ".xml"
           }
         },
@@ -3516,108 +3479,6 @@
         "coverlet.collector.nuspec"
       ]
     },
-    "DiffEngine/11.3.0": {
-      "sha512": "k0ZgZqd09jLZQjR8FyQbSQE86Q7QZnjEzq1LPHtj1R2AoWO8sjV5x+jlSisL7NZAbUOI4y+7Bog8gkr9WIRBGw==",
-      "type": "package",
-      "path": "diffengine/11.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "diffengine.11.3.0.nupkg.sha512",
-        "diffengine.nuspec",
-        "icon.png",
-        "lib/net461/DiffEngine.dll",
-        "lib/net461/DiffEngine.xml",
-        "lib/net48/DiffEngine.dll",
-        "lib/net48/DiffEngine.xml",
-        "lib/net5.0/DiffEngine.dll",
-        "lib/net5.0/DiffEngine.xml",
-        "lib/net6.0/DiffEngine.dll",
-        "lib/net6.0/DiffEngine.xml",
-        "lib/net7.0/DiffEngine.dll",
-        "lib/net7.0/DiffEngine.xml",
-        "lib/netcoreapp2.0/DiffEngine.dll",
-        "lib/netcoreapp2.0/DiffEngine.xml",
-        "lib/netcoreapp2.1/DiffEngine.dll",
-        "lib/netcoreapp2.1/DiffEngine.xml",
-        "lib/netcoreapp3.0/DiffEngine.dll",
-        "lib/netcoreapp3.0/DiffEngine.xml",
-        "lib/netcoreapp3.1/DiffEngine.dll",
-        "lib/netcoreapp3.1/DiffEngine.xml",
-        "lib/netstandard2.0/DiffEngine.dll",
-        "lib/netstandard2.0/DiffEngine.xml",
-        "lib/netstandard2.1/DiffEngine.dll",
-        "lib/netstandard2.1/DiffEngine.xml"
-      ]
-    },
-    "EmptyFiles/4.4.0": {
-      "sha512": "gwJEfIGS7FhykvtZoscwXj/XwW+mJY6UbAZk+qtLKFUGWC95kfKXnj8VkxsZQnWBxJemM/q664rGLN5nf+OHZw==",
-      "type": "package",
-      "path": "emptyfiles/4.4.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "EmptyFiles/archive/empty.7z",
-        "EmptyFiles/archive/empty.bz2",
-        "EmptyFiles/archive/empty.gz",
-        "EmptyFiles/archive/empty.tar",
-        "EmptyFiles/archive/empty.xz",
-        "EmptyFiles/archive/empty.zip",
-        "EmptyFiles/document/empty.docx",
-        "EmptyFiles/document/empty.odt",
-        "EmptyFiles/document/empty.pdf",
-        "EmptyFiles/document/empty.rtf",
-        "EmptyFiles/image/empty.avif",
-        "EmptyFiles/image/empty.bmp",
-        "EmptyFiles/image/empty.dds",
-        "EmptyFiles/image/empty.dib",
-        "EmptyFiles/image/empty.emf",
-        "EmptyFiles/image/empty.exif",
-        "EmptyFiles/image/empty.gif",
-        "EmptyFiles/image/empty.heic",
-        "EmptyFiles/image/empty.heif",
-        "EmptyFiles/image/empty.ico",
-        "EmptyFiles/image/empty.j2c",
-        "EmptyFiles/image/empty.jfif",
-        "EmptyFiles/image/empty.jp2",
-        "EmptyFiles/image/empty.jpc",
-        "EmptyFiles/image/empty.jpe",
-        "EmptyFiles/image/empty.jpg",
-        "EmptyFiles/image/empty.jxr",
-        "EmptyFiles/image/empty.pbm",
-        "EmptyFiles/image/empty.pcx",
-        "EmptyFiles/image/empty.pgm",
-        "EmptyFiles/image/empty.png",
-        "EmptyFiles/image/empty.ppm",
-        "EmptyFiles/image/empty.rle",
-        "EmptyFiles/image/empty.tga",
-        "EmptyFiles/image/empty.tif",
-        "EmptyFiles/image/empty.wdp",
-        "EmptyFiles/image/empty.webp",
-        "EmptyFiles/image/empty.wmp",
-        "EmptyFiles/sheet/empty.ods",
-        "EmptyFiles/sheet/empty.xlsx",
-        "EmptyFiles/slide/empty.odp",
-        "EmptyFiles/slide/empty.pptx",
-        "build/EmptyFiles.targets",
-        "buildTransitive/EmptyFiles.targets",
-        "emptyfiles.4.4.0.nupkg.sha512",
-        "emptyfiles.nuspec",
-        "icon.png",
-        "lib/net461/EmptyFiles.dll",
-        "lib/net461/EmptyFiles.xml",
-        "lib/net5.0/EmptyFiles.dll",
-        "lib/net5.0/EmptyFiles.xml",
-        "lib/net6.0/EmptyFiles.dll",
-        "lib/net6.0/EmptyFiles.xml",
-        "lib/net7.0/EmptyFiles.dll",
-        "lib/net7.0/EmptyFiles.xml",
-        "lib/netstandard2.0/EmptyFiles.dll",
-        "lib/netstandard2.0/EmptyFiles.xml",
-        "lib/netstandard2.1/EmptyFiles.dll",
-        "lib/netstandard2.1/EmptyFiles.xml"
-      ]
-    },
     "Firebase.Auth/1.0.0": {
       "sha512": "MRAGIRDXqB0jRvtJx0yRmTMjZInQcUSyHN7LuOwxL/nfyceDEA+Gfiimn7HtI2ntHw3hdUAoeeCA6BCc3qg0/A==",
       "type": "package",
@@ -3640,6 +3501,36 @@
         "firebasestorage.net.1.0.3.nupkg.sha512",
         "firebasestorage.net.nuspec",
         "lib/netstandard1.1/Firebase.Storage.dll"
+      ]
+    },
+    "FluentAssertions/6.12.0": {
+      "sha512": "ZXhHT2YwP9lajrwSKbLlFqsmCCvFJMoRSK9t7sImfnCyd0OB3MhgxdoMcVqxbq1iyxD6mD2fiackWmBb7ayiXQ==",
+      "type": "package",
+      "path": "fluentassertions/6.12.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "FluentAssertions.png",
+        "fluentassertions.6.12.0.nupkg.sha512",
+        "fluentassertions.nuspec",
+        "lib/net47/FluentAssertions.dll",
+        "lib/net47/FluentAssertions.pdb",
+        "lib/net47/FluentAssertions.xml",
+        "lib/net6.0/FluentAssertions.dll",
+        "lib/net6.0/FluentAssertions.pdb",
+        "lib/net6.0/FluentAssertions.xml",
+        "lib/netcoreapp2.1/FluentAssertions.dll",
+        "lib/netcoreapp2.1/FluentAssertions.pdb",
+        "lib/netcoreapp2.1/FluentAssertions.xml",
+        "lib/netcoreapp3.0/FluentAssertions.dll",
+        "lib/netcoreapp3.0/FluentAssertions.pdb",
+        "lib/netcoreapp3.0/FluentAssertions.xml",
+        "lib/netstandard2.0/FluentAssertions.dll",
+        "lib/netstandard2.0/FluentAssertions.pdb",
+        "lib/netstandard2.0/FluentAssertions.xml",
+        "lib/netstandard2.1/FluentAssertions.dll",
+        "lib/netstandard2.1/FluentAssertions.pdb",
+        "lib/netstandard2.1/FluentAssertions.xml"
       ]
     },
     "Google.Api.Gax/4.4.0": {
@@ -5753,23 +5644,6 @@
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.nuspec",
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
-      ]
-    },
-    "Shouldly/4.2.1": {
-      "sha512": "dKAKiSuhLKqD2TXwLKtqNg1nwzJcIKOOMncZjk9LYe4W+h+SCftpWdxwR79YZUIHMH+3Vu9s0s0UHNrgICLwRQ==",
-      "type": "package",
-      "path": "shouldly/4.2.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "assets/logo_128x128.png",
-        "buildTransitive/Shouldly.targets",
-        "lib/net5.0/Shouldly.dll",
-        "lib/net5.0/Shouldly.xml",
-        "lib/netstandard2.0/Shouldly.dll",
-        "lib/netstandard2.0/Shouldly.xml",
-        "shouldly.4.2.1.nupkg.sha512",
-        "shouldly.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore/6.5.0": {
@@ -9826,9 +9700,9 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "FluentAssertions >= 6.12.0",
       "Microsoft.NET.Test.Sdk >= 17.8.0",
       "Moq >= 4.20.70",
-      "Shouldly >= 4.2.1",
       "backend >= 1.0.0",
       "coverlet.collector >= 6.0.0",
       "xunit >= 2.6.4",
@@ -9878,6 +9752,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "FluentAssertions": {
+            "target": "Package",
+            "version": "[6.12.0, )"
+          },
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.8.0, )"
@@ -9885,10 +9763,6 @@
           "Moq": {
             "target": "Package",
             "version": "[4.20.70, )"
-          },
-          "Shouldly": {
-            "target": "Package",
-            "version": "[4.2.1, )"
           },
           "coverlet.collector": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
