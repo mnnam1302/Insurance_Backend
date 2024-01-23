@@ -54,12 +54,6 @@ namespace backend.Repositories
                 .ToListAsync();
 
             return result;
-        }
-
-        //public async Task<Insurance?> GetInsuranceById(int id)
-        //{
-        //    var insurance = await _dbContext.Insurances.FindAsync(id);
-        //    return insurance;
-        //}   
+        } 
     }
 }
