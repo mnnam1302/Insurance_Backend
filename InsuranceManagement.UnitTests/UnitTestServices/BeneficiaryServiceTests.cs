@@ -57,7 +57,7 @@ namespace InsuranceManagement.UnitTests.UnitTestServices
         }
 
         [Fact]
-        public async Task AddBeneficiary_WithValidBeneficiary_ReturnsBeneficiary()
+        public async Task CreateBeneficiary_WithValidBeneficiary_ReturnsBeneficiary()
         {
             // Arrange
             var beneficiaryService = new BeneficiaryService(_mockBeneficiaryRepository.Object, _mapper);

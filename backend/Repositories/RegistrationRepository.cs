@@ -1,8 +1,5 @@
-﻿using backend.DTO.Registration;
-using backend.IRepositories;
+﻿using backend.IRepositories;
 using backend.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
@@ -37,7 +34,8 @@ namespace backend.Repositories
                 _dbContext.Entry(registration).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
                 return registration;
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -80,7 +78,7 @@ namespace backend.Repositories
         //    try
         //    {
         //        string sql = "exec UpdateRegistrationStatus " +
-        //            "@id, " + 
+        //            "@id, " +
         //            "@status";
 
         //        IEnumerable<Registration?> result = await _dbContext.Registrations.FromSqlRaw(sql,
