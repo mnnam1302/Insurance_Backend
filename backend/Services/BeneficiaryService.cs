@@ -3,7 +3,6 @@ using backend.DTO.Beneficiary;
 using backend.IRepositories;
 using backend.Models;
 using backend.Responses;
-using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
 {
@@ -24,14 +23,14 @@ namespace backend.Services
             var beneficiary = _mapper.Map<Beneficiary>(beneficiaryDTO);
 
             var result = await _beneficiaryRepository.Add(beneficiary);
-            
+
             if (result == null)
             {
                 response.Success = false;
                 response.Message = "Creation failed.";
                 response.Errors = new List<string> { "Creation benificiary is failed." };
-            } 
-            else 
+            }
+            else
             {
                 response.Success = true;
                 response.Message = "Creation successful.";

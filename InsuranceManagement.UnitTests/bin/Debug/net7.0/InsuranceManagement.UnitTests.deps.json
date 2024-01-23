@@ -8,9 +8,9 @@
     ".NETCoreApp,Version=v7.0": {
       "InsuranceManagement.UnitTests/1.0.0": {
         "dependencies": {
+          "FluentAssertions": "6.12.0",
           "Microsoft.NET.Test.Sdk": "17.8.0",
           "Moq": "4.20.70",
-          "Shouldly": "4.2.1",
           "backend": "1.0.0",
           "coverlet.collector": "6.0.0",
           "xunit": "2.6.4",
@@ -121,26 +121,6 @@
         }
       },
       "coverlet.collector/6.0.0": {},
-      "DiffEngine/11.3.0": {
-        "dependencies": {
-          "EmptyFiles": "4.4.0",
-          "System.Management": "7.0.2"
-        },
-        "runtime": {
-          "lib/net7.0/DiffEngine.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "EmptyFiles/4.4.0": {
-        "runtime": {
-          "lib/net7.0/EmptyFiles.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "Firebase.Auth/1.0.0": {
         "dependencies": {
           "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
@@ -163,6 +143,17 @@
           "lib/netstandard1.1/Firebase.Storage.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "FluentAssertions/6.12.0": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "runtime": {
+          "lib/net6.0/FluentAssertions.dll": {
+            "assemblyVersion": "6.12.0.0",
+            "fileVersion": "6.12.0.0"
           }
         }
       },
@@ -1044,18 +1035,6 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
-      "Shouldly/4.2.1": {
-        "dependencies": {
-          "DiffEngine": "11.3.0",
-          "EmptyFiles": "4.4.0"
-        },
-        "runtime": {
-          "lib/net5.0/Shouldly.dll": {
-            "assemblyVersion": "4.2.1.0",
-            "fileVersion": "4.2.1.0"
-          }
-        }
-      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -1963,20 +1942,6 @@
       "path": "coverlet.collector/6.0.0",
       "hashPath": "coverlet.collector.6.0.0.nupkg.sha512"
     },
-    "DiffEngine/11.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-k0ZgZqd09jLZQjR8FyQbSQE86Q7QZnjEzq1LPHtj1R2AoWO8sjV5x+jlSisL7NZAbUOI4y+7Bog8gkr9WIRBGw==",
-      "path": "diffengine/11.3.0",
-      "hashPath": "diffengine.11.3.0.nupkg.sha512"
-    },
-    "EmptyFiles/4.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-gwJEfIGS7FhykvtZoscwXj/XwW+mJY6UbAZk+qtLKFUGWC95kfKXnj8VkxsZQnWBxJemM/q664rGLN5nf+OHZw==",
-      "path": "emptyfiles/4.4.0",
-      "hashPath": "emptyfiles.4.4.0.nupkg.sha512"
-    },
     "Firebase.Auth/1.0.0": {
       "type": "package",
       "serviceable": true,
@@ -1990,6 +1955,13 @@
       "sha512": "sha512-SupDHNUwNqcVwEo/HdFEWAXveQe3fU16q4wrrCxUVwP0a77zaddKp7vo2sHIW56DAsJn/gUfjDK3w0MuBhvzjQ==",
       "path": "firebasestorage.net/1.0.3",
       "hashPath": "firebasestorage.net.1.0.3.nupkg.sha512"
+    },
+    "FluentAssertions/6.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZXhHT2YwP9lajrwSKbLlFqsmCCvFJMoRSK9t7sImfnCyd0OB3MhgxdoMcVqxbq1iyxD6mD2fiackWmBb7ayiXQ==",
+      "path": "fluentassertions/6.12.0",
+      "hashPath": "fluentassertions.6.12.0.nupkg.sha512"
     },
     "Google.Api.Gax/4.4.0": {
       "type": "package",
@@ -2543,13 +2515,6 @@
       "sha512": "sha512-VB5cn/7OzUfzdnC8tqAIMQciVLiq2epm2NrAm1E9OjNRyG4lVhfR61SMcLizejzQP8R8Uf/0l5qOIbUEi+RdEg==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
-    },
-    "Shouldly/4.2.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dKAKiSuhLKqD2TXwLKtqNg1nwzJcIKOOMncZjk9LYe4W+h+SCftpWdxwR79YZUIHMH+3Vu9s0s0UHNrgICLwRQ==",
-      "path": "shouldly/4.2.1",
-      "hashPath": "shouldly.4.2.1.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",
