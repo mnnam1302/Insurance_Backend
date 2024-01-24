@@ -3,6 +3,7 @@ using backend.IRepositories;
 using backend.Models;
 using Firebase.Auth;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -28,7 +29,7 @@ namespace backend.Repositories
             _userRepository = userRepository;
         }
 
-        private string GenerateToken(int userId, TimeSpan expirationTime, string secretKeyConfig)
+        private string GenerateToken(int userId, TimeSpan expirationTime, string secretKeyConfig, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config[$"Jwt:{secretKeyConfig}"] ?? "");
@@ -38,7 +39,7 @@ namespace backend.Repositories
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                    //new Claim(ClaimTypes.Name, user.Username)
+                    new Claim(ClaimTypes.Role, role),
                 }),
                 Expires = DateTime.UtcNow.Add(expirationTime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
@@ -102,9 +103,16 @@ namespace backend.Repositories
 
                 if (user != null)
                 {
+                    string role;
+                    if(user.IsAdmin)
+                    {
+                        role = "admin";
+                    }
+                    else { role  = "user"; }
+
                     // Tạo access token && refresh token
-                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(15), "SecreteKey");
-                    var refreshToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(20), "SecreteKey");
+                    var accessToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(15), "SecreteKey", role);
+                    var refreshToken = GenerateToken(user.UserId, TimeSpan.FromMinutes(20), "SecreteKey", role);
 
                     // Lưu refresh token cho người dùng
                     await CreateOrUpdateRefreshToken(user.UserId, refreshToken);
@@ -165,7 +173,14 @@ namespace backend.Repositories
                     throw new Exception("User is not valid");
                 }
 
-                var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey");
+                string role;
+                if (user.IsAdmin)
+                {
+                    role = "admin";
+                }
+                else { role = "user"; }
+
+                var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey", role);
 
                 return accessToken;
             }
@@ -234,8 +249,8 @@ namespace backend.Repositories
             try
             {
                 // Tạo access token && refresh token
-                var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey");
-                var refreshToken = GenerateToken(userId, TimeSpan.FromMinutes(20), "SecreteKey");
+                var accessToken = GenerateToken(userId, TimeSpan.FromMinutes(5), "SecreteKey", "user");
+                var refreshToken = GenerateToken(userId, TimeSpan.FromMinutes(20), "SecreteKey", "user");
 
                 // Lưu refresh token cho người dùng
                 await CreateOrUpdateRefreshToken(userId, refreshToken);

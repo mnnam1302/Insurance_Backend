@@ -109,6 +109,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("summary")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetSummaryPaymentContract([FromQuery] int year)
         {
             try
