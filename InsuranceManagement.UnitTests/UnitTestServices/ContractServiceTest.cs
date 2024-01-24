@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.DTO.Contract;
 using backend.IRepositories;
 using backend.Profiles;
 using backend.Responses;
@@ -7,6 +8,7 @@ using FluentAssertions;
 using InsuranceManagement.UnitTests.Mocks;
 using Moq;
 using Xunit;
+using static System.Net.WebRequestMethods;
 
 namespace InsuranceManagement.UnitTests.UnitTestServices
 {
@@ -164,12 +166,11 @@ namespace InsuranceManagement.UnitTests.UnitTestServices
                 _mapper);
 
             // Act
-            var result = await contractService.CreateContract(1, 1);
+            var result = await contractService.CreateContract(1,1);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType<BaseCommandResponse>();
-            result.Success.Should().BeTrue();
+            result.Should().BeOfType<ContractDTO>();
         }
 
         [Fact]
@@ -181,12 +182,10 @@ namespace InsuranceManagement.UnitTests.UnitTestServices
                 _mapper);
 
             // Act
-            var result = await contractService.CreateContract(3, 1);
+            var result = await Assert.ThrowsAsync<Exception>(() => contractService.CreateContract(3, 1));
 
             // Assert
-            result.Should().NotBeNull();
-            result.Should().BeOfType<BaseCommandResponse>();
-            result.Success.Should().BeFalse();
+            Assert.Equal("Registration not exists", result.Message);
         }
     }
 }

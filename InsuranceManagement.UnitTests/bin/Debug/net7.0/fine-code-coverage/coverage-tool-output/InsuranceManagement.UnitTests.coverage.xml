@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.5229" branch-rate="0.1875" version="1.9" timestamp="1706090289" lines-covered="1872" lines-valid="3580" branches-covered="45" branches-valid="240">
+<coverage line-rate="0.5221" branch-rate="0.1875" version="1.9" timestamp="1706097592" lines-covered="1861" lines-valid="3564" branches-covered="45" branches-valid="240">
   <sources>
     <source>C:\Users\admin\</source>
   </sources>
   <packages>
-    <package name="backend" line-rate="0.2804" branch-rate="0.1779" complexity="690">
+    <package name="backend" line-rate="0.2793" branch-rate="0.1779" complexity="690">
       <classes>
         <class name="Program" filename="source\repos\Insurance_Backend1\backend\Program.cs" line-rate="0" branch-rate="0" complexity="2">
           <methods>
@@ -582,30 +582,31 @@
             <line number="29" hits="10" branch="False" />
           </lines>
         </class>
-        <class name="backend.Services.ContractService/&lt;CreateContract&gt;d__10" filename="source\repos\Insurance_Backend1\backend\Services\ContractService.cs" line-rate="0.84" branch-rate="0.75" complexity="4">
+        <class name="backend.Services.ContractService/&lt;CreateContract&gt;d__10" filename="source\repos\Insurance_Backend1\backend\Services\ContractService.cs" line-rate="0.9473" branch-rate="0.75" complexity="4">
           <methods>
-            <method name="MoveNext" signature="()" line-rate="0.84" branch-rate="0.75" complexity="4">
+            <method name="MoveNext" signature="()" line-rate="0.9473" branch-rate="0.75" complexity="4">
               <lines>
                 <line number="100" hits="2" branch="False" />
                 <line number="102" hits="2" branch="False" />
                 <line number="104" hits="2" branch="False" />
-                <line number="106" hits="2" branch="False" />
-                <line number="108" hits="2" branch="True" condition-coverage="100% (2/2)">
+                <line number="106" hits="2" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="219" type="jump" coverage="100%" />
+                    <condition number="208" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="109" hits="1" branch="False" />
-                <line number="110" hits="1" branch="False" />
+                <line number="107" hits="1" branch="False" />
+                <line number="108" hits="1" branch="False" />
                 <line number="111" hits="1" branch="False" />
-                <line number="112" hits="1" branch="False" />
                 <line number="113" hits="1" branch="False" />
+                <line number="114" hits="1" branch="False" />
+                <line number="115" hits="1" branch="False" />
                 <line number="116" hits="1" branch="False" />
-                <line number="118" hits="1" branch="False" />
+                <line number="117" hits="1" branch="False" />
                 <line number="119" hits="1" branch="False" />
                 <line number="120" hits="1" branch="False" />
                 <line number="121" hits="1" branch="False" />
                 <line number="122" hits="1" branch="False" />
+                <line number="123" hits="1" branch="False" />
                 <line number="124" hits="1" branch="False" />
                 <line number="125" hits="1" branch="False" />
                 <line number="126" hits="1" branch="False" />
@@ -613,37 +614,24 @@
                 <line number="128" hits="1" branch="False" />
                 <line number="129" hits="1" branch="False" />
                 <line number="130" hits="1" branch="False" />
-                <line number="131" hits="1" branch="False" />
-                <line number="132" hits="1" branch="False" />
                 <line number="133" hits="1" branch="False" />
-                <line number="134" hits="1" branch="False" />
-                <line number="135" hits="1" branch="False" />
-                <line number="139" hits="1" branch="False" />
-                <line number="141" hits="1" branch="True" condition-coverage="50% (1/2)">
+                <line number="135" hits="1" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="834" type="jump" coverage="50%" />
+                    <condition number="763" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="142" hits="0" branch="False" />
-                <line number="143" hits="0" branch="False" />
-                <line number="144" hits="0" branch="False" />
-                <line number="145" hits="0" branch="False" />
-                <line number="146" hits="0" branch="False" />
+                <line number="136" hits="0" branch="False" />
+                <line number="137" hits="0" branch="False" />
+                <line number="141" hits="1" branch="False" />
+                <line number="142" hits="1" branch="False" />
+                <line number="145" hits="1" branch="False" />
+                <line number="146" hits="1" branch="False" />
                 <line number="148" hits="1" branch="False" />
                 <line number="149" hits="1" branch="False" />
-                <line number="150" hits="1" branch="False" />
                 <line number="151" hits="1" branch="False" />
-                <line number="154" hits="1" branch="False" />
+                <line number="152" hits="1" branch="False" />
+                <line number="153" hits="1" branch="False" />
                 <line number="155" hits="1" branch="False" />
-                <line number="158" hits="1" branch="False" />
-                <line number="159" hits="1" branch="False" />
-                <line number="160" hits="1" branch="False" />
-                <line number="162" hits="1" branch="False" />
-                <line number="163" hits="1" branch="False" />
-                <line number="165" hits="0" branch="False" />
-                <line number="166" hits="0" branch="False" />
-                <line number="167" hits="0" branch="False" />
-                <line number="169" hits="2" branch="False" />
               </lines>
             </method>
           </methods>
@@ -651,23 +639,24 @@
             <line number="100" hits="2" branch="False" />
             <line number="102" hits="2" branch="False" />
             <line number="104" hits="2" branch="False" />
-            <line number="106" hits="2" branch="False" />
-            <line number="108" hits="2" branch="True" condition-coverage="100% (2/2)">
+            <line number="106" hits="2" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="219" type="jump" coverage="100%" />
+                <condition number="208" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="109" hits="1" branch="False" />
-            <line number="110" hits="1" branch="False" />
+            <line number="107" hits="1" branch="False" />
+            <line number="108" hits="1" branch="False" />
             <line number="111" hits="1" branch="False" />
-            <line number="112" hits="1" branch="False" />
             <line number="113" hits="1" branch="False" />
+            <line number="114" hits="1" branch="False" />
+            <line number="115" hits="1" branch="False" />
             <line number="116" hits="1" branch="False" />
-            <line number="118" hits="1" branch="False" />
+            <line number="117" hits="1" branch="False" />
             <line number="119" hits="1" branch="False" />
             <line number="120" hits="1" branch="False" />
             <line number="121" hits="1" branch="False" />
             <line number="122" hits="1" branch="False" />
+            <line number="123" hits="1" branch="False" />
             <line number="124" hits="1" branch="False" />
             <line number="125" hits="1" branch="False" />
             <line number="126" hits="1" branch="False" />
@@ -675,37 +664,24 @@
             <line number="128" hits="1" branch="False" />
             <line number="129" hits="1" branch="False" />
             <line number="130" hits="1" branch="False" />
-            <line number="131" hits="1" branch="False" />
-            <line number="132" hits="1" branch="False" />
             <line number="133" hits="1" branch="False" />
-            <line number="134" hits="1" branch="False" />
-            <line number="135" hits="1" branch="False" />
-            <line number="139" hits="1" branch="False" />
-            <line number="141" hits="1" branch="True" condition-coverage="50% (1/2)">
+            <line number="135" hits="1" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="834" type="jump" coverage="50%" />
+                <condition number="763" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="142" hits="0" branch="False" />
-            <line number="143" hits="0" branch="False" />
-            <line number="144" hits="0" branch="False" />
-            <line number="145" hits="0" branch="False" />
-            <line number="146" hits="0" branch="False" />
+            <line number="136" hits="0" branch="False" />
+            <line number="137" hits="0" branch="False" />
+            <line number="141" hits="1" branch="False" />
+            <line number="142" hits="1" branch="False" />
+            <line number="145" hits="1" branch="False" />
+            <line number="146" hits="1" branch="False" />
             <line number="148" hits="1" branch="False" />
             <line number="149" hits="1" branch="False" />
-            <line number="150" hits="1" branch="False" />
             <line number="151" hits="1" branch="False" />
-            <line number="154" hits="1" branch="False" />
+            <line number="152" hits="1" branch="False" />
+            <line number="153" hits="1" branch="False" />
             <line number="155" hits="1" branch="False" />
-            <line number="158" hits="1" branch="False" />
-            <line number="159" hits="1" branch="False" />
-            <line number="160" hits="1" branch="False" />
-            <line number="162" hits="1" branch="False" />
-            <line number="163" hits="1" branch="False" />
-            <line number="165" hits="0" branch="False" />
-            <line number="166" hits="0" branch="False" />
-            <line number="167" hits="0" branch="False" />
-            <line number="169" hits="2" branch="False" />
           </lines>
         </class>
         <class name="backend.Services.ContractService/&lt;GetByInsuranceCode&gt;d__8" filename="source\repos\Insurance_Backend1\backend\Services\ContractService.cs" line-rate="0.6666" branch-rate="1" complexity="1">
@@ -800,62 +776,62 @@
           <methods>
             <method name="MoveNext" signature="()" line-rate="0" branch-rate="0" complexity="2">
               <lines>
-                <line number="172" hits="0" branch="False" />
-                <line number="173" hits="0" branch="False" />
-                <line number="175" hits="0" branch="False" />
-                <line number="177" hits="0" branch="False" />
-                <line number="180" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="158" hits="0" branch="False" />
+                <line number="159" hits="0" branch="False" />
+                <line number="161" hits="0" branch="False" />
+                <line number="163" hits="0" branch="False" />
+                <line number="166" hits="0" branch="True" condition-coverage="0% (0/2)">
                   <conditions>
                     <condition number="206" type="jump" coverage="0%" />
                   </conditions>
                 </line>
-                <line number="181" hits="0" branch="False" />
-                <line number="182" hits="0" branch="False" />
-                <line number="184" hits="0" branch="False" />
-                <line number="185" hits="0" branch="False" />
-                <line number="187" hits="0" branch="False" />
-                <line number="189" hits="0" branch="False" />
+                <line number="167" hits="0" branch="False" />
+                <line number="168" hits="0" branch="False" />
+                <line number="170" hits="0" branch="False" />
+                <line number="171" hits="0" branch="False" />
+                <line number="173" hits="0" branch="False" />
+                <line number="175" hits="0" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="172" hits="0" branch="False" />
-            <line number="173" hits="0" branch="False" />
-            <line number="175" hits="0" branch="False" />
-            <line number="177" hits="0" branch="False" />
-            <line number="180" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="158" hits="0" branch="False" />
+            <line number="159" hits="0" branch="False" />
+            <line number="161" hits="0" branch="False" />
+            <line number="163" hits="0" branch="False" />
+            <line number="166" hits="0" branch="True" condition-coverage="0% (0/2)">
               <conditions>
                 <condition number="206" type="jump" coverage="0%" />
               </conditions>
             </line>
-            <line number="181" hits="0" branch="False" />
-            <line number="182" hits="0" branch="False" />
-            <line number="184" hits="0" branch="False" />
-            <line number="185" hits="0" branch="False" />
-            <line number="187" hits="0" branch="False" />
-            <line number="189" hits="0" branch="False" />
+            <line number="167" hits="0" branch="False" />
+            <line number="168" hits="0" branch="False" />
+            <line number="170" hits="0" branch="False" />
+            <line number="171" hits="0" branch="False" />
+            <line number="173" hits="0" branch="False" />
+            <line number="175" hits="0" branch="False" />
           </lines>
         </class>
         <class name="backend.Services.ContractService/&lt;UpdateStatusContract&gt;d__12" filename="source\repos\Insurance_Backend1\backend\Services\ContractService.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="191" hits="1" branch="False" />
-                <line number="192" hits="1" branch="False" />
-                <line number="194" hits="1" branch="False" />
-                <line number="196" hits="1" branch="False" />
-                <line number="197" hits="1" branch="False" />
-                <line number="198" hits="1" branch="False" />
+                <line number="177" hits="1" branch="False" />
+                <line number="178" hits="1" branch="False" />
+                <line number="180" hits="1" branch="False" />
+                <line number="182" hits="1" branch="False" />
+                <line number="183" hits="1" branch="False" />
+                <line number="184" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="191" hits="1" branch="False" />
-            <line number="192" hits="1" branch="False" />
-            <line number="194" hits="1" branch="False" />
-            <line number="196" hits="1" branch="False" />
-            <line number="197" hits="1" branch="False" />
-            <line number="198" hits="1" branch="False" />
+            <line number="177" hits="1" branch="False" />
+            <line number="178" hits="1" branch="False" />
+            <line number="180" hits="1" branch="False" />
+            <line number="182" hits="1" branch="False" />
+            <line number="183" hits="1" branch="False" />
+            <line number="184" hits="1" branch="False" />
           </lines>
         </class>
         <class name="backend.Services.EmailService" filename="source\repos\Insurance_Backend1\backend\Services\EmailService.cs" line-rate="0" branch-rate="1" complexity="1">
@@ -2264,30 +2240,30 @@
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="6" branch="False" />
+                <line number="5" hits="5" branch="False" />
               </lines>
             </method>
             <method name="get_Success" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="28" branch="False" />
+                <line number="6" hits="24" branch="False" />
               </lines>
             </method>
             <method name="get_Message" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="18" branch="False" />
+                <line number="7" hits="16" branch="False" />
               </lines>
             </method>
             <method name="get_Errors" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="17" branch="False" />
+                <line number="8" hits="16" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="6" branch="False" />
-            <line number="6" hits="28" branch="False" />
-            <line number="7" hits="18" branch="False" />
-            <line number="8" hits="17" branch="False" />
+            <line number="5" hits="5" branch="False" />
+            <line number="6" hits="24" branch="False" />
+            <line number="7" hits="16" branch="False" />
+            <line number="8" hits="16" branch="False" />
           </lines>
         </class>
         <class name="backend.Responses.BasePagingQuery" filename="source\repos\Insurance_Backend1\backend\Responses\BasePagingQuery.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -4234,7 +4210,7 @@
           <methods>
             <method name="get_ContractId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="49" branch="False" />
+                <line number="12" hits="48" branch="False" />
               </lines>
             </method>
             <method name="get_InsuranceCode" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -4324,7 +4300,7 @@
             </method>
           </methods>
           <lines>
-            <line number="12" hits="49" branch="False" />
+            <line number="12" hits="48" branch="False" />
             <line number="15" hits="74" branch="False" />
             <line number="18" hits="39" branch="False" />
             <line number="21" hits="39" branch="False" />
@@ -8984,7 +8960,7 @@
         </class>
       </classes>
     </package>
-    <package name="InsuranceManagement.UnitTests" line-rate="0.9901000000000001" branch-rate="0.75" complexity="86">
+    <package name="InsuranceManagement.UnitTests" line-rate="0.9893000000000001" branch-rate="0.75" complexity="87">
       <classes>
         <class name="AutoGeneratedProgram" filename=".nuget\packages\microsoft.net.test.sdk\17.8.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.Program.cs" line-rate="0" branch-rate="1" complexity="1">
           <methods>
@@ -9298,288 +9274,290 @@
           <methods>
             <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="20" hits="10" branch="False" />
-                <line number="21" hits="10" branch="False" />
                 <line number="22" hits="10" branch="False" />
                 <line number="23" hits="10" branch="False" />
+                <line number="24" hits="10" branch="False" />
                 <line number="25" hits="10" branch="False" />
-                <line number="26" hits="10" branch="False" />
                 <line number="27" hits="10" branch="False" />
-                <line number="28" hits="20" branch="False" />
-                <line number="30" hits="10" branch="False" />
-                <line number="31" hits="10" branch="False" />
+                <line number="28" hits="10" branch="False" />
+                <line number="29" hits="10" branch="False" />
+                <line number="30" hits="20" branch="False" />
+                <line number="32" hits="10" branch="False" />
+                <line number="33" hits="10" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="20" hits="10" branch="False" />
-            <line number="21" hits="10" branch="False" />
             <line number="22" hits="10" branch="False" />
             <line number="23" hits="10" branch="False" />
+            <line number="24" hits="10" branch="False" />
             <line number="25" hits="10" branch="False" />
-            <line number="26" hits="10" branch="False" />
             <line number="27" hits="10" branch="False" />
-            <line number="28" hits="20" branch="False" />
-            <line number="30" hits="10" branch="False" />
-            <line number="31" hits="10" branch="False" />
+            <line number="28" hits="10" branch="False" />
+            <line number="29" hits="10" branch="False" />
+            <line number="30" hits="20" branch="False" />
+            <line number="32" hits="10" branch="False" />
+            <line number="33" hits="10" branch="False" />
+          </lines>
+        </class>
+        <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;&gt;c__DisplayClass13_0" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="&lt;CreateContract_Fail_RegistrationNotValid&gt;b__0" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="185" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="185" hits="2" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;ChangeStatusContract_Success&gt;d__5" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="51" hits="1" branch="False" />
                 <line number="53" hits="1" branch="False" />
-                <line number="54" hits="1" branch="False" />
                 <line number="55" hits="1" branch="False" />
-                <line number="58" hits="1" branch="False" />
-                <line number="61" hits="1" branch="False" />
-                <line number="62" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+                <line number="60" hits="1" branch="False" />
                 <line number="63" hits="1" branch="False" />
                 <line number="64" hits="1" branch="False" />
+                <line number="65" hits="1" branch="False" />
+                <line number="66" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="51" hits="1" branch="False" />
             <line number="53" hits="1" branch="False" />
-            <line number="54" hits="1" branch="False" />
             <line number="55" hits="1" branch="False" />
-            <line number="58" hits="1" branch="False" />
-            <line number="61" hits="1" branch="False" />
-            <line number="62" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="60" hits="1" branch="False" />
             <line number="63" hits="1" branch="False" />
             <line number="64" hits="1" branch="False" />
+            <line number="65" hits="1" branch="False" />
+            <line number="66" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;CreateContract_Fail_RegistrationNotValid&gt;d__13" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="177" hits="1" branch="False" />
-                <line number="179" hits="1" branch="False" />
+                <line number="178" hits="1" branch="False" />
                 <line number="180" hits="1" branch="False" />
                 <line number="181" hits="1" branch="False" />
-                <line number="184" hits="1" branch="False" />
-                <line number="187" hits="1" branch="False" />
+                <line number="182" hits="1" branch="False" />
                 <line number="188" hits="1" branch="False" />
                 <line number="189" hits="1" branch="False" />
-                <line number="190" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="177" hits="1" branch="False" />
-            <line number="179" hits="1" branch="False" />
+            <line number="178" hits="1" branch="False" />
             <line number="180" hits="1" branch="False" />
             <line number="181" hits="1" branch="False" />
-            <line number="184" hits="1" branch="False" />
-            <line number="187" hits="1" branch="False" />
+            <line number="182" hits="1" branch="False" />
             <line number="188" hits="1" branch="False" />
             <line number="189" hits="1" branch="False" />
-            <line number="190" hits="1" branch="False" />
           </lines>
         </class>
-        <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;CreateContract_Success&gt;d__12" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;CreateContract_Success&gt;d__12" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="0.8571" branch-rate="1" complexity="1">
           <methods>
-            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+            <method name="MoveNext" signature="()" line-rate="0.8571" branch-rate="1" complexity="1">
               <lines>
-                <line number="160" hits="1" branch="False" />
                 <line number="162" hits="1" branch="False" />
-                <line number="163" hits="1" branch="False" />
                 <line number="164" hits="1" branch="False" />
-                <line number="167" hits="1" branch="False" />
-                <line number="170" hits="1" branch="False" />
-                <line number="171" hits="1" branch="False" />
-                <line number="172" hits="1" branch="False" />
+                <line number="165" hits="1" branch="False" />
+                <line number="166" hits="1" branch="False" />
+                <line number="169" hits="1" branch="False" />
                 <line number="173" hits="1" branch="False" />
+                <line number="174" hits="0" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="160" hits="1" branch="False" />
             <line number="162" hits="1" branch="False" />
-            <line number="163" hits="1" branch="False" />
             <line number="164" hits="1" branch="False" />
-            <line number="167" hits="1" branch="False" />
-            <line number="170" hits="1" branch="False" />
-            <line number="171" hits="1" branch="False" />
-            <line number="172" hits="1" branch="False" />
+            <line number="165" hits="1" branch="False" />
+            <line number="166" hits="1" branch="False" />
+            <line number="169" hits="1" branch="False" />
             <line number="173" hits="1" branch="False" />
+            <line number="174" hits="0" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetAllContract_Success&gt;d__4" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="35" hits="1" branch="False" />
                 <line number="37" hits="1" branch="False" />
-                <line number="38" hits="1" branch="False" />
                 <line number="39" hits="1" branch="False" />
-                <line number="42" hits="1" branch="False" />
-                <line number="45" hits="1" branch="False" />
-                <line number="46" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="44" hits="1" branch="False" />
                 <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="35" hits="1" branch="False" />
             <line number="37" hits="1" branch="False" />
-            <line number="38" hits="1" branch="False" />
             <line number="39" hits="1" branch="False" />
-            <line number="42" hits="1" branch="False" />
-            <line number="45" hits="1" branch="False" />
-            <line number="46" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="44" hits="1" branch="False" />
             <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetConractByInsuranceCode_Success&gt;d__10" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="130" hits="1" branch="False" />
                 <line number="132" hits="1" branch="False" />
-                <line number="133" hits="1" branch="False" />
                 <line number="134" hits="1" branch="False" />
-                <line number="137" hits="1" branch="False" />
-                <line number="140" hits="1" branch="False" />
-                <line number="141" hits="1" branch="False" />
+                <line number="135" hits="1" branch="False" />
+                <line number="136" hits="1" branch="False" />
+                <line number="139" hits="1" branch="False" />
+                <line number="142" hits="1" branch="False" />
+                <line number="143" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="130" hits="1" branch="False" />
             <line number="132" hits="1" branch="False" />
-            <line number="133" hits="1" branch="False" />
             <line number="134" hits="1" branch="False" />
-            <line number="137" hits="1" branch="False" />
-            <line number="140" hits="1" branch="False" />
-            <line number="141" hits="1" branch="False" />
+            <line number="135" hits="1" branch="False" />
+            <line number="136" hits="1" branch="False" />
+            <line number="139" hits="1" branch="False" />
+            <line number="142" hits="1" branch="False" />
+            <line number="143" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetContactByInsuranceCode_Fail_NotFound&gt;d__11" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="145" hits="1" branch="False" />
                 <line number="147" hits="1" branch="False" />
-                <line number="148" hits="1" branch="False" />
                 <line number="149" hits="1" branch="False" />
-                <line number="152" hits="1" branch="False" />
-                <line number="155" hits="1" branch="False" />
-                <line number="156" hits="1" branch="False" />
+                <line number="150" hits="1" branch="False" />
+                <line number="151" hits="1" branch="False" />
+                <line number="154" hits="1" branch="False" />
+                <line number="157" hits="1" branch="False" />
+                <line number="158" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="145" hits="1" branch="False" />
             <line number="147" hits="1" branch="False" />
-            <line number="148" hits="1" branch="False" />
             <line number="149" hits="1" branch="False" />
-            <line number="152" hits="1" branch="False" />
-            <line number="155" hits="1" branch="False" />
-            <line number="156" hits="1" branch="False" />
+            <line number="150" hits="1" branch="False" />
+            <line number="151" hits="1" branch="False" />
+            <line number="154" hits="1" branch="False" />
+            <line number="157" hits="1" branch="False" />
+            <line number="158" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetContactByUserId_Fail_NotFound&gt;d__9" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="115" hits="1" branch="False" />
                 <line number="117" hits="1" branch="False" />
-                <line number="118" hits="1" branch="False" />
                 <line number="119" hits="1" branch="False" />
-                <line number="122" hits="1" branch="False" />
-                <line number="125" hits="1" branch="False" />
-                <line number="126" hits="1" branch="False" />
+                <line number="120" hits="1" branch="False" />
+                <line number="121" hits="1" branch="False" />
+                <line number="124" hits="1" branch="False" />
+                <line number="127" hits="1" branch="False" />
+                <line number="128" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="115" hits="1" branch="False" />
             <line number="117" hits="1" branch="False" />
-            <line number="118" hits="1" branch="False" />
             <line number="119" hits="1" branch="False" />
-            <line number="122" hits="1" branch="False" />
-            <line number="125" hits="1" branch="False" />
-            <line number="126" hits="1" branch="False" />
+            <line number="120" hits="1" branch="False" />
+            <line number="121" hits="1" branch="False" />
+            <line number="124" hits="1" branch="False" />
+            <line number="127" hits="1" branch="False" />
+            <line number="128" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetContractById_Fail_ContractNotExists&gt;d__7" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="84" hits="1" branch="False" />
                 <line number="86" hits="1" branch="False" />
-                <line number="87" hits="1" branch="False" />
                 <line number="88" hits="1" branch="False" />
-                <line number="91" hits="1" branch="False" />
-                <line number="94" hits="1" branch="False" />
-                <line number="95" hits="1" branch="False" />
+                <line number="89" hits="1" branch="False" />
+                <line number="90" hits="1" branch="False" />
+                <line number="93" hits="1" branch="False" />
+                <line number="96" hits="1" branch="False" />
+                <line number="97" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="84" hits="1" branch="False" />
             <line number="86" hits="1" branch="False" />
-            <line number="87" hits="1" branch="False" />
             <line number="88" hits="1" branch="False" />
-            <line number="91" hits="1" branch="False" />
-            <line number="94" hits="1" branch="False" />
-            <line number="95" hits="1" branch="False" />
+            <line number="89" hits="1" branch="False" />
+            <line number="90" hits="1" branch="False" />
+            <line number="93" hits="1" branch="False" />
+            <line number="96" hits="1" branch="False" />
+            <line number="97" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetContractById_Success&gt;d__6" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="68" hits="1" branch="False" />
                 <line number="70" hits="1" branch="False" />
-                <line number="71" hits="1" branch="False" />
                 <line number="72" hits="1" branch="False" />
-                <line number="75" hits="1" branch="False" />
-                <line number="78" hits="1" branch="False" />
-                <line number="79" hits="1" branch="False" />
+                <line number="73" hits="1" branch="False" />
+                <line number="74" hits="1" branch="False" />
+                <line number="77" hits="1" branch="False" />
                 <line number="80" hits="1" branch="False" />
+                <line number="81" hits="1" branch="False" />
+                <line number="82" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="68" hits="1" branch="False" />
             <line number="70" hits="1" branch="False" />
-            <line number="71" hits="1" branch="False" />
             <line number="72" hits="1" branch="False" />
-            <line number="75" hits="1" branch="False" />
-            <line number="78" hits="1" branch="False" />
-            <line number="79" hits="1" branch="False" />
+            <line number="73" hits="1" branch="False" />
+            <line number="74" hits="1" branch="False" />
+            <line number="77" hits="1" branch="False" />
             <line number="80" hits="1" branch="False" />
+            <line number="81" hits="1" branch="False" />
+            <line number="82" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.ContractServiceTest/&lt;GetContractByUserId_Success&gt;d__8" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\ContractServiceTest.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="99" hits="1" branch="False" />
                 <line number="101" hits="1" branch="False" />
-                <line number="102" hits="1" branch="False" />
                 <line number="103" hits="1" branch="False" />
-                <line number="106" hits="1" branch="False" />
-                <line number="109" hits="1" branch="False" />
-                <line number="110" hits="1" branch="False" />
+                <line number="104" hits="1" branch="False" />
+                <line number="105" hits="1" branch="False" />
+                <line number="108" hits="1" branch="False" />
                 <line number="111" hits="1" branch="False" />
+                <line number="112" hits="1" branch="False" />
+                <line number="113" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="99" hits="1" branch="False" />
             <line number="101" hits="1" branch="False" />
-            <line number="102" hits="1" branch="False" />
             <line number="103" hits="1" branch="False" />
-            <line number="106" hits="1" branch="False" />
-            <line number="109" hits="1" branch="False" />
-            <line number="110" hits="1" branch="False" />
+            <line number="104" hits="1" branch="False" />
+            <line number="105" hits="1" branch="False" />
+            <line number="108" hits="1" branch="False" />
             <line number="111" hits="1" branch="False" />
+            <line number="112" hits="1" branch="False" />
+            <line number="113" hits="1" branch="False" />
           </lines>
         </class>
         <class name="InsuranceManagement.UnitTests.UnitTestServices.InsuranceServiceTests" filename="source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\UnitTestServices\InsuranceServiceTests.cs" line-rate="1" branch-rate="1" complexity="1">

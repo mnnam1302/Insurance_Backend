@@ -96,21 +96,16 @@ namespace backend.Services
         }
 
 
-        public async Task<BaseCommandResponse> CreateContract(int registrationId, int userId)
+        public async Task<ContractDTO?> CreateContract(int registrationId, int userId)
         {
             try
             {
 
                 var registration = await _registrationRepository.Get(registrationId);
 
-                var response = new BaseCommandResponse();
-
                 if (registration == null)
                 {
-                    response.Success = false;
-                    response.Message = "Creation failed";
-                    response.Errors = new List<string> { "Registration is not valid." };
-                    return response;
+                    throw new Exception("Registration not exists");
                 }
 
                 var contract = new Contract();
@@ -135,32 +130,23 @@ namespace backend.Services
                 contract.BeneficiaryId = registration.BeneficiaryId;
 
                 // Tạo contract
-                //var result  = await _contractRepository.CreateContract(contract);
                 var result = await _contractRepository.Add(contract);
 
-                if (result == null)
+                if(result == null)
                 {
-                    response.Success = false;
-                    response.Message = "Creation failed.";
-                    response.Errors = new List<string> { "Creation contract is failed." };
+                    throw new Exception("Cannot create contract!");
                 }
-                else
-                {
-                    response.Success = true;
-                    response.Message = "Creation successful.";
-                    response.Id = result.ContractId;
 
-                    // Thêm Insurance Code
-                    string insuranceCode = MakeInsuranceCode(result.ContractId, signingDate);
-                    result = await _contractRepository.AddContractInsuranceCode(result, insuranceCode);
+                // Thêm Insurance Code
+                string insuranceCode = MakeInsuranceCode(result.ContractId, signingDate);
+                result = await _contractRepository.AddContractInsuranceCode(result, insuranceCode);
 
-                    // Cập nhật trạng thái đơn đăng ký
-                    string status = "Đã lập hợp đồng";
-                    var updateStatusRegistration = await _registrationRepository.UpdateRegistrationStatus(registration, status);
-                }
+                // Cập nhật trạng thái đơn đăng ký
+                string status = "Đã lập hợp đồng";
+                var updateStatusRegistration = await _registrationRepository.UpdateRegistrationStatus(registration, status);
 
                 var responseContract = _mapper.Map<ContractDTO>(result);
-                return response;
+                return responseContract;
             }
             catch (Exception ex)
             {
