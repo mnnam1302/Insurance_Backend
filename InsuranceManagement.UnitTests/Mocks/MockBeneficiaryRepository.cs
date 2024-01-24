@@ -23,7 +23,7 @@ namespace InsuranceManagement.UnitTests.Mocks
                     FullName = "Beneficiary 1",
                     Phone = "123456789",
                     Sex = "Nam",
-                    DateOfBirth = new DateTime(1999, 1, 1),
+                    DateOfBirth = new DateTime(2024, 1, 1),
                     CardIdentification = "123456789",
                     ImageIdentificationUrl = "",
                     Address = "Address 1",

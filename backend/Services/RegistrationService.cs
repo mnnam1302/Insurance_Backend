@@ -3,11 +3,10 @@ using backend.DTO.Registration;
 using backend.IRepositories;
 using backend.Models;
 using backend.Responses;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace backend.Services
 {
-    public class RegistrationService: IRegistrationService
+    public class RegistrationService : IRegistrationService
     {
         private readonly IRegistrationRepository _registrationRepository;
         private readonly IBeneficiaryRepository _beneficiaryRepository;
@@ -28,6 +27,12 @@ namespace backend.Services
         public async Task<RegistrationDTO> ChangeStatusRegistration(int id, UpdateStatusRegistrationDTO updateRegistration)
         {
             var registration = await _registrationRepository.Get(id);
+
+            if (registration is null)
+            {
+                return null;
+            }
+
             var result = await _registrationRepository.UpdateRegistrationStatus(registration, updateRegistration.Status);
 
             var response = _mapper.Map<RegistrationDTO>(result);
@@ -99,18 +104,9 @@ namespace backend.Services
             var result = await _registrationRepository.Add(registration);
             //var result = await _registrationRepository.CreateRegistrationInsurance(registrationDTO);
 
-            if (result is null)
-            {
-                response.Success = false;
-                response.Message = "Creation failed";
-                response.Errors = new List<string> { "Creation registration something wrong." };
-            }
-            else
-            {
-                response.Success = true;
-                response.Message = "Creation successful";
-                response.Id = result.RegistrationId;
-            }
+            response.Success = true;
+            response.Message = "Creation successful";
+            response.Id = result.RegistrationId;
 
             return response;
         }

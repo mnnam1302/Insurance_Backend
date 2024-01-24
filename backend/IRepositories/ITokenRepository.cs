@@ -1,5 +1,4 @@
 ﻿using backend.DTO.Auth;
-using System.Runtime.CompilerServices;
 
 namespace backend.IRepositories
 {

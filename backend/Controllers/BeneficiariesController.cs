@@ -1,7 +1,6 @@
 ﻿using backend.Attribute;
 using backend.DTO.Beneficiary;
 using backend.Extensions;
-using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,20 +9,19 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class BeneficiariesController: ControllerBase
+    public class BeneficiariesController : ControllerBase
     {
         private readonly IBeneficiaryService _beneficiaryService;
         private readonly IUserService _userService;
         private readonly FirebaseController _firebaseController;
 
-        public BeneficiariesController(IBeneficiaryService beneficiaryService, 
+        public BeneficiariesController(IBeneficiaryService beneficiaryService,
                                         IUserService userService,
                                         FirebaseController firebaseController)
         {
             _userService = userService;
             _beneficiaryService = beneficiaryService;
             _firebaseController = firebaseController;
-
         }
 
         [HttpGet("{id}")]
@@ -39,7 +37,6 @@ namespace backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
 
         [HttpPost]
         [JwtAuthorize]
@@ -80,7 +77,7 @@ namespace backend.Controllers
 
                 return Ok(result);
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }

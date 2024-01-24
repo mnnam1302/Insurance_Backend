@@ -39,6 +39,7 @@ namespace backend.Services
             {
                 throw new Exception("OTP code is expired");
             }
+
             // Check OTP có đúng không
             if (!verification.OTPCode.Equals(otp))
             {

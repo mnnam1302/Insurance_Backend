@@ -1,12 +1,11 @@
-﻿using backend.DTO;
-using backend.Services;
+﻿using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class BenefitDetailsController: ControllerBase
+    public class BenefitDetailsController : ControllerBase
     {
         private readonly IBenefitDetailService _benefitDetailService;
 
@@ -28,7 +27,6 @@ namespace backend.Controllers
                 }
 
                 return Ok(result);
-               
             }
             catch (ArgumentException ex)
             {
