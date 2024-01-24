@@ -1,10 +1,7 @@
 ﻿using backend.Attribute;
-using backend.DTO;
 using backend.DTO.Contract;
 using backend.Extensions;
-using backend.Models;
 using backend.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -64,7 +61,6 @@ namespace backend.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("filter")]
-        //[JwtAuthorize]
         public async Task<IActionResult> GetByUserId([FromQuery] int userId)
         {
             try
@@ -113,7 +109,6 @@ namespace backend.Controllers
                 return BadRequest(new { errors = ex.Message });
             }
         }
-
 
         /// <summary>
         /// Create contract
@@ -170,6 +165,6 @@ namespace backend.Controllers
             {
                 return BadRequest(new { errors = ex.Message });
             }
-        }   
+        }
     }
 }
