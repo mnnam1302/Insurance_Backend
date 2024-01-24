@@ -50,6 +50,8 @@ namespace backend.Profiles
 
             CreateMap<PaymentRequestDTO, PaymentRequest>().ReverseMap();
 
+            CreateMap<CreatePaymentRequestDTO, PaymentRequest>().ReverseMap();
+
             CreateMap<CreatePaymentContractHistoryDTO, ContractPaymentHistory>();
             CreateMap<UpdatePaymentContractHistoryDTO, ContractPaymentHistory>();
             CreateMap<PaymentContractHistoryDTO, ContractPaymentHistory>().ReverseMap();

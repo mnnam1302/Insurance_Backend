@@ -50,36 +50,50 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<Contract?> CreateContract(Contract contract)
+        //public async Task<Contract?> CreateContract(Contract contract)
+        //{
+        //    try
+        //    {
+        //        string sql = "exec AddContract " +
+        //                        "@start_date ," +
+        //                        "@end_date ," +
+        //                        "@registion_id ," +
+        //                        "@beneficiary_id ," +
+        //                        "@initial_fee , " +
+        //                        "@discount , " +
+        //                        "@total_fee ," +
+        //                        "@periodic_fee ," +
+        //                        "@user_id ," +
+        //                        "@total_turn "; 
+
+        //        IEnumerable<Contract> result = await _dbContext.Contracts.FromSqlRaw(sql,
+        //            new SqlParameter("@start_date", contract.StartDate),
+        //            new SqlParameter("@end_date", contract.EndDate),
+        //            new SqlParameter("@registion_id", contract.RegistrationId),
+        //            new SqlParameter("@beneficiary_id", contract.BeneficiaryId),
+        //            new SqlParameter("@initial_fee", contract.InitialFeePerTurn),
+        //            new SqlParameter("@discount", contract.Discount),
+        //            new SqlParameter("@total_fee", contract.TotalFee),
+        //            new SqlParameter("@periodic_fee", contract.PeriodFee),
+        //            new SqlParameter("@user_id", contract.UserId),
+        //            new SqlParameter("@total_turn", contract.TotalTurn)).ToListAsync();
+
+        //        var contractResult = result.FirstOrDefault();
+        //        return contractResult;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+        public async Task<Contract> AddContractInsuranceCode(Contract contract, string insuranceCode)
         {
             try
             {
-                string sql = "exec AddContract " +
-                                "@start_date ," +
-                                "@end_date ," +
-                                "@registion_id ," +
-                                "@beneficiary_id ," +
-                                "@initial_fee , " +
-                                "@discount , " +
-                                "@total_fee ," +
-                                "@periodic_fee ," +
-                                "@user_id ," +
-                                "@total_turn "; 
-
-                IEnumerable<Contract> result = await _dbContext.Contracts.FromSqlRaw(sql,
-                    new SqlParameter("@start_date", contract.StartDate),
-                    new SqlParameter("@end_date", contract.EndDate),
-                    new SqlParameter("@registion_id", contract.RegistrationId),
-                    new SqlParameter("@beneficiary_id", contract.BeneficiaryId),
-                    new SqlParameter("@initial_fee", contract.InitialFeePerTurn),
-                    new SqlParameter("@discount", contract.Discount),
-                    new SqlParameter("@total_fee", contract.TotalFee),
-                    new SqlParameter("@periodic_fee", contract.PeriodFee),
-                    new SqlParameter("@user_id", contract.UserId),
-                    new SqlParameter("@total_turn", contract.TotalTurn)).ToListAsync();
-
-                var contractResult = result.FirstOrDefault();
-                return contractResult;
+                contract.InsuranceCode = insuranceCode;
+                _dbContext.Entry(contract).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return contract;
             }
             catch (Exception ex)
             {

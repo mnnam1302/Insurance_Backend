@@ -15,31 +15,31 @@ namespace backend.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PaymentRequest?> CreatePaymentRequest(CreatePaymentRequestDTO dto)
-        {
-            try
-            {
-                string sql = "exec AddPaymentRequest " +
-                    "@contract_id, " +
-                    "@total_cost, " +
-                    "@description, " +
-                    "@image";
+        //public async Task<PaymentRequest?> CreatePaymentRequest(CreatePaymentRequestDTO dto)
+        //{
+        //    try
+        //    {
+        //        string sql = "exec AddPaymentRequest " +
+        //            "@contract_id, " +
+        //            "@total_cost, " +
+        //            "@description, " +
+        //            "@image";
 
-                IEnumerable<PaymentRequest?> result = await _dbContext.PaymentRequests.FromSqlRaw(sql,
-                    new SqlParameter("@contract_id", dto.ContractId),
-                    new SqlParameter("@total_cost", dto.TotalCost),
-                    new SqlParameter("@description", dto.Description),
-                    new SqlParameter("@image", dto.ImagePaymentRequestUrl)
-                    ).ToListAsync();
+        //        IEnumerable<PaymentRequest?> result = await _dbContext.PaymentRequests.FromSqlRaw(sql,
+        //            new SqlParameter("@contract_id", dto.ContractId),
+        //            new SqlParameter("@total_cost", dto.TotalCost),
+        //            new SqlParameter("@description", dto.Description),
+        //            new SqlParameter("@image", dto.ImagePaymentRequestUrl)
+        //            ).ToListAsync();
 
-                var request = result.FirstOrDefault();
-                return request;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //        var request = result.FirstOrDefault();
+        //        return request;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
 
         public async Task<List<SummaryPaymentRequest>> GetSummaryPaymentRequest(int year)
         {

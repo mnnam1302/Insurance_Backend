@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = InsuranceManagement.UnitTests
-build_property.ProjectDir = D:\NhatNam\4th\HK1\PTUDHTTT_HD\project\Code\backend\InsuranceManagement.UnitTests\
+build_property.ProjectDir = C:\Users\admin\source\repos\Insurance_Backend1\InsuranceManagement.UnitTests\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

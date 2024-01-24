@@ -65,6 +65,13 @@ namespace InsuranceManagement.UnitTests.Mocks
                     return paymentRequestUpdate;
                 });
 
+            mockRepo.Setup(x => x.Add(It.IsAny<PaymentRequest>()))
+               .ReturnsAsync((PaymentRequest paymentRequest) =>
+               {
+                   listPaymentRequests.Add(paymentRequest);
+                   return paymentRequest;
+               });
+
             return mockRepo;
         }
     }

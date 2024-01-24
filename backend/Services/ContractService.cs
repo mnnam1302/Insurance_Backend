@@ -46,6 +46,15 @@ namespace backend.Services
 
             return monthsDifference;
         }
+        private string MakeInsuranceCode(int id, DateTime signing_date)
+        {
+            int devine_id = id % 1000;
+
+            string contract_id = devine_id.ToString("0000");
+            string formattedDate = signing_date.ToString("yyyyMMdd");
+
+            return formattedDate + "-KHN" + contract_id;
+        }
 
         public async Task<List<ContractDTO>> GetListContracts()
         {
@@ -87,15 +96,21 @@ namespace backend.Services
         }
 
 
-        public async Task<ContractDTO> CreateContract(int registrationId, int userId)
+        public async Task<BaseCommandResponse> CreateContract(int registrationId, int userId)
         {
             try
             {
+
                 var registration = await _registrationRepository.Get(registrationId);
+
+                var response = new BaseCommandResponse();
 
                 if (registration == null)
                 {
-                    throw new Exception("Registration is not found");
+                    response.Success = false;
+                    response.Message = "Creation failed";
+                    response.Errors = new List<string> { "Registration is not valid." };
+                    return response;
                 }
 
                 var contract = new Contract();
@@ -104,6 +119,7 @@ namespace backend.Services
                 decimal discount = registration.Discount;
                 DateTime start_date = registration.StartDate;
                 DateTime end_date = registration.EndDate;
+                DateTime signingDate = DateTime.Now;
 
                 contract.RegistrationId = registrationId;
                 contract.UserId = userId;
@@ -111,20 +127,39 @@ namespace backend.Services
                 contract.Discount = discount;
                 contract.TotalFee = basic_fee * (1 - discount);
                 contract.TotalTurn = GetTotalTurn(start_date, end_date);
+                contract.ContractStatus = "Chưa thanh toán";
+                contract.SigningDate = signingDate;
                 contract.StartDate = start_date;
                 contract.EndDate = end_date;
                 contract.PeriodFee = contract.TotalFee / contract.TotalTurn;
                 contract.BeneficiaryId = registration.BeneficiaryId;
 
                 // Tạo contract
-                var result  = await _contractRepository.CreateContract(contract);
+                //var result  = await _contractRepository.CreateContract(contract);
+                var result = await _contractRepository.Add(contract);
 
-                // Cập nhật trạng thái đơn đăng ký
-                string status = "Đã lập hợp đồng";
-                var updateStatusRegistration = await _registrationRepository.UpdateRegistrationStatus(registration, status);
+                if (result == null)
+                {
+                    response.Success = false;
+                    response.Message = "Creation failed.";
+                    response.Errors = new List<string> { "Creation contract is failed." };
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = "Creation successful.";
+                    response.Id = result.ContractId;
 
-                
-                var response = _mapper.Map<ContractDTO>(result);
+                    // Thêm Insurance Code
+                    string insuranceCode = MakeInsuranceCode(result.ContractId, signingDate);
+                    result = await _contractRepository.AddContractInsuranceCode(result, insuranceCode);
+
+                    // Cập nhật trạng thái đơn đăng ký
+                    string status = "Đã lập hợp đồng";
+                    var updateStatusRegistration = await _registrationRepository.UpdateRegistrationStatus(registration, status);
+                }
+
+                var responseContract = _mapper.Map<ContractDTO>(result);
                 return response;
             }
             catch (Exception ex)

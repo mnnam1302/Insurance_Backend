@@ -14,5 +14,9 @@ namespace backend.DTO.PaymentRequest
         public string ImagePaymentRequestUrl { get; set; } = string.Empty;
 
         public int ContractId { get; set; }
+
+        public string RequestStatus { get; set; } = "Chưa xử lý";
+
+        public DateTime? UpdateDate { get; set; } = DateTime.Now;
     }
 }

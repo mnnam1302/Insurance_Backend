@@ -8,7 +8,8 @@ namespace backend.IRepositories
     {
         Task<List<Contract>> GetContractByUserId(int userId);
         Task<Contract?> GetContractByInsuranceCode(string insurance_code);
-        Task<Contract?> CreateContract(Contract contact);
+        //Task<Contract?> CreateContract(Contract contact);
+        Task<Contract> AddContractInsuranceCode(Contract contract, string insuranceCode);
         Task<Contract> UpdateContractStatus(Contract contract, string status);
 
         Task<List<ContractRevenue>> GetSummaryContract();

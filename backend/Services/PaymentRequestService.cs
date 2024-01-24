@@ -16,13 +16,17 @@ namespace backend.Services
     public class PaymentRequestService : IPaymentRequestService
     {
         private readonly IPaymentRequestRepository _payment;
+        private readonly IContractRepository _contractRepository;
+
         private readonly IMapper _mapper;
 
         public PaymentRequestService(IPaymentRequestRepository payment,
+                                    IContractRepository contractRepository,
                                     IMapper mapper)
         {
             _payment = payment;
             _mapper = mapper;
+            _contractRepository = contractRepository;
         }
 
         public async Task<List<PaymentRequestDTO>> GetAll()
@@ -41,10 +45,22 @@ namespace backend.Services
             return response;
         }
 
-        public async Task<BaseCommandResponse> CreatePaymentRequest(CreatePaymentRequestDTO dto)
+        public async Task<BaseCommandResponse> CreatePaymentRequest(CreatePaymentRequestDTO paymentRequestDTO)
         {
             var response = new BaseCommandResponse();
-            var result = await _payment.CreatePaymentRequest(dto);
+            var contract = await _contractRepository.Get(paymentRequestDTO.ContractId);
+
+            if (contract == null)
+            {
+                response.Success = false;
+                response.Message = "Create payment request failed";
+                response.Errors = new List<string>() { "Contract Id not valid" };
+
+                return response;
+            }        
+
+            var paymentRequest = _mapper.Map<PaymentRequest>(paymentRequestDTO);
+            var result = await _payment.Add(paymentRequest);
 
             if (result == null)
             {

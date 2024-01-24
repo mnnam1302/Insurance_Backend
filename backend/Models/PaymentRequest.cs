@@ -31,7 +31,7 @@ namespace backend.Models
         public int ContractId { get; set; }
 
         [Column("update_date")]
-        public DateTime? UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; } = DateTime.Now;
 
         [ForeignKey("ContractId")]
         public Contract? Contract { get; set; }

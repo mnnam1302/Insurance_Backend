@@ -88,6 +88,13 @@ namespace InsuranceManagement.UnitTests.Mocks
                     return listContract.FirstOrDefault(x => x.InsuranceCode == insuranceCode);
                 });
 
+            mockRepo.Setup(x => x.Add(It.IsAny<Contract>()))
+                .ReturnsAsync((Contract contract) =>
+                {
+                    listContract.Add(contract);
+                    return contract;
+                });
+
             return mockRepo;
         }
     }
