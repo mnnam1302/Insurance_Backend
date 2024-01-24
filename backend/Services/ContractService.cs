@@ -87,32 +87,37 @@ namespace backend.Services
         }
 
 
-        public async Task<ContractDTO> CreateContract(ContractDTO contractDTO)
+        public async Task<ContractDTO> CreateContract(int registrationId, int userId)
         {
             try
             {
-                var registration = await _registrationRepository.Get(contractDTO.RegistrationId);
+                var registration = await _registrationRepository.Get(registrationId);
 
                 if (registration == null)
                 {
                     throw new Exception("Registration is not found");
                 }
 
+                var contract = new Contract();
+
                 decimal basic_fee = registration.BasicInsuranceFee;
                 decimal discount = registration.Discount;
                 DateTime start_date = registration.StartDate;
                 DateTime end_date = registration.EndDate;
-                contractDTO.InitialFeePerTurn = basic_fee;
-                contractDTO.Discount = discount;
-                contractDTO.TotalFee = basic_fee * (1 - discount);
-                contractDTO.TotalTurn = GetTotalTurn(start_date, end_date);
-                contractDTO.StartDate = start_date;
-                contractDTO.EndDate = end_date;
-                contractDTO.PeriodFee = contractDTO.TotalFee / contractDTO.TotalTurn;
-                contractDTO.BeneficiayId = registration.BeneficiaryId;
+
+                contract.RegistrationId = registrationId;
+                contract.UserId = userId;
+                contract.InitialFeePerTurn = basic_fee;
+                contract.Discount = discount;
+                contract.TotalFee = basic_fee * (1 - discount);
+                contract.TotalTurn = GetTotalTurn(start_date, end_date);
+                contract.StartDate = start_date;
+                contract.EndDate = end_date;
+                contract.PeriodFee = contract.TotalFee / contract.TotalTurn;
+                contract.BeneficiaryId = registration.BeneficiaryId;
 
                 // Tạo contract
-                var result  = await _contractRepository.CreateContract(contractDTO);
+                var result  = await _contractRepository.CreateContract(contract);
 
                 // Cập nhật trạng thái đơn đăng ký
                 string status = "Đã lập hợp đồng";

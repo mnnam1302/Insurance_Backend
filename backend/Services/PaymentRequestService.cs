@@ -8,6 +8,7 @@ using backend.Models;
 using backend.Repositories;
 using backend.Responses;
 using Firebase.Auth;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Newtonsoft.Json;
 
 namespace backend.Services
@@ -63,6 +64,12 @@ namespace backend.Services
         public async Task<PaymentRequestDTO?> UpdatePaymentRequest(int id, UpdatePaymentRequestDTO updatePaymentRequestDTO)
         {
             var paymentRequest = await _payment.Get(id);
+
+            if(paymentRequest == null)
+            {
+                return null;
+            }
+
             var result = await _payment.UpdatePaymentRequest(paymentRequest, updatePaymentRequestDTO);
 
             var response = _mapper.Map<PaymentRequestDTO>(result);
@@ -97,6 +104,11 @@ namespace backend.Services
 
             var response =  _mapper.Map<List<SummaryPaymentRequestDTO>>(result);
             return response;
+        }
+
+        public Task UpdatePaymentRequest(PaymentRequest paymentRequest, UpdatePaymentRequestDTO updatePaymentRequestDTO)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,6 +3,7 @@ using backend.DTO.User;
 using backend.Models;
 using backend.Responses;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -104,6 +105,7 @@ namespace backend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("summary")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetSummaryUser()
         {
             try
