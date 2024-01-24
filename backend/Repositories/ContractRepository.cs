@@ -50,7 +50,7 @@ namespace backend.Repositories
             }
         }
 
-        public async Task<Contract?> CreateContract(ContractDTO contractDTO)
+        public async Task<Contract?> CreateContract(Contract contract)
         {
             try
             {
@@ -67,19 +67,19 @@ namespace backend.Repositories
                                 "@total_turn "; 
 
                 IEnumerable<Contract> result = await _dbContext.Contracts.FromSqlRaw(sql,
-                    new SqlParameter("@start_date", contractDTO.StartDate),
-                    new SqlParameter("@end_date", contractDTO.EndDate),
-                    new SqlParameter("@registion_id", contractDTO.RegistrationId),
-                    new SqlParameter("@beneficiary_id", contractDTO.BeneficiayId),
-                    new SqlParameter("@initial_fee", contractDTO.InitialFeePerTurn),
-                    new SqlParameter("@discount", contractDTO.Discount),
-                    new SqlParameter("@total_fee", contractDTO.TotalFee),
-                    new SqlParameter("@periodic_fee", contractDTO.PeriodFee),
-                    new SqlParameter("@user_id", contractDTO.UserId),
-                    new SqlParameter("@total_turn", contractDTO.TotalTurn)).ToListAsync();
+                    new SqlParameter("@start_date", contract.StartDate),
+                    new SqlParameter("@end_date", contract.EndDate),
+                    new SqlParameter("@registion_id", contract.RegistrationId),
+                    new SqlParameter("@beneficiary_id", contract.BeneficiaryId),
+                    new SqlParameter("@initial_fee", contract.InitialFeePerTurn),
+                    new SqlParameter("@discount", contract.Discount),
+                    new SqlParameter("@total_fee", contract.TotalFee),
+                    new SqlParameter("@periodic_fee", contract.PeriodFee),
+                    new SqlParameter("@user_id", contract.UserId),
+                    new SqlParameter("@total_turn", contract.TotalTurn)).ToListAsync();
 
-                var contract = result.FirstOrDefault();
-                return contract;
+                var contractResult = result.FirstOrDefault();
+                return contractResult;
             }
             catch (Exception ex)
             {

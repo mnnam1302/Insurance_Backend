@@ -4,6 +4,7 @@ using backend.DTO.Contract;
 using backend.Extensions;
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,7 @@ namespace backend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAllContracts()
         {
             try
@@ -139,12 +141,9 @@ namespace backend.Controllers
                     return NotFound("Policyholder is not found");
                 }
 
-                var contract_dto = new ContractDTO();
-                contract_dto.UserId = userId;
-                contract_dto.RegistrationId = addContract.Registration_Id;
 
                 // thêm hợp đồng
-                var result = await _contractService.CreateContract(contract_dto);
+                var result = await _contractService.CreateContract(addContract.Registration_Id, userId);
 
                 return Ok(result);
             }
@@ -159,6 +158,7 @@ namespace backend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("summary")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetSummaryContract()
         {
             try

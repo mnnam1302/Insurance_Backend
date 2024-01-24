@@ -18,7 +18,7 @@ namespace backend.DTO.Contract
         public decimal PeriodFee { get; set; }
         public decimal TotalFee { get; set; }
         public int UserId { get; set; }
-        public int BeneficiayId { get; set; }
+        public int BeneficiaryId { get; set; }
         public int RegistrationId { get; set; }
     }
 }

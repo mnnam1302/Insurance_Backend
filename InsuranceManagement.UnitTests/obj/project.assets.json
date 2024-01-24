@@ -9710,19 +9710,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\NhatNam\\4th\\HK1\\PTUDHTTT_HD\\project\\Code\\backend\\InsuranceManagement.UnitTests\\InsuranceManagement.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Source\\Repos\\Insurance_Backend\\InsuranceManagement.UnitTests\\InsuranceManagement.UnitTests.csproj",
       "projectName": "InsuranceManagement.UnitTests",
-      "projectPath": "D:\\NhatNam\\4th\\HK1\\PTUDHTTT_HD\\project\\Code\\backend\\InsuranceManagement.UnitTests\\InsuranceManagement.UnitTests.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\NhatNam\\4th\\HK1\\PTUDHTTT_HD\\project\\Code\\backend\\InsuranceManagement.UnitTests\\obj\\",
+      "projectPath": "C:\\Users\\admin\\Source\\Repos\\Insurance_Backend\\InsuranceManagement.UnitTests\\InsuranceManagement.UnitTests.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admin\\Source\\Repos\\Insurance_Backend\\InsuranceManagement.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9736,8 +9736,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\NhatNam\\4th\\HK1\\PTUDHTTT_HD\\project\\Code\\backend\\backend\\backend.csproj": {
-              "projectPath": "D:\\NhatNam\\4th\\HK1\\PTUDHTTT_HD\\project\\Code\\backend\\backend\\backend.csproj"
+            "C:\\Users\\admin\\Source\\Repos\\Insurance_Backend\\backend\\backend.csproj": {
+              "projectPath": "C:\\Users\\admin\\Source\\Repos\\Insurance_Backend\\backend\\backend.csproj"
             }
           }
         }
@@ -9797,7 +9797,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

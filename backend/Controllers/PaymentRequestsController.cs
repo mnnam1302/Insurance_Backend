@@ -2,6 +2,7 @@
 using backend.DTO.PaymentRequest;
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -128,6 +129,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("summary")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetSummaryPaymentRequest([FromQuery] int year)
         {
             try

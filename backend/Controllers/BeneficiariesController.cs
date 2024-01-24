@@ -3,6 +3,7 @@ using backend.DTO.Beneficiary;
 using backend.Extensions;
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -86,6 +87,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("summary")]
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> GetSummaryBeneficiaryByAge()
         {
             try
