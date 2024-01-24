@@ -2,11 +2,8 @@
 using backend.DTO.Contract;
 using backend.Extensions;
 using backend.Services;
-<<<<<<< HEAD
-=======
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
->>>>>>> b12dd3320a6ddaaf8df1d5504e0cd40a135201ee
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
